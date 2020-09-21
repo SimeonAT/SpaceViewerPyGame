@@ -146,6 +146,4 @@ while quit == False:
     clock.tick(60)  # 60 FPS
     sound.play_music(sound.main_loop)  # play main game loop music
 
-
-# Done! Time to quit.
 pygame.quit()
