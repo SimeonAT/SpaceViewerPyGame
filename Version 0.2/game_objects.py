@@ -3,7 +3,8 @@
     - https://www.geeksforgeeks.org/python-display-images-with-pygame/#:~:text=load()%20method%20of%20pygame,update()%20method%20of%20pygame.
     - http://programarcadegames.com/python_examples/en/sprite_sheets/
     - https://stackoverflow.com/questions/20002242/how-to-scale-images-to-screen-size-in-pygame
-    - https://stackoverflow.com/questions/14044147/animated-sprite-from-few-images """
+    - https://stackoverflow.com/questions/14044147/animated-sprite-from-few-images
+    - https://stackoverflow.com/questions/19715251/pygame-getting-the-size-of-a-loaded-image/19715931 """
 import pygame
 import os
 from random import randint
@@ -25,11 +26,9 @@ class Planet(pygame.sprite.Sprite):
     """ Planet object in Space Viewer video game.
         Some spaces in the grid will have a planet, while other will not.  """
 
-    def __init__(self, pos = (CENTER_X, CENTER_Y), size = None):
-        """@param: pos -> position (x, y); default is the dead center of the screen
-                   size -> size of dot as int; default is a random size """
+    def __init__(self, size = None):
+        """@param: size -> size of dot as int; default is a random size """
         super().__init__()
-        self.pos = pos
         self.size = size if size != None else randint(75, 500)
         self.shown = False   # is the planet being currently displayed on the screen
         self.frames_since_shown = 0  # how many frames has the planet been displayed on screen
@@ -174,10 +173,8 @@ class Intestellar_Object(pygame.sprite.Sprite):
         Although similar to the planet objects, they differ in property, size, and
         the player will be able to interact more with them. """
 
-    def __init__(self, pos = (CENTER_X, CENTER_Y), size_multiple = None):
-        """@params: pos -> position on the screen
-                    size_multiple -> should black hole be same size, 2x, 3x, 4x, etc bigger; this is because sprite is rect in shape """
-        self.pos = pos
+    def __init__(self, size_multiple = None):
+        """@params: size_multiple -> should black hole be same size, 2x, 3x, 4x, etc bigger; this is because sprite is rect in shape """
         self.size_multiple = size_multiple if size_multiple != None else randint(3, 5)
         self.shown = False  # is the black hole being currently displayed on the screen
         self.frames_since_shown = 0  # how many frames has the black hole been displayed on screen
@@ -214,7 +211,7 @@ class Intestellar_Object(pygame.sprite.Sprite):
         # Create the text box
         self.text_box = TextBox((1350, 400), lines=self.description)  # 3X is the size of the original text box sprite
 
-    """ Draws the black hole sprite """
+    """ Draws the space object sprite """
     def draw(self, screen):
         screen.blit(self.image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))  # display image at center of screen
 
@@ -251,13 +248,11 @@ class Spaceship(pygame.sprite.Sprite):
     """ The name says it all. Like the Planets, they have dialogue boxes with flavor text/descriptions, but I'm going to try
         to add turn based combat and trade features to them later on in development. """
 
-    def __init__(self, grid_pos, pos = [CENTER_X, CENTER_Y], size = None):
+    def __init__(self, grid_pos, size = None):
         """ @params: grid_pos -> position of the spaceship on the grid space
-                     pos -> position of the spaceship sprite on the screen
                      size -> the size of the spaceship sprite """
         super().__init__()
         self.grid_pos = grid_pos
-        self.pos = pos
         self.size = size if size != None else randint(300, 700)
         self.shown = False  # is the spaceship being currently displayed on the screen
         self.frames_since_shown = 0  # how many frames has the spaceship been displayed on screen
@@ -321,5 +316,44 @@ class Asteroid(pygame.sprite.Sprite):
     """ Asteroids, space rock. These asteroids will be grouped together
     as an asteroid belt in-game. """
 
-    def __init__(self):
-        pass
+    def __init__(self, pos = None, size_multiple = None):
+        """@params: pos -> position of the asteroid on screen
+                    size_multiple -> should asteroid be 1x, 2x, 3x, 4x, etc bigger?
+           NOTE: Parameters are set to none and are given random values in initialization """
+        super().__init__()
+        self.size_multiple = size_multiple if size_multiple != None else randint(1, 3)
+        self.shown = False  # is the asteroid being currently displayed on the screen
+        self.frames_since_shown = 0  # how many frames has the asteroid been displayed on screen
+        self.description = ["Testing asteroid sprite.",
+                            "These asteroid sprites won't be alone; they will be in an asteroid belt.",
+                            "Description is for debugging purposes only."]
+
+        """ Load up which sprite graphic to use """
+        self.img_file_location = os.path.join("Graphics", "Space Objects") + "\\"
+        rng = randint(1, 4)
+        if rng == 1:
+            self.img_file_location += "Asteroid 1.png"
+        elif rng == 2:
+            self.img_file_location += "Asteroid 2.png"
+        elif rng == 3:
+            self.img_file_location += "Asteroid 3.png"
+        elif rng == 4:
+            self.img_file_location += "Asteroid 4.png"
+
+        # Load up the sprite img and resize it by factor of size_multiple
+        self.image = pygame.image.load(self.img_file_location)  # load up the planet img
+        self.size = self.image.get_rect().size  # Get the size of the sprite
+        self.image = pygame.transform.scale(self.image, self.size[0] * size_multiple, self.size[1] * size_multiple)
+
+        # Create the text box
+        self.text_box = TextBox((1350, 400), lines=self.description)  # 3X is the size of the original text box sprite
+
+        """ Draws the asteroid """
+        def draw(self, screen):
+            screen.blit(self.image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))  # display image at center of screen
+
+        """ Draws the textbox """
+        def draw_textbox(self, screen):
+            self.text_box.draw(screen, self.frames_since_shown)
+
+
