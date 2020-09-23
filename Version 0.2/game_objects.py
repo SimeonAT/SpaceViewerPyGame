@@ -321,7 +321,7 @@ class Asteroid(pygame.sprite.Sprite):
                     size_multiple -> should asteroid be 1x, 2x, 3x, 4x, etc bigger?
            NOTE: Parameters are set to none and are given random values in initialization """
         super().__init__()
-        self.size_multiple = size_multiple if size_multiple != None else randint(1, 3)
+        self.size_multiple = size_multiple if size_multiple != None else randint(5, 7)
         self.shown = False  # is the asteroid being currently displayed on the screen
         self.frames_since_shown = 0  # how many frames has the asteroid been displayed on screen
         self.description = ["Testing asteroid sprite.",
@@ -343,17 +343,18 @@ class Asteroid(pygame.sprite.Sprite):
         # Load up the sprite img and resize it by factor of size_multiple
         self.image = pygame.image.load(self.img_file_location)  # load up the planet img
         self.size = self.image.get_rect().size  # Get the size of the sprite
-        self.image = pygame.transform.scale(self.image, self.size[0] * size_multiple, self.size[1] * size_multiple)
+        self.image = pygame.transform.scale(self.image, (self.size[0] * self.size_multiple, self.size[1] * self.size_multiple))
+        self.size = list(self.image.get_rect().size)  # Get the new size of the sprite
 
         # Create the text box
         self.text_box = TextBox((1350, 400), lines=self.description)  # 3X is the size of the original text box sprite
 
-        """ Draws the asteroid """
-        def draw(self, screen):
-            screen.blit(self.image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))  # display image at center of screen
+    """ Draws the asteroid """
+    def draw(self, screen):
+        screen.blit(self.image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))  # display image at center of screen
 
-        """ Draws the textbox """
-        def draw_textbox(self, screen):
-            self.text_box.draw(screen, self.frames_since_shown)
+    """ Draws the textbox """
+    def draw_textbox(self, screen):
+        self.text_box.draw(screen, self.frames_since_shown)
 
 

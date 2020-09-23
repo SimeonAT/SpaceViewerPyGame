@@ -33,8 +33,9 @@ for row in range(0, GRID_SIZE[0]):
             0 -> nothing 
             1 -> a planet 
             2 -> a spaceship 
-            3 -> interstellar object """
-        rng = randint(0, 3)
+            3 -> interstellar object 
+            4 -> asteroid (will be asteroid belt in the future) """
+        rng = randint(0, 4)
 
         """ grid[row][column] will contain a LIST of game objects, and every game object in that grid position will be 
             drawn when the player is on it. This is so that we can have more than one game object in one grid space. """
@@ -48,6 +49,8 @@ for row in range(0, GRID_SIZE[0]):
             list_of_spaceships.append(new_spaceship)  # add spaceship to list of spaceships
         if rng == 3:
             grid[row][column] = [Intestellar_Object()]  # A non-planetary object in grid space
+        if rng == 4:
+            grid[row][column] = [Asteroid()]   # Asteroid space object
 
 
 current_pos = [0, 0]  # current location of player
