@@ -6,7 +6,7 @@ environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 import pygame
 import sound
 from random import randint
-from game_objects import Planet, Star, Spaceship, Intestellar_Object, Asteroid
+from game_objects import Planet, Star, Spaceship, Intestellar_Object, Asteroid_Belt
 from setup import resource_path
 
 pygame.init()  # initialize Pygame library
@@ -34,7 +34,7 @@ for row in range(0, GRID_SIZE[0]):
             1 -> a planet 
             2 -> a spaceship 
             3 -> interstellar object 
-            4 -> asteroid (will be asteroid belt in the future) """
+            4 -> asteroid belt """
         rng = randint(0, 4)
 
         """ grid[row][column] will contain a LIST of game objects, and every game object in that grid position will be 
@@ -50,7 +50,7 @@ for row in range(0, GRID_SIZE[0]):
         if rng == 3:
             grid[row][column] = [Intestellar_Object()]  # A non-planetary object in grid space
         if rng == 4:
-            grid[row][column] = [Asteroid()]   # Asteroid space object
+            grid[row][column] = [Asteroid_Belt()]   # Asteroid Belt space object
 
 
 current_pos = [0, 0]  # current location of player
