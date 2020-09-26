@@ -3,8 +3,6 @@ from os import environ
 # Got some help here: https://stackoverflow.com/questions/54246668/how-do-i-delete-the-hello-from-the-pygame-community-console-alert-while-using/54246669
 environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 
-""" Testing Comment. """
-
 import pygame
 import sound
 from random import randint
