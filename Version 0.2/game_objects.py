@@ -130,7 +130,6 @@ class Planet(pygame.sprite.Sprite):
                                 "Advanced beings from nearby planets harness this energy",
                                 "using their advanced technologies."]
 
-            print("A star has appeared...")  # so I know when stars spawn, since they're so rare
 
         elif rng == 11 or rng == 12:  # rng can be 2 nums to increase probabilities moon will spawn
             rng_moon = randint(1, 5)
@@ -148,8 +147,6 @@ class Planet(pygame.sprite.Sprite):
             self.description = ["A beautiful looking moon ",
                                 "that shines quietly in this ",
                                 "peaceful, yet dark, corner of space. "]
-
-            print("A moon has appeared...")   # so I know when moons spawn, since they're so rare
 
         self.img_file_location = resource_path(self.img_file_location)  # set up file location to work with PyInstaller
 
@@ -188,7 +185,6 @@ class Intestellar_Object(pygame.sprite.Sprite):
             self.description = ["A black hole that swirls with rage!",
                                 "Whatever comes inside...",
                                 "...never comes out..."]
-            print("A black hole has appeared...")
 
         elif rng == 2 or rng == 3:  # Nebula
             self.size = [128 * self.size_multiple, 128 * self.size_multiple]
@@ -321,12 +317,9 @@ class Asteroid(pygame.sprite.Sprite):
                     size_multiple -> should asteroid be 1x, 2x, 3x, 4x, etc bigger?
            NOTE: Parameters are set to none and are given random values in initialization """
         super().__init__()
-        self.size_multiple = size_multiple if size_multiple != None else randint(5, 7)
+        self.size_multiple = size_multiple if size_multiple != None else randint(1, 5)
         self.shown = False  # is the asteroid being currently displayed on the screen
         self.frames_since_shown = 0  # how many frames has the asteroid been displayed on screen
-        self.description = ["Testing asteroid sprite.",
-                            "These asteroid sprites won't be alone; they will be in an asteroid belt.",
-                            "Description is for debugging purposes only."]
 
         """ Load up which sprite graphic to use """
         self.img_file_location = os.path.join("Graphics", "Space Objects") + "\\"
@@ -344,17 +337,41 @@ class Asteroid(pygame.sprite.Sprite):
         self.image = pygame.image.load(self.img_file_location)  # load up the planet img
         self.size = self.image.get_rect().size  # Get the size of the sprite
         self.image = pygame.transform.scale(self.image, (self.size[0] * self.size_multiple, self.size[1] * self.size_multiple))
-        self.size = list(self.image.get_rect().size)  # Get the new size of the sprite
+        self.size = [self.size[0] * self.size_multiple, self.size[1] * self.size_multiple]  # Get the new size of the sprite
 
-        # Create the text box
-        self.text_box = TextBox((1350, 400), lines=self.description)  # 3X is the size of the original text box sprite
+        # Determine the position of the asteroid
+        LIMIT_X = SCREEN_WIDTH - self.size[0]  # has to be at least a width/height away so that asteroid stays on screen
+        LIMIT_Y = SCREEN_HEIGHT - self.size[1]
+        self.pos = pos if pos != None else randint(0, LIMIT_X), randint(0, LIMIT_Y)
 
     """ Draws the asteroid """
     def draw(self, screen):
-        screen.blit(self.image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))  # display image at center of screen
+        screen.blit(self.image, (self.pos[0], self.pos[1]))  # display image at self.pos
+
+
+class Asteroid_Belt(pygame.sprite.Sprite):
+    """ A list of individual asteroids that will be shown on the screen at the same time. """
+
+    def __init__(self):
+        self.quantity = randint(30, 50)   # how many asteroids to display
+        self.asteroid_belt = []  # the list of asteroids
+        self.frames_since_shown = 0  # how many frames has the asteroid been displayed on screen
+
+        # Put some Asteroid objects (with random features) in the Asteroid Belt
+        for index in range(self.quantity):
+            self.asteroid_belt.append(Asteroid())
+
+        # Textbox objection and descriptions
+        self.description = ["A large field of stray, floating asteroids.",
+                            "They are composed of debris from dead planets, ",
+                            "or are space rocks with tones of gems and minerals. "]
+        self.text_box = TextBox((1350, 400), lines = self.description)  # 3X is the size of the original text box sprite
+
+    """ Draws the asteroid belt """
+    def draw(self, screen):
+        for asteroid in self.asteroid_belt:
+            asteroid.draw(screen)
 
     """ Draws the textbox """
     def draw_textbox(self, screen):
         self.text_box.draw(screen, self.frames_since_shown)
-
-
