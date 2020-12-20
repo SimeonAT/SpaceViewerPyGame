@@ -147,6 +147,6 @@ while quit == False:
     """ --- Update frame rate, Show what's displayed on screen, Play music """
     pygame.display.flip()  # show everything that's drawn
     clock.tick(60)  # 60 FPS
-    sound.play_music(sound.main_loop)  # play main game loop music
+    # sound.play_music(sound.main_loop)  # play main game loop music
 
 pygame.quit()

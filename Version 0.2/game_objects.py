@@ -4,12 +4,14 @@
     - http://programarcadegames.com/python_examples/en/sprite_sheets/
     - https://stackoverflow.com/questions/20002242/how-to-scale-images-to-screen-size-in-pygame
     - https://stackoverflow.com/questions/14044147/animated-sprite-from-few-images
-    - https://stackoverflow.com/questions/19715251/pygame-getting-the-size-of-a-loaded-image/19715931 """
+    - https://stackoverflow.com/questions/19715251/pygame-getting-the-size-of-a-loaded-image/19715931
+    - https://stackoverflow.com/questions/6239769/how-can-i-crop-an-image-with-pygame """
 import pygame
 import os
 from random import randint
 from text_box import TextBox
 from setup import resource_path
+from spritesheet import get_frames
 
 # Dimensions of game for module to refer to:
 SCREEN_WIDTH = 1280
@@ -34,6 +36,13 @@ class Planet(pygame.sprite.Sprite):
         self.frames_since_shown = 0  # how many frames has the planet been displayed on screen
         self.description = []  # the description of planet, which is displayed on textbox (there is no desc by default)
 
+        """ THESE CLASS ATTRIBUTES ARE ONLY RELEVANT WHEN DEALING WITH ANIMATED SPRITES """
+        self.frames_list = []  # contains information about each frame in the spritesheet
+                               # if list remains empty after constructor, then the sprite isn't animated.
+        self.total_frames = 0  # how many frames does sprite have (# of frames in spritesheet)
+        self.frame_num = 0     # what frame to render when drawing
+        self.animated = False  # Will sprite be animated (Not animated by default)
+
         # the file location for the image of the planet
         self.img_file_location = os.path.join("Graphics", "Space Objects") + "\\"
 
@@ -48,22 +57,40 @@ class Planet(pygame.sprite.Sprite):
             if rng_desert == 1:
                 self.img_file_location += "Desert.png"
             elif rng_desert == 2:
-                self.img_file_location += "Brown Planet.png"
+                self.img_file_location += "Brown Planet Animated.png"
+                self.animated = True
+                self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
+                                                                 hanging_frames = 4)  # get the animated frames from spritesheet
 
             self.description = ["A planet where it is summer everyday.",
                                 "Mostly heat, sand, and dead plants, but the few oases within this planet",
                                 "are teeming with life."]
+
         elif rng == 3:
-            self.img_file_location += "Forest.png"
+            rng_forest = randint(1, 2)
+            if rng_forest == 1:
+                self.img_file_location += "Forest.png"
+            else:
+                self.img_file_location +="Forest Animated.png"
+                self.animated = True
+                self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
+                                                                 hanging_frames=4)  # get the animated frames from spritesheet
+
             self.description = ["A planet that is itself a huge jungle.",
                                 "Many insects and furry little creatures coincide peacefully in",
                                 "the dark ecosystem covered by the leaves of various tall trees."]
+
         elif rng == 4:
             rng_ice = randint(1, 2)
             if rng_ice == 1:
                 self.img_file_location += "Ice.png"
             elif rng_ice == 2:
                 self.img_file_location += "Blue Planet.png"
+            elif rng_ice == 3:
+                self.img_file_location += "Blue Planet Animated.png"
+                self.animated = True
+                self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
+                                                                 hanging_frames=4)  # get the animated frames from spritesheet
 
             self.description = ["Cold and barren, life within the planet lives",
                                 "in the warm caves found underground."]
@@ -84,13 +111,18 @@ class Planet(pygame.sprite.Sprite):
                                 "various desert, taiga, forest, jungle, and ocean biomes within this planet."]
 
         elif rng == 8:  # Gas Giants
-            rng_gas_giants = randint(1, 3)
+            rng_gas_giants = randint(1, 4)
             if rng_gas_giants == 1:
                 self.img_file_location += "Green Gas Giant.png"
             elif rng_gas_giants == 2:
                 self.img_file_location += "Grey Gas Giant.png"
             elif rng_gas_giants == 3:
                 self.img_file_location += "Pink Gas Giant.png"
+            elif rng_gas_giants == 4:
+                self.img_file_location += "Purple Planet.png"
+                self.animated = True
+                self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
+                                                                 hanging_frames=4)  # get the animated frames from spritesheet
 
             self.description = ["A planet made of solely of air.",
                                 "Birds, bats, and similar creatures of all kinds",
@@ -151,14 +183,31 @@ class Planet(pygame.sprite.Sprite):
         self.img_file_location = resource_path(self.img_file_location)  # set up file location to work with PyInstaller
 
         self.image = pygame.image.load(self.img_file_location)  # load up the planet img
-        self.image = pygame.transform.scale(self.image, (self.size, self.size))  # resize planet big enough so we can see it
+
+        if self.animated == False:  # If not animated, all we need to do is just scale the image
+            self.image = pygame.transform.scale(self.image,
+                                                (self.size, self.size))  # resize planet big enough so we can see it
 
         # Create the text box for the planet
         self.text_box = TextBox((1350, 400), lines = self.description)  # 3X is the size of the original text box sprite
 
     """ Draws the planet sprite """
     def draw(self, screen):
-       screen.blit(self.image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))  # display image at center of screen
+        if len(self.frames_list) != 0:   # if the sprite is animated
+            # The first step is to find which frame to render
+            if self.frames_since_shown % 8 == 0:  # if 1/30 of a second has passed (assuming 30 FPS), update the frame
+                self.frame_num += 1
+            if self.frame_num > len(self.frames_list) - 1:  # if frame_number has reached the end of the spritesheet array
+                self.frame_num = 0
+
+            # Create a new surface that contains the frame and resize it so it has dimensions self.size x self.size
+            frame_image = self.image.subsurface(self.frames_list[self.frame_num])
+            frame_image = pygame.transform.scale(frame_image, (self.size, self.size))
+
+            screen.blit(frame_image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))
+        else:
+            # This code runs only when there's only 1 frame to deal with
+            screen.blit(self.image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))  # display image at center of screen
 
     """ Draws the textbox """
     def draw_textbox(self, screen):
