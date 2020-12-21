@@ -48,6 +48,8 @@ class TextBox(pygame.sprite.Sprite):
                       frames_since_shown: how many frames has it appeared on screen so far """
         """ --- THE TEXT BOX APPEARANCE TRANSITION --- """
         if frames_since_shown <= 30:
+            # Reset self.current_line and self.current_letter to give RPG dialogue transition effect 
+            self.current_line = self.current_letter = 1
             return   # don't transition if the object just popped up
 
         # The actual transition:
