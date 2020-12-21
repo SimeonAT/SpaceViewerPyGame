@@ -29,7 +29,8 @@ class TextBox(pygame.sprite.Sprite):
 
         # These variables are needed to give the RPG dialogue text "pop up" effect
         self.total_lines = len(self.lines)
-        self.current_line = 1               # which new line to render for a given frame; always starts at first line
+        self.current_line = 1               # which new line to render up to for a given frame; always starts at first line
+        self.current_letter = 1             # which letter to render up to for a given frame; always starts at first letter of first line
 
         # set up the text box sprite/image
         self.file_loc = resource_path(os.path.join("Graphics", "text_box.png"))
@@ -76,13 +77,28 @@ class TextBox(pygame.sprite.Sprite):
                         CENTER_Y - (self.final_size[1] / 2) + 375]  # coordinates of the top left corner of the first line of text
 
             for i in range(0, self.current_line):
-                text = font.render(self.lines[i], True, (255, 255, 255, 255))
-                screen.blit(text, dest = top_left)
-                top_left[1] += 40   # the next line of text will be under the previous line of text
-                if frames_since_shown % 20 == 0:   # a new line appears every 20 frames
-                    if self.current_line < len(self.lines):
-                        # Keep incrementing until self.current_line renders the last line in self.lines
+                if i >= len(self.lines):
+                    # Double check if we just rendered the last line,
+                    # if we do, leave loop and don't get ready for next line (because there isn't a next line to get ready for)
+                    break
+
+                if i == self.current_line - 1:
+                    line_to_render = self.lines[i][0:self.current_letter - 1]   # slice string up to where current_letter is "referring to"
+                else:
+                    line_to_render = self.lines[i]  # render whole line
+
+                text = font.render(line_to_render, True, (255, 255, 255, 255))
+                screen.blit(text, dest=top_left)
+                top_left[1] += 40  # the next line of text will be under the previous line of text
+                if frames_since_shown % 0.25 == 0:   # a new letter appears every 0.25 frames
+                    if self.current_letter >= len(self.lines[i]):  # need >= to account for when self.current_letter is > than amount of lines
+                        # If we already printed out all letters for given line, get ready for next line
                         self.current_line += 1
+                        self.current_letter = 1   # reset self.current_letter so that we can print first letter of next line
+                    else:
+                        # if not finished printing out whole line, get ready to print next letter in next frame
+                        self.current_letter += 1
+
 
             close_text = font.render("Press Z to continue.", True, (255, 255, 255, 255))  # Textbox Call-To-Action
             screen.blit(close_text, dest = (CENTER_X + 320, CENTER_Y + 290))

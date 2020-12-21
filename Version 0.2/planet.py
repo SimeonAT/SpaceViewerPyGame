@@ -54,7 +54,7 @@ class Planet(pygame.sprite.Sprite):
                 self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
                                                                  hanging_frames = 4)  # get the animated frames from spritesheet
 
-            self.description = ["A planet where it is summer everyday.",
+            self.description = ["A planet where it's summer everyday.",
                                 "Mostly heat, sand, and dead plants, but the few oases within this planet",
                                 "are teeming with life."]
 
@@ -116,7 +116,7 @@ class Planet(pygame.sprite.Sprite):
                 self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
                                                                  hanging_frames=4)  # get the animated frames from spritesheet
 
-            self.description = ["A planet made of solely of air.",
+            self.description = ["A planet made solely out of air.",
                                 "Birds, bats, and similar creatures of all kinds",
                                 "take flight on its cloudy skies."]
 

@@ -35,5 +35,4 @@ def get_frames(rows, frames_per_row, frame_width, frame_height, hanging_frames =
         x = 0
         y += frame_height
 
-    print(frames)
     return (frames, num_frames)
