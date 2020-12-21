@@ -6,7 +6,8 @@ environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 import pygame
 import sound
 from random import randint
-from game_objects import Planet, Star, Spaceship, Intestellar_Object, Asteroid_Belt
+from game_objects import Star, Spaceship, Intestellar_Object, Asteroid_Belt
+from planet import Planet
 from setup import resource_path
 
 pygame.init()  # initialize Pygame library
