@@ -6,6 +6,12 @@ from text_box import TextBox
 from setup import resource_path
 from spritesheet import get_frames
 
+# Dimensions of game for module to refer to:
+SCREEN_WIDTH = 1280
+SCREEN_HEIGHT = 720
+
+GRID_SIZE = [10, 10]   # The dimensions of the grid space
+
 # Coordinates for the center of the screen
 CENTER_X = int(SCREEN_WIDTH / 2)
 CENTER_Y = int(SCREEN_HEIGHT / 2)
