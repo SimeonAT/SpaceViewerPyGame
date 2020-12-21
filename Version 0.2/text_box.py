@@ -27,6 +27,10 @@ class TextBox(pygame.sprite.Sprite):
         self.current_size = [0, 0]  # the size of the tex box on screen (0 x 0 so that text box can 'transition' by enlarging itself)
         self.lines = lines
 
+        # These variables are needed to give the RPG dialogue text "pop up" effect
+        self.total_lines = len(self.lines)
+        self.current_line = 1               # which new line to render for a given frame; always starts at first line
+
         # set up the text box sprite/image
         self.file_loc = resource_path(os.path.join("Graphics", "text_box.png"))
         self.image = pygame.image.load(self.file_loc).convert()  # load up text box sprite from file location
@@ -66,13 +70,19 @@ class TextBox(pygame.sprite.Sprite):
         if frames_since_shown > 35:
             font = pygame.font.Font(resource_path(os.path.join("Graphics", "m5x7.ttf")), 40)  # Upload the m5x7 font by Daniel Linssen
 
-            """ Display what is intended to be displayed """
+            """ Display what is intended to be displayed:
+                Render one new line each frame so that each line "pops up" like how they do in a typical RPG. """
             top_left = [CENTER_X - (self.final_size[0] / 2) + 100,
                         CENTER_Y - (self.final_size[1] / 2) + 375]  # coordinates of the top left corner of the first line of text
-            for line in self.lines:
-                text = font.render(line, True, (255, 255, 255, 255))
+
+            for i in range(0, self.current_line):
+                text = font.render(self.lines[i], True, (255, 255, 255, 255))
                 screen.blit(text, dest = top_left)
                 top_left[1] += 40   # the next line of text will be under the previous line of text
+                if frames_since_shown % 20 == 0:   # a new line appears every 20 frames
+                    if self.current_line < len(self.lines):
+                        # Keep incrementing until self.current_line renders the last line in self.lines
+                        self.current_line += 1
 
             close_text = font.render("Press Z to continue.", True, (255, 255, 255, 255))  # Textbox Call-To-Action
             screen.blit(close_text, dest = (CENTER_X + 320, CENTER_Y + 290))
