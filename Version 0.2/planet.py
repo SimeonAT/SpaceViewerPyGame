@@ -6,6 +6,10 @@ from text_box import TextBox
 from setup import resource_path
 from spritesheet import get_frames
 
+# Coordinates for the center of the screen
+CENTER_X = int(SCREEN_WIDTH / 2)
+CENTER_Y = int(SCREEN_HEIGHT / 2)
+
 class Planet(pygame.sprite.Sprite):
     """ Planet object in Space Viewer video game.
         Some spaces in the grid will have a planet, while other will not.  """
