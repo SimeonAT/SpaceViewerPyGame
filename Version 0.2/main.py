@@ -87,15 +87,16 @@ while quit == False:
                                    https://stackoverflow.com/questions/7053971/python-trouble-using-escape-key-to-exit """
         if event.type == pygame.KEYDOWN:
             previous_current_pos = current_pos[:]  # the previous position of the player
-            if (event.key == pygame.K_LEFT) or (event.key == pygame.K_a):  # move left
+            if (event.key == pygame.K_LEFT):  # move left
                 current_pos[0] -= 1
-            elif (event.key == pygame.K_RIGHT) or (event.key == pygame.K_d): # move right
+            elif (event.key == pygame.K_RIGHT): # move right
                 current_pos[0] += 1
-            elif (event.key == pygame.K_UP) or (event.key == pygame.K_w):  # move up
+            elif (event.key == pygame.K_UP):  # move up
                 current_pos[1] += 1
-            elif (event.key == pygame.K_DOWN) or (event.key == pygame.K_s):  # move down
+            elif (event.key == pygame.K_DOWN):  # move down
                 current_pos[1] -= 1
-            elif (event.key == pygame.K_z):
+
+            if (event.key == pygame.K_z):
                 # if z is pressed, show the next textbox
                 textbox_index += 1
 

@@ -9,7 +9,7 @@
 import pygame
 import os
 from random import randint
-from text_box import TextBox
+from text_box import TextBox, Extension_TextBox, Choice_TextBox
 from setup import resource_path
 from spritesheet import get_frames
 
@@ -151,9 +151,9 @@ class Spaceship(pygame.sprite.Sprite):
 
         self.text_boxes.append(TextBox((1350, 400), lines = self.description))   # Add desc textbox to the list
                                                                                  # # 3X is the size of the original text box sprite
-        self.text_boxes.append(TextBox((1350, 400), lines = ["Do you want to fight this spaceship?",   # Add the 'choice/prompt' textbox to list
-                                                             " ",
-                                                             "Y for YES                     N for NO"]))
+        # Add the 'choice/prompt' textbox to list
+        self.text_boxes.append(Choice_TextBox((1350, 400), lines = ["Do you want to fight this spaceship?",
+                                                             " "]))
         """ A list containing how many frames has each textbox been shown on the screen. """
         self.textbox_frames_since_shown = [0] * len(self.text_boxes)
 
@@ -257,9 +257,8 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         """ A list that will hold the text boxes for the asteroid belt; 
             description textbox is 3X is the size of the original text box sprite """
         self.text_boxes = [TextBox((1350, 400), lines = self.description),
-                           TextBox((1350, 400), lines = ["Do you want to mine this planet?",
-                                                         " ",
-                                                         "Y for YES                     N for NO"])]
+                           Choice_TextBox((1350, 400), lines = ["Do you want to mine this planet?",
+                                                         " "])]
 
         """ A list containing how many frames has each textbox been shown on the screen. """
         self.textbox_frames_since_shown = [0] * len(self.text_boxes)
