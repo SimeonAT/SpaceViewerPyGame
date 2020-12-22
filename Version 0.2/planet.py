@@ -183,7 +183,9 @@ class Planet(pygame.sprite.Sprite):
         """ A list that will hold the text boxes for the planets; 
                     description textbox is 3X is the size of the original text box sprite """
         self.text_boxes = [TextBox((1350, 400), lines = self.description)]  # 3X is the size of the original text box sprite
-        self.current_textbox = 0    # index determines which textbox to draw in self.text_boxes
+
+        """ A list containing how many frames has each textbox been shown on the screen. """
+        self.textbox_frames_since_shown = [0] * len(self.text_boxes)
 
     """ Draws the planet sprite """
     def draw(self, screen):
@@ -204,5 +206,13 @@ class Planet(pygame.sprite.Sprite):
             screen.blit(self.image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))  # display image at center of screen
 
     """ Draws the textbox """
-    def draw_textbox(self, screen):
-       self.text_boxes[self.current_textbox].draw(screen, self.frames_since_shown)
+    def draw_textbox(self, screen, index):
+        """ - index will hold what textbox to draw in text_boxes list. If index is past what is in self.text_boxes,
+                      don't render anything.
+                    - Will return a boolean value: True if there are still text boxes to render, False if there are no
+                      text boxes left to render. This boolean value will be saved in show_textbox in main. """
+        if index > len(self.text_boxes) - 1:
+            return False
+
+        self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index])
+        return True

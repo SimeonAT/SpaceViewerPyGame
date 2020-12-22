@@ -67,7 +67,8 @@ for i in range(0, 100):
 
 """ --- Main Game Loop --- """
 quit = False  # did the player press quit yet?
-show_textbox = True  # should the textbox of the current obj be shown this frame?
+show_textbox = True  # should the text boxes of the current obj be shown this frame?
+textbox_index = 0    # what text box to render in text_boxes list
 
 while quit == False:
     screen.fill((0, 0, 0))  # clear the screen so that the previous frame is not 'saved'
@@ -96,8 +97,7 @@ while quit == False:
                 current_pos[1] -= 1
             elif (event.key == pygame.K_z):
                 # if z is pressed, show the next textbox
-                # if this is the last textbox, the textbox will close 
-                show_textbox = False
+                textbox_index += 1
 
             if previous_current_pos != current_pos:  # so that a random key press can't move the stars
                 star_list.update(screen)  # reset stars and draw them at new positions
@@ -144,7 +144,13 @@ while quit == False:
         if show_textbox == True:
             """ TEMPORARY SOLUTION: Draw the textbox for each object on the grid space """
             for object in grid[current_pos[0] % 10][current_pos[1] % 10]:
-               object.draw_textbox(screen)
+                show_textbox = object.draw_textbox(screen, textbox_index)
+
+                if show_textbox == False:   # if there are no more text boxes to render
+                    textbox_index = 0       # reset index  so that we can render first textbox for next obj
+                else:
+                    # the specific textbox has been shown for += 1 frames already
+                    object.textbox_frames_since_shown[textbox_index] += 1
 
 
     """ --- Update frame rate, Show what's displayed on screen, Play music """

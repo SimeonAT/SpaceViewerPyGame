@@ -66,15 +66,26 @@ class Intestellar_Object(pygame.sprite.Sprite):
         """ A list that will hold the text boxes for the space objects; 
                     description textbox is 3X is the size of the original text box sprite """
         self.text_boxes = [TextBox((1350, 400), lines=self.description)]  # 3X is the size of the original text box sprite
-        self.current_textbox = 0   # index of which text box to render
+        """ A list containing how many frames has each textbox been shown on the screen. """
+        self.textbox_frames_since_shown = [0] * len(self.text_boxes)
 
     """ Draws the space object sprite """
     def draw(self, screen):
         screen.blit(self.image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))  # display image at center of screen
 
     """ Draws the textbox """
-    def draw_textbox(self, screen):
-        self.text_boxes[self.current_textbox].draw(screen, self.frames_since_shown)
+
+    def draw_textbox(self, screen, index):
+        """ - index will hold what textbox to draw in text_boxes list. If index is past what is in self.text_boxes,
+                      don't render anything.
+                    - Will return a boolean value: True if there are still text boxes to render, False if there are no
+                      text boxes left to render. This boolean value will be saved in show_textbox in main. """
+        if index > len(self.text_boxes) - 1:
+            return False
+
+        """ A list containing how many frames has each textbox been shown on the screen. """
+        self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index])
+        return True
 
 
 class Star(pygame.sprite.Sprite):
@@ -128,7 +139,6 @@ class Spaceship(pygame.sprite.Sprite):
         # Set up the text box
         self.text_boxes = []     # a list that will contain all the text boxes for the spaceship
         self.description = None  # the text to display in textbox (set to nothing right now, so we can use rng to determine the desc)
-        self.current_textbox = 0 # the index of text_boxes, to determine which textbox to draw for which frame.
         rng = randint(1, 3)
         if rng == 1:
             self.description = ["A spaceship from an unknown galaxy.", "It looks at your spaceship with curiosity."]
@@ -144,6 +154,8 @@ class Spaceship(pygame.sprite.Sprite):
         self.text_boxes.append(TextBox((1350, 400), lines = ["Do you want to fight this spaceship?",
                                                              " ",
                                                              "Yes or no?"]))     # Add the 'choice/prompt' textbox to list
+        """ A list containing how many frames has each textbox been shown on the screen. """
+        self.textbox_frames_since_shown = [0] * len(self.text_boxes)
 
     """ Update the image to be shown after each frame (so the spaceship can be animated), and draw the spaceship. """
     def draw(self, screen):
@@ -158,8 +170,17 @@ class Spaceship(pygame.sprite.Sprite):
         screen.blit(self.image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))  # display image at center of screen
 
     """ Draws the textbox """
-    def draw_textbox(self, screen):
-        self.text_boxes[self.current_textbox].draw(screen, self.frames_since_shown)
+    def draw_textbox(self, screen, index):
+        """ - index will hold what textbox to draw in text_boxes list. If index is past what is in self.text_boxes,
+              don't render anything.
+            - Will return a boolean value: True if there are still text boxes to render, False if there are no
+              text boxes left to render. This boolean value will be saved in show_textbox in main. """
+        if index > len(self.text_boxes) - 1:
+            return False
+
+        """ A list containing how many frames has each textbox been shown on the screen. """
+        self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index])
+        return True
 
     """ Update the position of the spaceship, which moves to a different space each time the player moves. 
         This will allow us to simulate the 'movement' of spaceships. """
@@ -236,7 +257,9 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         """ A list that will hold the text boxes for the asteroid belt; 
             description textbox is 3X is the size of the original text box sprite """
         self.text_boxes = [TextBox((1350, 400), lines = self.description)]
-        self.current_textbox = 0    # holding index containing current text box to look at
+
+        """ A list containing how many frames has each textbox been shown on the screen. """
+        self.textbox_frames_since_shown = [0] * len(self.text_boxes)
 
     """ Draws the asteroid belt """
     def draw(self, screen):
@@ -244,5 +267,13 @@ class Asteroid_Belt(pygame.sprite.Sprite):
             asteroid.draw(screen)
 
     """ Draws the textbox """
-    def draw_textbox(self, screen):
-        self.text_boxes[self.current_textbox].draw(screen, self.frames_since_shown)
+    def draw_textbox(self, screen, index):
+        """ - index will hold what textbox to draw in text_boxes list. If index is past what is in self.text_boxes,
+                      don't render anything.
+                    - Will return a boolean value: True if there are still text boxes to render, False if there are no
+                      text boxes left to render. This boolean value will be saved in show_textbox in main. """
+        if index > len(self.text_boxes) - 1:
+            return False
+
+        self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index])
+        return True
