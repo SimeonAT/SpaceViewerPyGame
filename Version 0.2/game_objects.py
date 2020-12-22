@@ -63,8 +63,10 @@ class Intestellar_Object(pygame.sprite.Sprite):
         self.image = pygame.image.load(self.img_file_location)  # load up the planet img
         self.image = pygame.transform.scale(self.image, (self.size[0], self.size[1]))  # resize so it is big enough so we can see it
 
-        # Create the text box
-        self.text_box = TextBox((1350, 400), lines=self.description)  # 3X is the size of the original text box sprite
+        """ A list that will hold the text boxes for the space objects; 
+                    description textbox is 3X is the size of the original text box sprite """
+        self.text_boxes = [TextBox((1350, 400), lines=self.description)]  # 3X is the size of the original text box sprite
+        self.current_textbox = 0   # index of which text box to render
 
     """ Draws the space object sprite """
     def draw(self, screen):
@@ -72,7 +74,7 @@ class Intestellar_Object(pygame.sprite.Sprite):
 
     """ Draws the textbox """
     def draw_textbox(self, screen):
-        self.text_box.draw(screen, self.frames_since_shown)
+        self.text_boxes[self.current_textbox].draw(screen, self.frames_since_shown)
 
 
 class Star(pygame.sprite.Sprite):
@@ -124,7 +126,9 @@ class Spaceship(pygame.sprite.Sprite):
         self.image = self.spritesheet[self.frame]  # the image of sprite to show in a given frame
 
         # Set up the text box
+        self.text_boxes = []     # a list that will contain all the text boxes for the spaceship
         self.description = None  # the text to display in textbox (set to nothing right now, so we can use rng to determine the desc)
+        self.current_textbox = 0 # the index of text_boxes, to determine which textbox to draw for which frame.
         rng = randint(1, 3)
         if rng == 1:
             self.description = ["A spaceship from an unknown galaxy.", "It looks at your spaceship with curiosity."]
@@ -135,7 +139,11 @@ class Spaceship(pygame.sprite.Sprite):
         if rng == 3:
             self.description = ["A Metroid themed spaceship.", "That's cool.", "Didn't know those were real."]
 
-        self.text_box = TextBox((1350, 400), lines = self.description)  # 3X is the size of the original text box sprite
+        self.text_boxes.append(TextBox((1350, 400), lines = self.description))   # Add desc textbox to the list
+                                                                                 # # 3X is the size of the original text box sprite
+        self.text_boxes.append(TextBox((1350, 400), lines = ["Do you want to fight this spaceship?",
+                                                             " ",
+                                                             "Yes or no?"]))     # Add the 'choice/prompt' textbox to list
 
     """ Update the image to be shown after each frame (so the spaceship can be animated), and draw the spaceship. """
     def draw(self, screen):
@@ -151,7 +159,7 @@ class Spaceship(pygame.sprite.Sprite):
 
     """ Draws the textbox """
     def draw_textbox(self, screen):
-        self.text_box.draw(screen, self.frames_since_shown)
+        self.text_boxes[self.current_textbox].draw(screen, self.frames_since_shown)
 
     """ Update the position of the spaceship, which moves to a different space each time the player moves. 
         This will allow us to simulate the 'movement' of spaceships. """
@@ -224,7 +232,11 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         self.description = ["A large field of stray, floating asteroids.",
                             "They are composed of debris from dead planets, ",
                             "and are space rocks with tones of gems and minerals. "]
-        self.text_box = TextBox((1350, 400), lines = self.description)  # 3X is the size of the original text box sprite
+
+        """ A list that will hold the text boxes for the asteroid belt; 
+            description textbox is 3X is the size of the original text box sprite """
+        self.text_boxes = [TextBox((1350, 400), lines = self.description)]
+        self.current_textbox = 0    # holding index containing current text box to look at
 
     """ Draws the asteroid belt """
     def draw(self, screen):
@@ -233,4 +245,4 @@ class Asteroid_Belt(pygame.sprite.Sprite):
 
     """ Draws the textbox """
     def draw_textbox(self, screen):
-        self.text_box.draw(screen, self.frames_since_shown)
+        self.text_boxes[self.current_textbox].draw(screen, self.frames_since_shown)

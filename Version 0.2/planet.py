@@ -180,8 +180,10 @@ class Planet(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.image,
                                                 (self.size, self.size))  # resize planet big enough so we can see it
 
-        # Create the text box for the planet
-        self.text_box = TextBox((1350, 400), lines = self.description)  # 3X is the size of the original text box sprite
+        """ A list that will hold the text boxes for the planets; 
+                    description textbox is 3X is the size of the original text box sprite """
+        self.text_boxes = [TextBox((1350, 400), lines = self.description)]  # 3X is the size of the original text box sprite
+        self.current_textbox = 0    # index determines which textbox to draw in self.text_boxes
 
     """ Draws the planet sprite """
     def draw(self, screen):
@@ -203,4 +205,4 @@ class Planet(pygame.sprite.Sprite):
 
     """ Draws the textbox """
     def draw_textbox(self, screen):
-       self.text_box.draw(screen, self.frames_since_shown)
+       self.text_boxes[self.current_textbox].draw(screen, self.frames_since_shown)

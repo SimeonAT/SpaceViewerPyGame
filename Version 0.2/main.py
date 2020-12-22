@@ -94,7 +94,9 @@ while quit == False:
                 current_pos[1] += 1
             elif (event.key == pygame.K_DOWN) or (event.key == pygame.K_s):  # move down
                 current_pos[1] -= 1
-            elif (event.key == pygame.K_z):  # if z is pressed, the textbox will close
+            elif (event.key == pygame.K_z):
+                # if z is pressed, show the next textbox
+                # if this is the last textbox, the textbox will close 
                 show_textbox = False
 
             if previous_current_pos != current_pos:  # so that a random key press can't move the stars
