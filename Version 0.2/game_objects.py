@@ -252,7 +252,7 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         # Textbox objection and descriptions
         self.description = ["A large field of stray, floating asteroids.",
                             "They are composed of debris from dead planets, ",
-                            "and are space rocks with tones of gems and minerals. "]
+                            "and are space rocks with tons of gems and minerals. "]
 
         """ A list that will hold the text boxes for the asteroid belt; 
             description textbox is 3X is the size of the original text box sprite """

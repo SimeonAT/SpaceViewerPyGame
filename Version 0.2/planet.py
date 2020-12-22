@@ -212,7 +212,7 @@ class Planet(pygame.sprite.Sprite):
     def draw_textbox(self, screen, index):
         """ - index will hold what textbox to draw in text_boxes list. If index is past what is in self.text_boxes,
                       don't render anything.
-                    - Will return a boolean value: True if there are still text boxes to render, False if there are no
+            - Will return a boolean value: True if there are still text boxes to render, False if there are no
                       text boxes left to render. This boolean value will be saved in show_textbox in main. """
         if index > len(self.text_boxes) - 1:
             return False
