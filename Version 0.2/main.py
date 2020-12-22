@@ -95,8 +95,7 @@ while quit == False:
                 current_pos[1] += 1
             elif (event.key == pygame.K_DOWN):  # move down
                 current_pos[1] -= 1
-
-            if (event.key == pygame.K_z):
+            elif (event.key == pygame.K_z):
                 # if z is pressed, show the next textbox
                 textbox_index += 1
 
