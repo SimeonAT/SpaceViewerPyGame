@@ -109,6 +109,9 @@ while quit == False:
                     for object in grid[previous_current_pos[0] % 10][previous_current_pos[1] % 10]:
                         object.shown = False
                         object.frames_since_shown = 0  # reset frames since shown
+                        for i in range(0, len(object.textbox_frames_since_shown)):
+                            object.textbox_frames_since_shown[i] = 0   # reset frames since shown for each textbox
+                        textbox_index = 0
 
                 """ Update the position of each spaceship when the user moves a space """
                 for spaceship in list_of_spaceships:

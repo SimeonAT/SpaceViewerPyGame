@@ -183,6 +183,9 @@ class Planet(pygame.sprite.Sprite):
         """ A list that will hold the text boxes for the planets; 
                     description textbox is 3X is the size of the original text box sprite """
         self.text_boxes = [TextBox((1350, 400), lines = self.description)]  # 3X is the size of the original text box sprite
+        self.text_boxes.append(TextBox((1350, 400), lines=["Do you want to enter this planet?",
+                                                           " ",
+                                                           "Y for YES                     N for NO"]))  # Add the 'choice/prompt' textbox to list
 
         """ A list containing how many frames has each textbox been shown on the screen. """
         self.textbox_frames_since_shown = [0] * len(self.text_boxes)
