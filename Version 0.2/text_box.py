@@ -174,9 +174,10 @@ class Choice_TextBox(TextBox):
             self.choices = choices
         self.choice_to_blit = 0  # which text to render; corresponds to index in choices list
 
-    def draw(self, screen, frames_since_shown):
+    def draw(self, screen, frames_since_shown, key_pressed = None):
         """@params -> screen: the screen to draw text box on
-                              frames_since_shown: how many frames has it appeared on screen so far """
+                      frames_since_shown: how many frames has it appeared on screen so far
+                      key_pressed: the key that was pressed by user input; 'None' means no key was pressed  """
         if frames_since_shown <= 10:
             # Reset self.current_line and self.current_letter to give RPG dialogue transition effect
             self.current_line = self.current_letter = 1
@@ -224,14 +225,12 @@ class Choice_TextBox(TextBox):
                     self.current_letter += 1
 
         """ Determine which choice to render """
-        for event in pygame.event.get():
-            if event.type == pygame.KEYDOWN:
-                if (event.key == pygame.K_a):
-                    # If "A" is pressed, move option to YES
-                    self.choice_to_blit -= 1
-                elif (event.key == pygame.K_d):
-                    # if "D" is pressed, move option to NO
-                    self.choice_to_blit += 1
+        if key_pressed == "a":
+            # If "A" is pressed, move option to YES
+            self.choice_to_blit -= 1
+        elif key_pressed == "d":
+            # if "D" is pressed, move option to NO
+            self.choice_to_blit += 1
 
         self.choice_to_blit %= len(self.choices)  # We % it so that the choice_to_blit will always be an index in self.choices
         choice = font.render(self.choices[self.choice_to_blit], True, (255, 255, 255, 255))   # display the choice onto the screen

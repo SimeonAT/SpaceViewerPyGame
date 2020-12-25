@@ -210,13 +210,18 @@ class Planet(pygame.sprite.Sprite):
             screen.blit(self.image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))  # display image at center of screen
 
     """ Draws the textbox """
-    def draw_textbox(self, screen, index):
+    def draw_textbox(self, screen, index, key_pressed = None):
         """ - index will hold what textbox to draw in text_boxes list. If index is past what is in self.text_boxes,
                       don't render anything.
             - Will return a boolean value: True if there are still text boxes to render, False if there are no
-                      text boxes left to render. This boolean value will be saved in show_textbox in main. """
+                      text boxes left to render. This boolean value will be saved in show_textbox in main.
+            - 'key_pressed' will hold the key that was pressed by the user. """
         if index > len(self.text_boxes) - 1:
             return False
 
-        self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index])
+        if key_pressed != None:
+            # If the key was pressed, pass it as a parameter to draw function so textbox will adjust accordingly
+            self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index], key_pressed)
+        else:
+            self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index])
         return True

@@ -69,6 +69,7 @@ for i in range(0, 100):
 quit = False  # did the player press quit yet?
 show_textbox = True  # should the text boxes of the current obj be shown this frame?
 textbox_index = 0    # what text box to render in text_boxes list
+key_pressed = None   # Which WASD was pressed (if any) by the user; "None" means WASD was not pressed; Used for textbox purposes
 
 while quit == False:
     screen.fill((0, 0, 0))  # clear the screen so that the previous frame is not 'saved'
@@ -98,6 +99,10 @@ while quit == False:
             elif (event.key == pygame.K_RETURN):
                 # if ENTER key (aka "Carriage Return") is pressed, show the next textbox
                 textbox_index += 1
+            elif (event.key == pygame.K_a):
+                key_pressed = "a"      # to 'move left' when a textbox is shown
+            elif (event.key == pygame.K_d):
+                key_pressed = "d"      # to 'move right' when a textbox is shown
 
             if previous_current_pos != current_pos:  # so that a random key press can't move the stars
                 star_list.update(screen)  # reset stars and draw them at new positions
@@ -147,7 +152,7 @@ while quit == False:
         if show_textbox == True:
             """ TEMPORARY SOLUTION: Draw the textbox for each object on the grid space """
             for object in grid[current_pos[0] % 10][current_pos[1] % 10]:
-                show_textbox = object.draw_textbox(screen, textbox_index)
+                show_textbox = object.draw_textbox(screen, textbox_index, key_pressed = key_pressed)
 
                 if show_textbox == False:   # if there are no more text boxes to render
                     textbox_index = 0       # reset index  so that we can render first textbox for next obj
@@ -159,6 +164,7 @@ while quit == False:
     """ --- Update frame rate, Show what's displayed on screen, Play music """
     pygame.display.flip()  # show everything that's drawn
     clock.tick(60)  # 60 FPS
+    key_pressed = None      # Reset as no key as been pressed so far
     # sound.play_music(sound.main_loop)  # play main game loop music
 
 pygame.quit()
