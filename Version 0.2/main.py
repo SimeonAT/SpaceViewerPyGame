@@ -69,7 +69,7 @@ for i in range(0, 100):
 quit = False  # did the player press quit yet?
 show_textbox = True  # should the text boxes of the current obj be shown this frame?
 textbox_index = 0    # what text box to render in text_boxes list
-key_pressed = None   # Which WASD was pressed (if any) by the user; "None" means WASD was not pressed; Used for textbox purposes
+key_pressed = None   # IF WASD was pressed (if any) by the user; "None" means WASD was not pressed; Used for textbox purposes
 
 while quit == False:
     screen.fill((0, 0, 0))  # clear the screen so that the previous frame is not 'saved'
@@ -99,6 +99,7 @@ while quit == False:
             elif (event.key == pygame.K_RETURN):
                 # if ENTER key (aka "Carriage Return") is pressed, show the next textbox
                 textbox_index += 1
+                key_pressed = "enter"
             elif (event.key == pygame.K_a):
                 key_pressed = "a"      # to 'move left' when a textbox is shown
             elif (event.key == pygame.K_d):

@@ -43,9 +43,10 @@ class TextBox(pygame.sprite.Sprite):
 
 
     """ Method to display textbox onto screen """
-    def draw(self, screen, frames_since_shown):
+    def draw(self, screen, frames_since_shown, key_pressed = None):
         """@params -> screen: the screen to draw text box on
-                      frames_since_shown: how many frames has it appeared on screen so far """
+                      frames_since_shown: how many frames has it appeared on screen so far
+                       key_pressed: doesn't do anything in this function, but needed as some text boxes use key_pressed """
         """ --- THE TEXT BOX APPEARANCE TRANSITION --- """
         if frames_since_shown <= 30:
             # Reset self.current_line and self.current_letter to give RPG dialogue transition effect
@@ -110,9 +111,10 @@ class Extension_TextBox(TextBox):
     """ This inheritance of textbox is the classes for text boxes that follow after the first textbox, and thus their
         text, but not their textbox, needs to be redrawn. """
 
-    def draw(self, screen, frames_since_shown):
+    def draw(self, screen, frames_since_shown, key_pressed = None):
         """@params -> screen: the screen to draw text box on
-                      frames_since_shown: how many frames has it appeared on screen so far """
+                      frames_since_shown: how many frames has it appeared on screen so far
+                      key_pressed: doesn't do anything in this function, but needed as some text boxes use key_pressed """
         if frames_since_shown <= 10:
             # Reset self.current_line and self.current_letter to give RPG dialogue transition effect
             self.current_line = self.current_letter = 1
@@ -186,18 +188,15 @@ class Choice_TextBox(TextBox):
         # self.image is the original img to transform; self.current_image is the transformed img to be displayed on screen
         self.current_image = pygame.transform.scale(self.image, (self.final_size[0], self.final_size[1]))
         screen.blit(self.current_image, ((CENTER_X - self.final_size[0] / 2),
-                                         (CENTER_Y - self.final_size[
-                                             1] / 2) + 250))  # display image at given coordinates
+                                         (CENTER_Y - self.final_size[1] / 2) + 250))  # display image at given coordinates
 
         # Display text on the textbox
-        font = pygame.font.Font(resource_path(os.path.join("Graphics", "m5x7.ttf")),
-                                40)  # Upload the m5x7 font by Daniel Linssen
+        font = pygame.font.Font(resource_path(os.path.join("Graphics", "m5x7.ttf")), 40)  # Upload the m5x7 font by Daniel Linssen
 
         """ Display what is intended to be displayed:
             Render one new line each frame so that each line "pops up" like how they do in a typical RPG. """
         top_left = [CENTER_X - (self.final_size[0] / 2) + 100,
-                    CENTER_Y - (self.final_size[
-                                    1] / 2) + 375]  # coordinates of the top left corner of the first line of text
+                    CENTER_Y - (self.final_size[1] / 2) + 375]  # coordinates of the top left corner of the first line of text
 
         for i in range(0, self.current_line):
             if i >= len(self.lines):
@@ -206,8 +205,7 @@ class Choice_TextBox(TextBox):
                 break
 
             if i == self.current_line - 1:
-                line_to_render = self.lines[i][
-                                 0:self.current_letter - 1]  # slice string up to where current_letter is "referring to"
+                line_to_render = self.lines[i][0:self.current_letter - 1]  # slice string up to where current_letter is "referring to"
             else:
                 line_to_render = self.lines[i]  # render whole line
 
