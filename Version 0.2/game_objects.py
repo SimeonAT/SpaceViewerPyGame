@@ -269,7 +269,7 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         # This textbox will only display if user entered "YES" in the choice textbox
         self.textbox_result = Extension_TextBox((1350, 400), lines= ["You mined the planet and found...",
                                                                   " ",
-                                                                  "{} gold! ".format(randrange(0, 10000))])
+                                                                  "This line will be replaced by result of random_item function."])
 
         """ A list containing how many frames has each textbox been shown on the screen. """
         self.textbox_frames_since_shown = [0] * len(self.text_boxes)
@@ -280,6 +280,17 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         for asteroid in self.asteroid_belt:
             asteroid.draw(screen)
 
+
+    """ Generates a random item that can be found on asteroid when mining """
+    def random_item(self):
+        found = ["{} bars of sulfurite!".format(randint(0, 1000)),
+                 "{} mythril ores!".format(randint(0, 500)),
+                 "{} gold!".format(randrange(0, 100000))]
+        rng = randint(0, len(found) - 1)
+
+        self.textbox_result.lines[2] = found[rng]
+
+
     """ Draws the textbox """
     def draw_textbox(self, screen, index, key_pressed):
         """ - index will hold what textbox to draw in text_boxes list. If index is past what is in self.text_boxes,
@@ -287,27 +298,29 @@ class Asteroid_Belt(pygame.sprite.Sprite):
             - Will return a boolean value: True if there are still text boxes to render, False if there are no
                       text boxes left to render. This boolean value will be saved in show_textbox in main.
             - 'key_pressed' will hold the key that was pressed by the user. """
+
         if key_pressed == "enter":
             self.choice_result = self.text_boxes[index - 1].draw(screen, self.textbox_frames_since_shown[index - 1], key_pressed)
 
             """ Manages which textbox to print given result of choice textbox """
             if self.choice_result == 0:  # Player entered "YES"
                 # Append "YES" result textbox to list so it can render
-                self.text_boxes.append(self.textbox_result)
-                self.textbox_frames_since_shown.append(0)
+                if self.textbox_result not in self.text_boxes:  # make sure textbox result not in text boxes list
+                                                                # as we don't want to include more than 1 copy of it in the list
+                    self.text_boxes.append(self.textbox_result)
+                    self.textbox_frames_since_shown.append(0)   # add an element to textbox frames list to account for new textbox
+                    self.random_item()                          # determine random thing player will find in asteroid belt 
             elif self.choice_result == 1:  # Player entered "NO"
-                if self.textbox_result in self.text_boxes:
+                if self.textbox_result in self.text_boxes:      # make sure textbox result is in text box list
+                                                                # so that we're not removing something that doesn't exist in list
                     self.text_boxes.remove(self.textbox_result)
-                    self.textbox_frames_since_shown.pop()
+                    self.textbox_frames_since_shown.pop()   # remove element from textbox frames list to remove frames from result textbox
 
         if index > len(self.text_boxes) - 1:
             return False
 
-        """ Manages the Choice Textbox """
-        if (key_pressed == "a") or (key_pressed == "d"):
-            # If 'A' or 'D' was pressed, pass it as a parameter to draw function so textbox will adjust accordingly
-            self.choice_result = self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index], key_pressed)
-        else:
-            self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index])
+        """ Render the textbox
+            NOTE: self.choice_result and key_pressed variables are used only for choice text boxes. """
+        self.choice_result = self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index], key_pressed)
 
         return True
