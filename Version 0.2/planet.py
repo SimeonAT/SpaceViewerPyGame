@@ -1,4 +1,6 @@
-""" This module holds the Planet class and everything related to it. """
+""" This module holds the Planet class and everything related to it.
+    - https://gamedev.stackexchange.com/questions/140609/games-developed-in-python-with-pygame-lags-too-much-how-can-i-improve-the-frame
+        - Recommended me to do convert() or convert_alpha() after loading an imate to improve performance """
 import pygame
 import os
 from random import randint
@@ -174,7 +176,7 @@ class Planet(pygame.sprite.Sprite):
 
         self.img_file_location = resource_path(self.img_file_location)  # set up file location to work with PyInstaller
 
-        self.image = pygame.image.load(self.img_file_location)  # load up the planet img
+        self.image = pygame.image.load(self.img_file_location).convert_alpha()  # load up the planet img
 
         if self.animated == False:  # If not animated, all we need to do is just scale the image
             self.image = pygame.transform.scale(self.image,

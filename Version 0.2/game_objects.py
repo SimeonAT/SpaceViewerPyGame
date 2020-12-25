@@ -60,7 +60,7 @@ class Intestellar_Object(pygame.sprite.Sprite):
                                 "at the edge of space."]
 
         # Load up the sprite img
-        self.image = pygame.image.load(self.img_file_location)  # load up the planet img
+        self.image = pygame.image.load(self.img_file_location).convert_alpha()  # load up the planet img
         self.image = pygame.transform.scale(self.image, (self.size[0], self.size[1]))  # resize so it is big enough so we can see it
 
         """ A list that will hold the text boxes for the space objects; 
@@ -126,8 +126,8 @@ class Spaceship(pygame.sprite.Sprite):
         self.frames_since_shown = 0  # how many frames has the spaceship been displayed on screen
 
         # the images for each frame of the sprite animation
-        self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics", "Spaceships", "spaceship-1.png"))),
-                            pygame.image.load(resource_path(os.path.join("Graphics", "Spaceships", "spaceship-2.png")))]
+        self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics", "Spaceships", "spaceship-1.png"))).convert_alpha(),
+                            pygame.image.load(resource_path(os.path.join("Graphics", "Spaceships", "spaceship-2.png"))).convert_alpha()]
 
         # Resize each image in self.spritesheet to the dimensions of self.size
         for index in range(0, len(self.spritesheet)):
@@ -222,7 +222,7 @@ class Asteroid(pygame.sprite.Sprite):
             self.img_file_location += "Asteroid 4.png"
 
         # Load up the sprite img and resize it by factor of size_multiple
-        self.image = pygame.image.load(self.img_file_location)  # load up the planet img
+        self.image = pygame.image.load(self.img_file_location).convert_alpha()  # load up the planet img
         self.size = self.image.get_rect().size  # Get the size of the sprite
         self.image = pygame.transform.scale(self.image, (self.size[0] * self.size_multiple, self.size[1] * self.size_multiple))
         self.size = [self.size[0] * self.size_multiple, self.size[1] * self.size_multiple]  # Get the new size of the sprite
