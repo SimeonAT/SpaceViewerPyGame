@@ -238,3 +238,6 @@ class Choice_TextBox(TextBox):
 
         close_text = font.render("Press ENTER to continue.", True, (255, 255, 255, 255))  # Textbox Call-To-Action
         screen.blit(close_text, dest=(CENTER_X + 250, CENTER_Y + 290))
+
+        return self.choice_to_blit     # return info on what text box was render by giving text box index in choices list
+                                       # this will allow us to know what the user picked (i.e. if they picked "YES or "NO")
