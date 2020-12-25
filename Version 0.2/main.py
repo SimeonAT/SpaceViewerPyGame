@@ -95,8 +95,8 @@ while quit == False:
                 current_pos[1] += 1
             elif (event.key == pygame.K_DOWN):  # move down
                 current_pos[1] -= 1
-            elif (event.key == pygame.K_z):
-                # if z is pressed, show the next textbox
+            elif (event.key == pygame.K_RETURN):
+                # if ENTER key (aka "Carriage Return") is pressed, show the next textbox
                 textbox_index += 1
 
             if previous_current_pos != current_pos:  # so that a random key press can't move the stars

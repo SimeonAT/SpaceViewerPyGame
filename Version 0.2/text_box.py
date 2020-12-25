@@ -102,8 +102,8 @@ class TextBox(pygame.sprite.Sprite):
                         self.current_letter += 1
 
 
-            close_text = font.render("Press Z to continue.", True, (255, 255, 255, 255))  # Textbox Call-To-Action
-            screen.blit(close_text, dest = (CENTER_X + 320, CENTER_Y + 290))
+            close_text = font.render("Press ENTER to continue.", True, (255, 255, 255, 255))  # Textbox Call-To-Action
+            screen.blit(close_text, dest = (CENTER_X + 250, CENTER_Y + 290))
 
 
 class Extension_TextBox(TextBox):
@@ -155,17 +155,23 @@ class Extension_TextBox(TextBox):
                     self.current_letter += 1
 
 
-        close_text = font.render("Press Z to continue.", True, (255, 255, 255, 255))  # Textbox Call-To-Action
-        screen.blit(close_text, dest = (CENTER_X + 320, CENTER_Y + 290))
+        close_text = font.render("Press ENTER to continue.", True, (255, 255, 255, 255))  # Textbox Call-To-Action
+        screen.blit(close_text, dest = (CENTER_X + 250, CENTER_Y + 290))
 
 
 class Choice_TextBox(TextBox):
     """ This type of textbox allows the user to make YES/NO choices using the WASD keys. """
 
-    def __init__(self, size = (452, 93), lines = []):
+    def __init__(self, size = (452, 93), lines = [], choices = None):
+        """ @paramaters: 'choices' -> a list that contains all of the possible strings that the user will see when
+                                      using WASD or Arrow Keys to select options. """
         super().__init__(size, lines)   # do everything in the regular TextBox constructor first
 
-        self.choices = [">YES                     NO", "YES                     >NO"]    # The possible choices of the textbox
+        if choices == None:
+            # If none, use default choices
+            self.choices = [">YES                     NO", "YES                     >NO"]    # The possible choices of the textbox
+        else:
+            self.choices = choices
         self.choice_to_blit = 0  # which text to render; corresponds to index in choices list
 
     def draw(self, screen, frames_since_shown):
@@ -231,5 +237,5 @@ class Choice_TextBox(TextBox):
         choice = font.render(self.choices[self.choice_to_blit], True, (255, 255, 255, 255))   # display the choice onto the screen
         screen.blit(choice, dest = top_left)
 
-        close_text = font.render("Press Z to continue.", True, (255, 255, 255, 255))  # Textbox Call-To-Action
-        screen.blit(close_text, dest=(CENTER_X + 320, CENTER_Y + 290))
+        close_text = font.render("Press ENTER to continue.", True, (255, 255, 255, 255))  # Textbox Call-To-Action
+        screen.blit(close_text, dest=(CENTER_X + 250, CENTER_Y + 290))
