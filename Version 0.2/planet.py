@@ -187,6 +187,7 @@ class Planet(pygame.sprite.Sprite):
         self.text_boxes = [TextBox((1350, 400), lines = self.description)]  # 3X is the size of the original text box sprite
         self.text_boxes.append(Choice_TextBox((1350, 400), lines=["Do you want to enter this planet?",
                                                            " "]))  # Add the 'choice/prompt' textbox to list
+        self.textbox_result = Extension_TextBox((1350, 400), lines = ["Entering Planet..."])
 
         """ A list containing how many frames has each textbox been shown on the screen. """
         self.textbox_frames_since_shown = [0] * len(self.text_boxes)
@@ -216,12 +217,34 @@ class Planet(pygame.sprite.Sprite):
             - Will return a boolean value: True if there are still text boxes to render, False if there are no
                       text boxes left to render. This boolean value will be saved in show_textbox in main.
             - 'key_pressed' will hold the key that was pressed by the user. """
-        if index > len(self.text_boxes) - 1:
-            return False
 
-        if key_pressed != None:
-            # If the key was pressed, pass it as a parameter to draw function so textbox will adjust accordingly
-            self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index], key_pressed)
-        else:
-            self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index])
-        return True
+        if key_pressed == "enter":
+            # When enter is pressed, main.py immediately increments index by 1; so in order to display the choice textbox
+            # we need to use index - 1
+            self.choice_result = self.text_boxes[index - 1].draw(screen, self.textbox_frames_since_shown[index - 1], key_pressed)
+
+            """ Manages which textbox to print given result of choice textbox """
+            if self.choice_result == 0:  # Player entered "YES"
+                # Append "YES" result textbox to list so it can render
+                if self.textbox_result not in self.text_boxes:  # make sure textbox result not in text boxes list
+                                                                # as we don't want to include more than 1 copy of it in the list
+                    self.text_boxes.append(self.textbox_result)
+                    self.textbox_frames_since_shown.append(0)   # add an element to textbox frames list to account for new textbox
+            elif self.choice_result == 1:  # Player entered "NO"
+                if self.textbox_result in self.text_boxes:      # make sure textbox result is in text box list
+                                                                # so that we're not removing something that doesn't exist in list
+                    self.text_boxes.remove(self.textbox_result)
+                    self.textbox_frames_since_shown.pop()   # remove element from textbox frames list to remove frames from result textbox
+
+        if index > len(self.text_boxes) - 1:
+            # Remove textbox result so that we can reset the result of the choices that the player made
+            if self.textbox_result in self.text_boxes:
+                self.text_boxes.remove(self.textbox_result)
+                self.textbox_frames_since_shown.pop()
+            return False    # False means there are no more text boxes to show
+
+        """ Render the textbox
+            NOTE: self.choice_result and key_pressed variables are used only for choice text boxes. """
+        self.choice_result = self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index], key_pressed)
+
+        return True    # True means that there are still more text boxes to show
