@@ -264,10 +264,10 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         """ A list that will hold the text boxes for the asteroid belt; 
             description textbox is 3X is the size of the original text box sprite """
         self.text_boxes = [TextBox((1350, 400), lines = self.description),
-                           Choice_TextBox((1350, 400), lines = ["Do you want to mine this planet?", " "])]
+                           Choice_TextBox((1350, 400), lines = ["Do you want to mine this asteroid belt?", " "])]
 
         # This textbox will only display if user entered "YES" in the choice textbox
-        self.textbox_result = Extension_TextBox((1350, 400), lines= ["You mined the planet and found...",
+        self.textbox_result = Extension_TextBox((1350, 400), lines= ["You mined this asteroid belt and found...",
                                                                   " ",
                                                                   "This line will be replaced by result of random_item function."])
 
