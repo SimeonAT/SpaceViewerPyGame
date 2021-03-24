@@ -215,7 +215,7 @@ class Spaceship(pygame.sprite.Sprite):
 
         return True    # True means that there are still more text boxes to show
 
-    """ Update the position of the spaceship, which moves to a different space each time the player moves. 
+    """ Update the position of the spaceship, which moves to a different space each time the player moves.
         This will allow us to simulate the 'movement' of spaceships. """
     def update(self):
         # The new coordinates of the Spaceship
@@ -287,7 +287,7 @@ class Asteroid_Belt(pygame.sprite.Sprite):
                             "They are composed of debris from dead planets, ",
                             "and are space rocks with tons of gems and minerals. "]
 
-        """ A list that will hold the text boxes for the asteroid belt; 
+        """ A list that will hold the text boxes for the asteroid belt;
             description textbox is 3X is the size of the original text box sprite """
         self.text_boxes = [TextBox((1350, 400), lines = self.description),
                            Choice_TextBox((1350, 400), lines = ["Do you want to mine this asteroid belt?", " "])]

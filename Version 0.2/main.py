@@ -25,16 +25,16 @@ clock = pygame.time.Clock()  # FPS of game
 list_of_spaceships = []  # contains all spaceships in game, so we can update their locations each frame quickly and easily
 
 """ Create the 'game board': a 20 x 20 grid where each space in the grid contains an object (a planet, a space station, 
-    an enemy spaceship, a black hole, etc). 
+    an enemy spaceship, a black hole, etc).
     Got some help here: https://www.geeksforgeeks.org/python-using-2d-arrays-lists-the-right-way/ """
 grid = [[None for i in range(GRID_SIZE[0])] for j in range(GRID_SIZE[1])]  # None means no objects in that space -> just the beautiful view of outer space
 for row in range(0, GRID_SIZE[0]):
     for column in range(0, GRID_SIZE[1]):
-        """ Decide what to place in the grid: 
-            0 -> nothing 
-            1 -> a planet 
-            2 -> a spaceship 
-            3 -> interstellar object 
+        """ Decide what to place in the grid:
+            0 -> nothing
+            1 -> a planet
+            2 -> a spaceship
+            3 -> interstellar object
             4 -> asteroid belt """
         rng = randint(0, 4)
 
@@ -121,8 +121,8 @@ while quit == False:
 
                 """ Update the position of each spaceship when the user moves a space """
                 for spaceship in list_of_spaceships:
-                    """ 1. Remove the spaceship from its original location on the grid 
-                        2. Update the position of the spaceship 
+                    """ 1. Remove the spaceship from its original location on the grid
+                        2. Update the position of the spaceship
                         3. Check if new position overlaps with another game object; if so repeat steps 1-3 until it doesn't overlap 
                         4. Add the spaceship to the list of the new location on the grid """
                     """ ------- """
