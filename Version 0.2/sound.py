@@ -11,7 +11,7 @@ def fill_music_lists(file_location, music_list):
                  music_list -> list to put file locations in """
     for filename in os.listdir(file_location):
         if filename.endswith(".wav"):
-            music_list.append(file_location + filename)
+            music_list.append(file_location + "/" +  filename)
 
     # Make each file location in music_list compatible with PyInstaller
     for song in music_list:

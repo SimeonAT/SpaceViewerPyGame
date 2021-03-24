@@ -166,6 +166,6 @@ while quit == False:
     pygame.display.flip()  # show everything that's drawn
     clock.tick(60)  # 60 FPS
     key_pressed = None      # Reset as no key as been pressed so far
-    # sound.play_music(sound.main_loop)  # play main game loop music
+    sound.play_music(sound.main_loop)  # play main game loop music
 
 pygame.quit()
