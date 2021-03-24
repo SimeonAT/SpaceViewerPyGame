@@ -6,6 +6,7 @@
     - https://stackoverflow.com/questions/14044147/animated-sprite-from-few-images
     - https://stackoverflow.com/questions/19715251/pygame-getting-the-size-of-a-loaded-image/19715931
     - https://stackoverflow.com/questions/6239769/how-can-i-crop-an-image-with-pygame """
+
 import pygame
 import os
 from random import randint, randrange
@@ -242,7 +243,7 @@ class Asteroid(pygame.sprite.Sprite):
         self.frames_since_shown = 0  # how many frames has the asteroid been displayed on screen
 
         """ Load up which sprite graphic to use """
-        self.img_file_location = os.path.join("Graphics", "Space Objects") + "\\"
+        self.img_file_location = os.path.join("Graphics", "Space Objects") + "/"
         rng = randint(1, 4)
         if rng == 1:
             self.img_file_location += "Asteroid 1.png"

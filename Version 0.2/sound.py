@@ -19,7 +19,7 @@ def fill_music_lists(file_location, music_list):
 
 # Organize game music by function (main loop music, battle music, etc):
 main_loop = []
-fill_music_lists(os.path.join("Music") + "\\", main_loop)
+fill_music_lists(os.path.join("Music"), main_loop)
 
 
 def initialize_music():

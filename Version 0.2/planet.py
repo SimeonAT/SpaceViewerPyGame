@@ -1,6 +1,7 @@
 """ This module holds the Planet class and everything related to it.
     - https://gamedev.stackexchange.com/questions/140609/games-developed-in-python-with-pygame-lags-too-much-how-can-i-improve-the-frame
         - Recommended me to do convert() or convert_alpha() after loading an imate to improve performance """
+
 import pygame
 import os
 from random import randint
@@ -38,7 +39,7 @@ class Planet(pygame.sprite.Sprite):
         self.animated = False  # Will sprite be animated (Not animated by default)
 
         # the file location for the image of the planet
-        self.img_file_location = os.path.join("Graphics", "Space Objects") + "\\"
+        self.img_file_location = os.path.join("Graphics", "Space Objects") + "/"
 
         # Use RNG to decide what type of Planet instance should be
         rng = randint(1, 12)
@@ -182,7 +183,7 @@ class Planet(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.image,
                                                 (self.size, self.size))  # resize planet big enough so we can see it
 
-        """ A list that will hold the text boxes for the planets; 
+        """ A list that will hold the text boxes for the planets;
                     description textbox is 3X is the size of the original text box sprite """
         self.text_boxes = [TextBox((1350, 400), lines = self.description)]  # 3X is the size of the original text box sprite
         self.text_boxes.append(Choice_TextBox((1350, 400), lines=["Do you want to enter this planet?",
