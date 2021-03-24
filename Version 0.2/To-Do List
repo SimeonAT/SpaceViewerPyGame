@@ -1,6 +1,7 @@
 
 PHASE 0: PREPARATIONS
 - Add all sprites you want to add into game
+- MAKE CODE PORTABLE! Make sure code doesn't get into any errors regardless if it's being run on Unix or Windows.
 
 PHASE 1: THE SIMULATION ELEMENTS
 - Spend some time learning the basics of Simpy and
