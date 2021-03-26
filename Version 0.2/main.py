@@ -142,7 +142,6 @@ while not quit:
 
                         textbox_index = 0
 
-                # Update the position of each spaceship when the user moves a space
                 for spaceship in list_of_spaceships:
                     """
                     1. Remove the spaceship from its original location on the grid
