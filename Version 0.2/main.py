@@ -64,7 +64,7 @@ for row in range(0, GRID_SIZE[0]):
 
 """
 Generate a list of 100 Star objects. These same stars will change color and position each time user
-moves to a different pos so we don't have to keep creating new stars for each space player goes to. 
+moves to a different pos so we don't have to keep creating new stars for each space player goes to.
 This will save runtime and memory.
 """
 star_list = pygame.sprite.Group()
@@ -149,9 +149,9 @@ while not quit:
                     2. Update the position of the spaceship
                     3. Check if new position overlaps with another game object;
                        if so repeat steps 1-3 until it doesn't overlap
-                    4. Add the spaceship to the list of the new location on the grid 
+                    4. Add the spaceship to the list of the new location on the grid
                     """
-                    # does new pos overlap with another game obj 
+                    # does new pos overlap with another game obj
                     not_overlap = False
                     while not not_overlap:
                         # remove spaceship from old position
@@ -171,9 +171,9 @@ while not quit:
     if grid[current_pos[0] % 10][current_pos[1] % 10]:
         # draw objects that are on tile if there is object to be drawn
         for object in grid[current_pos[0] % 10][current_pos[1] % 10]:
-            object.shown = True   # the obj is being shown on screen right now
+            object.shown = True
             object.frames_since_shown += 1
-            object.draw(screen)  # draw the object sprite
+            object.draw(screen)
 
         # display the text box, but 'close' (don't display)
         # textbox if player pressed 'z' (show_textbox == false)
@@ -184,7 +184,7 @@ while not quit:
 
                 if not show_textbox:
                     # if no more textboxes to render,
-                    # reset index  so that we can render first textbox for next obj
+                    # reset index so that we can render first textbox for next obj
                     textbox_index = 0
                 else:
                     # the specific textbox has been shown for += 1 frames already
