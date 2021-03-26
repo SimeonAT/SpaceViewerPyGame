@@ -35,7 +35,8 @@ def get_frames(rows, frames_per_row, frame_width, frame_height, hanging_frames=N
             # Get ready for next sprite
             x += frame_width
 
-            # If on last row and there are hanging frames, break once we got all the hanging frames
+            # We break if we're on last row and there are hanging frames to avoid 
+            # creating any empty frames
             if hanging_frames is not None and i == rows:
                 if j >= hanging_frames:
                     break
