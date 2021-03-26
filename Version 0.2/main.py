@@ -187,10 +187,8 @@ while not quit:
                     # reset index so that we can render first textbox for next obj
                     textbox_index = 0
                 else:
-                    # the specific textbox has been shown for += 1 frames already
                     object.textbox_frames_since_shown[textbox_index] += 1
 
-    # Update frame rate, show what's displayed on screen, play music
     pygame.display.flip()
     clock.tick(60)  # 60 FPS
     key_pressed = None
