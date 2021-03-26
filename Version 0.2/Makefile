@@ -1,5 +1,5 @@
 # Makefiles aren't needed for Python program, but using make commands
-# makes running the video games and formatting code easier.
+# makes running the video game and formatting code easier.
 
 all: game
 
