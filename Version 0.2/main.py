@@ -1,8 +1,4 @@
 from os import environ
-# TURNS OFF 'WELCOME TO PYGAME MESSAGE'
-# Got some help here: https://stackoverflow.com/questions/54246668/how-do-i-delete-the-hello-from-the-pygame-community-console-alert-while-using/54246669
-environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
-
 import pygame
 import sound
 from random import randint
@@ -10,24 +6,30 @@ from game_objects import Star, Spaceship, Intestellar_Object, Asteroid_Belt
 from planet import Planet
 from setup import resource_path
 
-pygame.init()  # initialize Pygame library
-sound.initialize_music()  # initialize Pygame music via music module
+# TURNS OFF 'WELCOME TO PYGAME MESSAGE'
+# Got some help here: https://stackoverflow.com/questions/54246668/how-do-i-delete-the-hello
+#                     -from-the-pygame-community-console-alert-while-using/54246669
+environ['PYGAME_HIDE_SUPPORT_PROMPT'] = '1'
 
-# Dimensions of the screen
-DIMENSIONS = [1280, 720]  # [WIDTH, HEIGHT]
-GRID_SIZE = [10, 10]   # The dimensions of the grid space
+pygame.init()
+sound.initialize_music()
 
-""" Set up the usual basics: """
+DIMENSIONS = [1280, 720]
+GRID_SIZE = [10, 10]
+
 screen = pygame.display.set_mode(DIMENSIONS)
 pygame.display.set_caption("A Randomly Generated Space Game")
 clock = pygame.time.Clock()  # FPS of game
 
-list_of_spaceships = []  # contains all spaceships in game, so we can update their locations each frame quickly and easily
+list_of_spaceships = []
 
-""" Create the 'game board': a 20 x 20 grid where each space in the grid contains an object (a planet, a space station, 
-    an enemy spaceship, a black hole, etc).
-    Got some help here: https://www.geeksforgeeks.org/python-using-2d-arrays-lists-the-right-way/ """
-grid = [[None for i in range(GRID_SIZE[0])] for j in range(GRID_SIZE[1])]  # None means no objects in that space -> just the beautiful view of outer space
+"""
+Create the 'game board': a 20 x 20 grid where each space in the grid contains an object
+(planet,space station, enemy spaceship, black hole, etc).
+Got some help here: https://www.geeksforgeeks.org/python-using-2d-arrays-lists-the-right-way/
+"""
+grid = [[None for i in range(GRID_SIZE[0])] for j in range(GRID_SIZE[1])]
+
 for row in range(0, GRID_SIZE[0]):
     for column in range(0, GRID_SIZE[1]):
         """ Decide what to place in the grid:
