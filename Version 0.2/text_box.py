@@ -1,16 +1,17 @@
-""" Manages the functionality of dialogue and text boxes for the video game.
-    USEFUL RESOURCES:
-        - https://stackoverflow.com/questions/328061/how-to-make-a-surface-with-a-transparent-background-in-pygame
-        - https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame """
+"""
+Manages the functionality of dialogue and text boxes for the video game.
+USEFUL RESOURCES:
+- https://stackoverflow.com/questions/328061
+  /how-to-make-a-surface-with-a-transparent-background-in-pygame
+- https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
+"""
 import pygame
 import os
 from setup import resource_path
 
-# Dimensions of game for module to refer to:
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
-# Coordinates for the center of the screen
 CENTER_X = int(SCREEN_WIDTH / 2)
 CENTER_Y = int(SCREEN_HEIGHT / 2)
 
@@ -18,10 +19,12 @@ CENTER_Y = int(SCREEN_HEIGHT / 2)
 class TextBox(pygame.sprite.Sprite):
     """ Class template for text and dialogue boxes. """
 
-    def __init__(self, size = (452, 93), lines = []):
-        """ @params: size -> tuple containing dimensions of the text box
-                     lines -> a list of strings; each element is a line to display on the textbox
-            NOTE: The original size of the text box is 452 x 93. """
+    def __init__(self, size=(452, 93), lines=[]):
+        """
+        size -> tuple containing dimensions of the text box
+        lines -> a list of strings; each element is a line to display on the textbox
+        NOTE: The original size of the text box is 452 x 93.
+        """
         super().__init__()
         self.final_size = size  # the actual size of text box
         self.current_size = [0, 0]  # the size of the tex box on screen (0 x 0 so that text box can 'transition' by enlarging itself)
