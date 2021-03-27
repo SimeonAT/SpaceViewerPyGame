@@ -26,23 +26,31 @@ class TextBox(pygame.sprite.Sprite):
         NOTE: The original size of the text box is 452 x 93.
         """
         super().__init__()
-        self.final_size = size  # the actual size of text box
-        self.current_size = [0, 0]  # the size of the tex box on screen (0 x 0 so that text box can 'transition' by enlarging itself)
+
+        # the "actual" dimensions of the textbox
+        self.final_size = size
+
+        # the dimensions of the textbox as it is shown on the screen;
+        # the dimensions become bigger each frame to give a "transition effect"
+        self.current_size = [0, 0]
         self.lines = lines
 
         # These variables are needed to give the RPG dialogue text "pop up" effect
         self.total_lines = len(self.lines)
-        self.current_line = 1               # which new line to render up to for a given frame; always starts at first line
-        self.current_letter = 1             # which letter to render up to for a given frame; always starts at first letter of first line
+
+        # the line and letter to render in a given frame; always starts at first line/letter
+        self.current_line = 1
+        self.current_letter = 1
 
         # set up the text box sprite/image
         self.file_loc = resource_path(os.path.join("Graphics", "text_box.png"))
-        self.image = pygame.image.load(self.file_loc).convert()  # load up text box sprite from file location
-        self.image.set_colorkey((0, 0, 0))  # make img transparent to black
+        self.image = pygame.image.load(self.file_loc).convert()
 
-        # The coordinates for the top left corner of the textbox
-        self.top_left = ( (CENTER_X - self.final_size[0] / 2),
-                                  (CENTER_Y -  self.final_size[1] / 2) + 250 )
+        # make img transparent to black
+        self.image.set_colorkey((0, 0, 0))
+
+        self.top_left = ((CENTER_X - self.final_size[0] / 2),
+                         (CENTER_Y - self.final_size[1] / 2) + 250)
 
 
     """ Method to display textbox onto screen """
