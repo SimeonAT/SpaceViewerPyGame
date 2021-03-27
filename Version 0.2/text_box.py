@@ -127,7 +127,8 @@ class TextBox(pygame.sprite.Sprite):
                         # reset self.current_letter so that we can print first letter of next line
                         self.current_letter = 1
                     else:
-                        # if not finished printing out whole line, get ready to print next letter in next frame
+                        # if not finished printing out whole line,
+                        # get ready to print next letter in next frame
                         self.current_letter += 1
 
             close_text = font.render("Press ENTER to continue.", True, (255, 255, 255, 255))
