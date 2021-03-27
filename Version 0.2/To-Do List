@@ -1,29 +1,6 @@
-
-PHASE 0: PREPARATIONS
-- Add all sprites you want to add into game
-- MAKE CODE PORTABLE! Make sure code doesn't get into any errors regardless if it's being run on Unix or Windows.
-
-PHASE 1: THE SIMULATION ELEMENTS
-- Spend some time learning the basics of Simpy and
-  see if it can help you make the simulation for the game
-- Each planet and space object has an individual state/status:
-    - Containing advanced civilizations
-        - Small spaceship sprites fly around planet if planet has this state
-    - No life / Has life
-    - Inhabitable / Uninhabitable
-    - Destroyed
-        - No planet sprite; just asteroid rocks flying around where planet was
-  that changes over time
-- Advanced civilizations from other planets interact with each other
-  - Ships fly to and from each other
-  - Ships fight each other in wars
-- Random and multiple descriptions and information for each space object
-
-PHASE 2: TURN BASED VIDEO GAME ELEMENTS
-- Add basic interactivity to space objects
-  - You can enter a black hole, which will teleport you to a random galaxy
-  - MULTIPLE TEXT BOXES
-    - Basic space objects interactions: "talk" / "interact" feature for each object
-- TURNED BASED BATTLES
-  - [To Be Determined]
+- Format code so that it's easy to read and edit.
+	- Remove all unnecessary comments. 
+	- Remove instances where you use "magic numbers".
+- MAKE CODE PORTABLE! In other words, make sure code can run without any errors 
+  regardless if it's being run on Linux, Windows, or Mac. 
 
