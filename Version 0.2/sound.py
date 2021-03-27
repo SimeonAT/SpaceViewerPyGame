@@ -32,11 +32,9 @@ def initialize_music():
 
 def play_music(music_list):
     """
-    Cycles through each song and loops back to playing each one after playing all of them.
+    Plays a random song.
     Got help here: https://stackoverflow.com/questions/7746263/how-can-i-play-an-mp3-with-pygame
     """
-
-    # if a song is not playing, play a random song
     if not pygame.mixer.music.get_busy():
         random_num = randint(0, len(music_list) - 1)
         pygame.mixer.music.load(resource_path(music_list[random_num]))
