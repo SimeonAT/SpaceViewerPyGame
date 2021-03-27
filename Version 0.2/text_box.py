@@ -51,13 +51,18 @@ class TextBox(pygame.sprite.Sprite):
 
         self.top_left = ((CENTER_X - self.final_size[0] / 2),
                          (CENTER_Y - self.final_size[1] / 2) + 250)
+        return
 
 
-    """ Method to display textbox onto screen """
     def draw(self, screen, frames_since_shown, key_pressed = None):
-        """@params -> screen: the screen to draw text box on
-                      frames_since_shown: how many frames has it appeared on screen so far
-                       key_pressed: doesn't do anything in this function, but needed as some text boxes use key_pressed """
+        """
+        Displays the textbox onto the screen.
+
+        screen: the screen to draw text box on
+        frames_since_shown: how many frames has it appeared on screen so far
+        key_pressed: doesn't do anything in this function, but needed as some text boxes use key_pressed 
+        """
+        
         """ --- THE TEXT BOX APPEARANCE TRANSITION --- """
         if frames_since_shown <= 30:
             # Reset self.current_line and self.current_letter to give RPG dialogue transition effect
