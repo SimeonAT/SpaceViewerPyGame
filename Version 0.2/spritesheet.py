@@ -1,10 +1,3 @@
-"""
-Contains a function that converts a spritesheet into a list of
-individual sprite frames.
-- https://stackoverflow.com/questions/6239769/how-can-i-crop-an-image-with-pygame
-- https://stackoverflow.com/questions/36653519
-  /how-do-i-get-the-size-width-x-height-of-my-pygame-window
-"""
 
 
 def get_frames(rows, frames_per_row, frame_width, frame_height, hanging_frames=None):
@@ -17,11 +10,17 @@ def get_frames(rows, frames_per_row, frame_width, frame_height, hanging_frames=N
     frame_width, frame_height -> the dimensions of each frame in the spritesheet
     hanging_frames -> contains how many frames are in last row when last row < frames_per_row;
                       'None' means that last row has frames_per_row frames
+
+    Resources Used:
+    - https://stackoverflow.com/questions/6239769/how-can-i-crop-an-image-with-pygame
+    - https://stackoverflow.com/questions/36653519
+      /how-do-i-get-the-size-width-x-height-of-my-pygame-window
     """
     frames = []
     num_frames = 0
 
-    # The coordinates of top left corner of each frame; starts with top left corner of first frame
+    # The coordinates of top left corner of each frame;
+    # starts with top left corner of first frame
     x = 0
     y = 0
 
