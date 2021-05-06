@@ -4,7 +4,6 @@ import sound
 from random import randint
 from game_objects import Star, Spaceship, Intestellar_Object, Asteroid_Belt
 from planet import Planet
-from setup import resource_path
 
 # TURNS OFF 'WELCOME TO PYGAME MESSAGE'
 # Got some help here: https://stackoverflow.com/questions/54246668/how-do-i-delete-the-hello
