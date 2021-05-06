@@ -208,19 +208,23 @@ class Extension_TextBox(TextBox):
 
 
 class Choice_TextBox(TextBox):
-    """ This type of textbox allows the user to make YES/NO choices using the WASD keys. """
+    """
+    A textbox child class that has the functionality to allow the user to make YES/NO choices
+    using the WASD keys.
+    """
 
-    def __init__(self, size = (452, 93), lines = [], choices = None):
-        """ @paramaters: 'choices' -> a list that contains all of the possible strings that the user will see when
-                                      using WASD or Arrow Keys to select options. """
-        super().__init__(size, lines)   # do everything in the regular TextBox constructor first
+    def __init__(self, size=(452, 93), lines=[], choices=None):
+        """ choices: a list that contains all of the possible strings that the user will see when
+                     using WASD or Arrow Keys to select options.
+        """
+        super().__init__(size, lines)
 
-        if choices == None:
+        if choices is None:
             # If none, use default choices
-            self.choices = [">YES                     NO", "YES                     >NO"]    # The possible choices of the textbox
+            self.choices = [">YES                     NO", "YES                     >NO"]
         else:
             self.choices = choices
-        self.choice_to_blit = 0  # which text to render; corresponds to index in choices list
+        self.choice_to_blit = 0
 
     def draw(self, screen, frames_since_shown, key_pressed = None):
         """@params -> screen: the screen to draw text box on
