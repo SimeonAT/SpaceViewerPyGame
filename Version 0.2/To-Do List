@@ -1,6 +1,0 @@
-- Format code so that it's easy to read and edit.
-	- Remove all unnecessary comments. 
-	- Remove instances where you use "magic numbers".
-- MAKE CODE PORTABLE! In other words, make sure code can run without any errors 
-  regardless if it's being run on Linux, Windows, or Mac. 
-
