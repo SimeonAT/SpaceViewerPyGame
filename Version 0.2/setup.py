@@ -1,6 +1,6 @@
 """
 The code that I need in order for PyInstaller to work will go here.
-Got some help here: https://stackoverflow.com/questions/54210392/how-can-i-convert-pygame-to-exe
+I got the code from this link: https://stackoverflow.com/questions/54210392/how-can-i-convert-pygame-to-exe
 """
 import sys
 import os
