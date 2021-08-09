@@ -2,8 +2,8 @@
 
 # **TO-DO LIST**
 
-*	Write up a DESIGN PDF to plan out exactly how you want this game to function. Keep the game short and simple, and 
-	avoid being too ambitious. 
+~~*	Write up a DESIGN PDF to plan out exactly how you want this game to function. Keep the game short and simple, and 
+	avoid being too ambitious.~~
 *	Format the code for each Python file so that it is easy to read and make changes.
 *	[The next steps of the program will be decided after the DESIGN PDF is written.]
 
@@ -21,5 +21,6 @@ The sources below are the music and graphics that I am using for this video game
 	*	https://ansimuz.itch.io/warped-vehicles
 	*	https://gvituri.itch.io/space-shooter
 	*	https://helianthus-games.itch.io/animated-pixel-art-planets
+	*	https://ansimuz.itch.io/explosion-animations-pack
 *	DOS-88 Synthwave Music Library: https://dos88.itch.io/dos-88-music-library
 *	Textbox Sprite : https://vapxiel.itch.io/pixel-ui-elements-pack-1?download
