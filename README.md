@@ -2,8 +2,7 @@
 
 # **TO-DO LIST**
 
-~~ 
-*	Write up a DESIGN PDF to plan out exactly how you want this game to function. Keep the game short and simple, and 
+*	~~Write up a DESIGN PDF to plan out exactly how you want this game to function. Keep the game short and simple, and 
 	avoid being too ambitious.~~
 *	Format the code for each Python file so that it is easy to read and make changes.
 *	[The next steps of the program will be decided after the DESIGN PDF is written.]
