@@ -19,5 +19,6 @@ The sources below are the music and graphics that I am using for this video game
 	*	https://helianthus-games.itch.io/pixel-art-planets
 	*	https://norma-2d.itch.io/celestial-objects-pixel-art-pack
 	*	https://ansimuz.itch.io/warped-vehicles
+	*	https://gvituri.itch.io/space-shooter
 *	DOS-88 Synthwave Music Library: https://dos88.itch.io/dos-88-music-library
 *	Textbox Sprite : https://vapxiel.itch.io/pixel-ui-elements-pack-1?download
