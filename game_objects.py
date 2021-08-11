@@ -226,7 +226,7 @@ class Spaceship(pygame.sprite.Sprite):
 
                     # add an element to textbox frames list to account for new textbox
                     self.textbox_frames_since_shown.append(0)
- 
+
             # Player Chose "NO"
             elif self.choice_result == 1:
                 # make sure textbox result is in text box list
@@ -369,31 +369,44 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         if key_pressed == "enter":
             # main.py increments index by 1 when ENTER is pressed.
             # Thus, in order to display the choice textbox, we need to use index - 1.
-            self.choice_result = self.text_boxes[index - 1]\
+            self.choice_result = self.text_boxes[index - 1] \
                     .draw(screen, self.textbox_frames_since_shown[index - 1], key_pressed)
 
-            if self.choice_result == 0:  # Player entered "YES"
+            # Player entered YES
+            if self.choice_result == 0:
                 # Append "YES" result textbox to list so it can render
-                if self.textbox_result not in self.text_boxes:  # make sure textbox result not in text boxes list
-                                                                # as we don't want to include more than 1 copy of it in the list
-                    self.random_item()                          # determine random thing player will find in asteroid belt
+                if self.textbox_result not in self.text_boxes:
+                    # make sure textbox result not in text boxes list
+                    # as we don't want to include more than 1 copy of it in the list
+                    # determine random thing player will find in asteroid belt
+                    self.random_item()
                     self.text_boxes.append(self.textbox_result)
-                    self.textbox_frames_since_shown.append(0)   # add an element to textbox frames list to account for new textbox
-            elif self.choice_result == 1:  # Player entered "NO"
-                if self.textbox_result in self.text_boxes:      # make sure textbox result is in text box list
-                                                                # so that we're not removing something that doesn't exist in list
+
+                    # add an element to textbox frames list to account for new textbox
+                    self.textbox_frames_since_shown.append(0)
+
+            # Player entered NO
+            elif self.choice_result == 1:
+                if self.textbox_result in self.text_boxes:
+                    # make sure textbox result is in text box list
+                    # so that we're not removing something that doesn't exist in list
                     self.text_boxes.remove(self.textbox_result)
-                    self.textbox_frames_since_shown.pop()   # remove element from textbox frames list to remove frames from result textbox
+
+                    # add an element to textbox frames list to account for new textbox
+
+                    self.textbox_frames_since_shown.pop()
 
         if index > len(self.text_boxes) - 1:
-            # Remove textbox result so that we can reset the result of the choices that the player made
+            # Remove textbox result so that we can reset the result 
+            # of the choices that the player made
             if self.textbox_result in self.text_boxes:
                 self.text_boxes.remove(self.textbox_result)
                 self.textbox_frames_since_shown.pop()
-            return False    # False means there are no more text boxes to show
+            return False
 
-        """ Render the textbox
-            NOTE: self.choice_result and key_pressed variables are used only for choice text boxes. """
-        self.choice_result = self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index], key_pressed)
+        # Render the textbox
+        # NOTE: self.choice_result and key_pressed variables are used only for choice text boxes
+        self.choice_result = self.text_boxes[index] \
+        .draw(screen, self.textbox_frames_since_shown[index], key_pressed)
 
-        return True    # True means that there are still more text boxes to show
+        return True
