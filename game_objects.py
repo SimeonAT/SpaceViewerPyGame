@@ -1,10 +1,13 @@
 """ Classes that will represent certain objects and attributes in the Space Viewer game.
-    Got some help from these links:
-    - https://www.geeksforgeeks.org/python-display-images-with-pygame/#:~:text=load()%20method%20of%20pygame,update()%20method%20of%20pygame.
+
+    USEFUL RESOURCES:
+    - https://www.geeksforgeeks.org/python-display-images-with-pygame/
+      #:~:text=load()%20method%20of%20pygame,update()%20method%20of%20pygame.
     - http://programarcadegames.com/python_examples/en/sprite_sheets/
     - https://stackoverflow.com/questions/20002242/how-to-scale-images-to-screen-size-in-pygame
     - https://stackoverflow.com/questions/14044147/animated-sprite-from-few-images
-    - https://stackoverflow.com/questions/19715251/pygame-getting-the-size-of-a-loaded-image/19715931
+    - https://stackoverflow.com/questions/19715251/pygame-getting-the
+      -size-of-a-loaded-image/19715931
     - https://stackoverflow.com/questions/6239769/how-can-i-crop-an-image-with-pygame """
 
 import pygame
@@ -14,93 +17,104 @@ from text_box import TextBox, Extension_TextBox, Choice_TextBox
 from setup import resource_path
 from spritesheet import get_frames
 
-# Dimensions of game for module to refer to:
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
-GRID_SIZE = [10, 10]   # The dimensions of the grid space
+GRID_SIZE = [10, 10]
 
-# Coordinates for the center of the screen
 CENTER_X = int(SCREEN_WIDTH / 2)
 CENTER_Y = int(SCREEN_HEIGHT / 2)
 
 
 class Intestellar_Object(pygame.sprite.Sprite):
-    """ Any objects in space that is not a planetary object (black holes, nebulas, etc)
-        Although similar to the planet objects, they differ in property, size, and
-        the player will be able to interact more with them. """
+    """ This class refers to all instances that are non-planetary interstellar objects
+        (i.e. black holes, nebulas, and so on). """
 
     def __init__(self, size_multiple = None):
-        """@params: size_multiple -> should black hole be same size, 2x, 3x, 4x, etc bigger; this is because sprite is rect in shape """
+        """ Parameters:
+                size_multiple: The factor to increase the size of the sprite by
+
+            Returns:
+                No return value; just creates a new intestellar object
+        """
         self.size_multiple = size_multiple if size_multiple != None else randint(3, 5)
-        self.shown = False  # is the black hole being currently displayed on the screen
-        self.frames_since_shown = 0  # how many frames has the black hole been displayed on screen
+        self.shown = False
+        self.frames_since_shown = 0
 
-        # Load up the sprite depending the planetary object it will be
-        rng = randint(1, 5)
-
-        if rng == 1:  # Black Hole
-            self.size = [128 * self.size_multiple, 95 * self.size_multiple]  # the actual size of the sprite * the size multiple
-            self.img_file_location = resource_path(os.path.join("Graphics", "Space Objects", "Wormhole.png"))
+        # rng == 1 -> black hole 
+        # rng == 2 -> nebula
+        #rng == 3-> small nebula
+        rng = randint(1, 3)
+        if rng == 1:
+            self.size = [128 * self.size_multiple, 95 * self.size_multiple]
+            self.img_file_location = \
+                resource_path(os.path.join("Graphics", "Space Objects", "Wormhole.png"))
             self.description = ["A black hole that swirls with rage!",
                                 "Whatever comes inside...",
                                 "...never comes out..."]
-
-        elif rng == 2 or rng == 3:  # Nebula
+        elif rng == 2:
             self.size = [128 * self.size_multiple, 128 * self.size_multiple]
-            self.img_file_location = resource_path(os.path.join("Graphics", "Space Objects", "Nebula.png"))
+            self.img_file_location = \
+                    resource_path(os.path.join("Graphics", "Space Objects", "Nebula.png"))
             self.description = ["The debris of dust, hydrogen, helium, oxygen, and space rocks",
                                 "swirl together to create this beautiful mix of ",
                                 "cosmic space energy. "]
-
-        elif rng == 4 or rng == 5: # Small Nebula
-            self.size = [128 * (self.size_multiple - 1), 33 * (self.size_multiple - 1)]  # subtract by 1 since nebula is small
-            self.img_file_location = resource_path(os.path.join("Graphics", "Space Objects", "Small Nebula.png"))
+        elif rng == 3:
+            self.size = [128 * (self.size_multiple - 1), 33 * (self.size_multiple - 1)]
+            self.img_file_location = \
+                    resource_path(os.path.join("Graphics", "Space Objects", "Small Nebula.png"))
             self.description = ["A small cluster of space debris and dark energy",
                                 "laying around as unfinished goods",
                                 "at the edge of space."]
 
-        # Load up the sprite img
-        self.image = pygame.image.load(self.img_file_location).convert_alpha()  # load up the planet img
-        self.image = pygame.transform.scale(self.image, (self.size[0], self.size[1]))  # resize so it is big enough so we can see it
+        self.image = pygame.image.load(self.img_file_location).convert_alpha()
+        self.image = pygame.transform.scale(self.image, (self.size[0], self.size[1]))
 
-        """ A list that will hold the text boxes for the space objects; 
-                    description textbox is 3X is the size of the original text box sprite """
-        self.text_boxes = [TextBox((1350, 400), lines=self.description)]  # 3X is the size of the original text box sprite
-        """ A list containing how many frames has each textbox been shown on the screen. """
+        # 1350 x 400 is three times the size of the original text box sprite
+        self.text_boxes = [TextBox((1350, 400), lines=self.description)]
         self.textbox_frames_since_shown = [0] * len(self.text_boxes)
 
-    """ Draws the space object sprite """
-    def draw(self, screen):
-        screen.blit(self.image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))  # display image at center of screen
 
-    """ Draws the textbox """
+    def draw(self, screen):
+        """ Draws the space object sprite.
+
+            Parameters:
+                screen: the PyGame screen object to draw the sprite in
+
+            Returns:
+                No return value
+        """
+        screen.blit(self.image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))
+
+
     def draw_textbox(self, screen, index, key_pressed=None):
-        """ - index will hold what textbox to draw in text_boxes list. If index is past what is in self.text_boxes,
-                      don't render anything.
-            - Will return a boolean value: True if there are still text boxes to render, False if there are no
-                      text boxes left to render. This boolean value will be saved in show_textbox in main.
-            - 'key_pressed' will hold the key that was pressed by the user. """
+        """ Parameters:
+                index: the index for the text box that should be drawn in the text_boxes list
+                key_pressed: the key value that has been pressed by the user
+
+            Returns:
+                True -> there are still text boxes left to render
+                False -> No more text boxes left to render """
         if index > len(self.text_boxes) - 1:
             return False
 
         if key_pressed != None:
-            # If the key was pressed, pass it as a parameter to draw function so textbox will adjust accordingly
             self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index], key_pressed)
         else:
             self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index])
+
         return True
 
 
 class Star(pygame.sprite.Sprite):
-    """ A star is outer space. Is generated to be very small (1 - 3 pixels) in order to
-        give the appearance that it is far away. Unlike Planets and other objects, Stars are going to
+    """ A star is outer space. Is generated to be very small (1 - 3 pixels) in order to give the
+        appearance that it is far away. Unlike Planets and other objects, Stars are going to
         be displaced randomly in all spaces in the grid. """
 
     def __init__(self):
         super().__init__()
         self.color = (randint(0, 255), randint(0, 255), randint(0, 255))
-        self.width = self.height = randint(1, 4)   # width and height are the same so the stars look like squares (planets)
+        self.width = self.height = randint(1, 4)
 
         self.image = pygame.Surface([self.width, self.height])
         pygame.draw.rect(self.image, self.color, [0, 0, self.width, self.height])
@@ -117,121 +131,143 @@ class Star(pygame.sprite.Sprite):
 
 
 class Spaceship(pygame.sprite.Sprite):
-    """ The name says it all. Like the Planets, they have dialogue boxes with flavor text/descriptions, but I'm going to try
-        to add turn based combat and trade features to them later on in development. """
 
     def __init__(self, grid_pos, size = None):
-        """ @params: grid_pos -> position of the spaceship on the grid space
-                     size -> the size of the spaceship sprite """
+        """ Parameters:
+                grid_pos: the [row, column]/(row, column) position of the spaceship on the grid
+                size: the size of the spaceship sprite
+
+            Returns:
+                No return value """
         super().__init__()
         self.grid_pos = grid_pos
         self.size = size if size != None else randint(300, 700)
-        self.shown = False  # is the spaceship being currently displayed on the screen
-        self.frames_since_shown = 0  # how many frames has the spaceship been displayed on screen
+        self.shown = False
+        self.frames_since_shown = 0
 
-        # the images for each frame of the sprite animation
-        self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics", "Spaceships", "spaceship-1.png"))).convert_alpha(),
-                            pygame.image.load(resource_path(os.path.join("Graphics", "Spaceships", "spaceship-2.png"))).convert_alpha()]
+        self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics",
+                                 "Spaceships", "spaceship-1.png"))).convert_alpha(),
+                            pygame.image.load(resource_path(os.path.join("Graphics",
+                                 "Spaceships", "spaceship-2.png"))).convert_alpha()]
 
         # Resize each image in self.spritesheet to the dimensions of self.size
         for index in range(0, len(self.spritesheet)):
-            self.spritesheet[index] = pygame.transform.scale(self.spritesheet[index], (self.size, self.size))
+            self.spritesheet[index] = \
+                pygame.transform.scale(self.spritesheet[index], (self.size, self.size))
 
-        self.frame = 0  # index of self.spritesheet; what frame is the sprite animation on
-        self.image = self.spritesheet[self.frame]  # the image of sprite to show in a given frame
+        # What frame is the sprite animation on; also the index for self.spritesheet
+        self.frame = 0
+        self.image = self.spritesheet[self.frame]
 
-        # Set up the text box
-        self.text_boxes = []     # a list that will contain all the text boxes for the spaceship
-        self.description = None  # the text to display in textbox (set to nothing right now, so we can use rng to determine the desc)
+        self.text_boxes = []
+        self.description = None
+
         rng = randint(1, 3)
         if rng == 1:
-            self.description = ["A spaceship from an unknown galaxy.", "It looks at your spaceship with curiosity."]
+            self.description = ["A spaceship from an unknown galaxy.",
+                                "It looks at your spaceship with curiosity."]
         if rng == 2:
             self.description = ["AN ENEMY SPACESHIP HAS JUST APPEARED!",
                                 "Thank god your have your cloaking device on.",
                                 "Otherwise, they would have seen you."]
         if rng == 3:
-            self.description = ["A Metroid themed spaceship.", "That's cool.", "Didn't know those were real."]
+            self.description = ["A Metroid themed spaceship.",
+                                "That's cool.", "Didn't know those were real."]
 
-        self.text_boxes.append(TextBox((1350, 400), lines = self.description))   # Add desc textbox to the list
-                                                                                 # # 3X is the size of the original text box sprite
-        # Add the 'choice/prompt' textbox to list
-        self.text_boxes.append(Choice_TextBox((1350, 400), lines = ["Do you want to fight this spaceship?",
-                                                             " "]))
-        self.textbox_result = Extension_TextBox((1350, 400), lines = ["Spaceship battle will happen here.",
-                                                                     "But it is still in development right now."])
+        self.text_boxes.append(TextBox((1350, 400), lines = self.description))
+        self.text_boxes.append(Choice_TextBox((1350, 400), lines =
+                                              ["Do you want to fight this spaceship?", " "]))
+        self.textbox_result = Extension_TextBox((1350, 400), lines =
+                                              ["Spaceship battle will happen here.",
+                                               "But it is still in development right now."])
 
-        """ A list containing how many frames has each textbox been shown on the screen. """
+        # A list containing how many frames has each textbox been shown on the screen
         self.textbox_frames_since_shown = [0] * len(self.text_boxes)
 
-    """ Update the image to be shown after each frame (so the spaceship can be animated), and draw the spaceship. """
+
     def draw(self, screen):
-        # Update the frame that is being shown
-        if self.frames_since_shown % 4 == 0:   # if 1/15 of a second has passed (assuming 60 FPS), update the frame
+        if self.frames_since_shown % 4 == 0:
+            # if 1/15 of a second has passed (assuming 60 FPS), update the frame
             self.frame += 1
-        if self.frame > len(self.spritesheet) - 1:  # if frame_number has reached the end of the spritesheet array
+
+        # if frame_number has reached the end of the spritesheet array
+        if self.frame > len(self.spritesheet) - 1:
             self.frame = 0
-        self.image = self.spritesheet[self.frame]   # update the image shown based on changes to self.frame
+        self.image = self.spritesheet[self.frame]
 
-        # Draw the sprite
-        screen.blit(self.image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))  # display image at center of screen
+        screen.blit(self.image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))
+        return
 
-    """ Draws the textbox """
+
     def draw_textbox(self, screen, index, key_pressed=None):
-        """ - index will hold what textbox to draw in text_boxes list. If index is past what is in self.text_boxes,
-                      don't render anything.
-            - Will return a boolean value: True if there are still text boxes to render, False if there are no
-                      text boxes left to render. This boolean value will be saved in show_textbox in main.
-            - 'key_pressed' will hold the key that was pressed by the user. """
+        """ Parameters:
+                index: what textbox to draw in the text_boxes list
+                key_pressed: the key that was pressed by the user
+
+            Returns:
+                True -> There are still textboxes left to render
+                False -> No textboxes left to render
+            """
 
         if key_pressed == "enter":
-            # When enter is pressed, main.py immediately increments index by 1; so in order to display the choice textbox
-            # we need to use index - 1
-            self.choice_result = self.text_boxes[index - 1].draw(screen, self.textbox_frames_since_shown[index - 1], key_pressed)
+            # main.py increments index by 1 when ENTER is pressed
+            # Thus, in order to display the choice textbox, we need to use index - 1
+            self.choice_result = self.text_boxes[index - 1] \
+                .draw(screen, self.textbox_frames_since_shown[index - 1], key_pressed)
 
-            """ Manages which textbox to print given result of choice textbox """
-            if self.choice_result == 0:  # Player entered "YES"
-                # Append "YES" result textbox to list so it can render
-                if self.textbox_result not in self.text_boxes:  # make sure textbox result not in text boxes list
-                                                                # as we don't want to include more than 1 copy of it in the list
-                    self.text_boxes.append(self.textbox_result)
-                    self.textbox_frames_since_shown.append(0)   # add an element to textbox frames list to account for new textbox
-            elif self.choice_result == 1:  # Player entered "NO"
-                if self.textbox_result in self.text_boxes:      # make sure textbox result is in text box list
-                                                                # so that we're not removing something that doesn't exist in list
+            # Player chose "YES"
+            if self.choice_result == 0:
+                # Append "YES" result textbox to list so it can render the "YES" outcome.
+                if self.textbox_result not in self.text_boxes:
+                    # Make sure textbox result not in text boxes list,
+                    # as we don't want to include more than 1 copy of it in the list
+                    self.text_boxes.append(self.textbox_result)]
+
+                    # add an element to textbox frames list to account for new textbox
+                    self.textbox_frames_since_shown.append(0)
+
+            # Player Chose "NO"
+            elif self.choice_result == 1:
+                # make sure textbox result is in text box list
+                # so that we're not removing something that doesn't exist in list
+                if self.textbox_result in self.text_boxes:
                     self.text_boxes.remove(self.textbox_result)
-                    self.textbox_frames_since_shown.pop()   # remove element from textbox frames list to remove frames from result textbox
+
+                    # remove element from textbox frames list to remove frames from result textbox
+                    self.textbox_frames_since_shown.pop()
 
         if index > len(self.text_boxes) - 1:
             # Remove textbox result so that we can reset the result of the choices that the player made
             if self.textbox_result in self.text_boxes:
                 self.text_boxes.remove(self.textbox_result)
                 self.textbox_frames_since_shown.pop()
-            return False    # False means there are no more text boxes to show
+            return False
 
-        """ Render the textbox
-            NOTE: self.choice_result and key_pressed variables are used only for choice text boxes. """
-        self.choice_result = self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index], key_pressed)
+        # Render the textbox
+        # NOTE: self.choice_result and key_pressed are only choice textbox class attributes
+        self.choice_result = self.text_boxes[index] \
+                .draw(screen, self.textbox_frames_since_shown[index], key_pressed)
 
-        return True    # True means that there are still more text boxes to show
+        return True
 
-    """ Update the position of the spaceship, which moves to a different space each time the player moves.
-        This will allow us to simulate the 'movement' of spaceships. """
+
     def update(self):
-        # The new coordinates of the Spaceship
+    """ Updates the position of the spaceship, which allows the spaceship to move to
+        a different space each time the player moves.
+        This will allow us to simulate the 'movement' of a spaceship. """
+
         horizontal = randint(0, GRID_SIZE[0] - 1)
         vertical = randint(0, GRID_SIZE[1] - 1)
 
-        # Update positions
         self.grid_pos[0] = horizontal
         self.grid_pos[1] = vertical
 
-        return self.grid_pos   # return the new grid position of the spaceship
+        return self.grid_pos
 
 
 class Asteroid(pygame.sprite.Sprite):
-    """ Asteroids, space rock. These asteroids will be grouped together
-    as an asteroid belt in-game. """
+    """ The class for individual asteroid instances. These asteroids will be grouped together
+        as an asteroid belt in-game. """
 
     def __init__(self, pos = None, size_multiple = None):
         """@params: pos -> position of the asteroid on screen
