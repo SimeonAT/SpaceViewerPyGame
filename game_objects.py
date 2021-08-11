@@ -222,11 +222,11 @@ class Spaceship(pygame.sprite.Sprite):
                 if self.textbox_result not in self.text_boxes:
                     # Make sure textbox result not in text boxes list,
                     # as we don't want to include more than 1 copy of it in the list
-                    self.text_boxes.append(self.textbox_result)]
+                    self.text_boxes.append(self.textbox_result)
 
                     # add an element to textbox frames list to account for new textbox
                     self.textbox_frames_since_shown.append(0)
-
+ 
             # Player Chose "NO"
             elif self.choice_result == 1:
                 # make sure textbox result is in text box list
@@ -254,16 +254,13 @@ class Spaceship(pygame.sprite.Sprite):
 
 
     def update(self):
-    """ Updates the position of the spaceship, which allows the spaceship to move to
-        a different space each time the player moves.
-        This will allow us to simulate the 'movement' of a spaceship. """
-
+        """ Updates the position of the spaceship, which allows the spaceship to move to
+            a different space each time the player moves.
+            This will allow us to simulate the 'movement' of a spaceship. """
         horizontal = randint(0, GRID_SIZE[0] - 1)
         vertical = randint(0, GRID_SIZE[1] - 1)
-
         self.grid_pos[0] = horizontal
         self.grid_pos[1] = vertical
-
         return self.grid_pos
 
 
