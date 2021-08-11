@@ -201,6 +201,7 @@ class Spaceship(pygame.sprite.Sprite):
 
     def draw_textbox(self, screen, index, key_pressed=None):
         """ Parameters:
+                screen: the PyGame screen in which to render the text box
                 index: what textbox to draw in the text_boxes list
                 key_pressed: the key that was pressed by the user
 
@@ -237,7 +238,8 @@ class Spaceship(pygame.sprite.Sprite):
                     self.textbox_frames_since_shown.pop()
 
         if index > len(self.text_boxes) - 1:
-            # Remove textbox result so that we can reset the result of the choices that the player made
+            # Remove textbox result so that we can reset the result of 
+            # the choices that the player made
             if self.textbox_result in self.text_boxes:
                 self.text_boxes.remove(self.textbox_result)
                 self.textbox_frames_since_shown.pop()
@@ -270,15 +272,18 @@ class Asteroid(pygame.sprite.Sprite):
         as an asteroid belt in-game. """
 
     def __init__(self, pos = None, size_multiple = None):
-        """@params: pos -> position of the asteroid on screen
-                    size_multiple -> should asteroid be 1x, 2x, 3x, 4x, etc bigger?
-           NOTE: Parameters are set to none and are given random values in initialization """
+        """ Parameters:
+               pos: position of the asteroid on the screen represented as either
+                    [row, column] or (row, column)
+               size_multiple: the factor to increase the size of the asteroid sprite
+
+               NOTE: Parameters are set to none and are given random values in initialization """
         super().__init__()
         self.size_multiple = size_multiple if size_multiple != None else randint(1, 5)
-        self.shown = False  # is the asteroid being currently displayed on the screen
-        self.frames_since_shown = 0  # how many frames has the asteroid been displayed on screen
+        self.shown = False
+        self.frames_since_shown = 0
 
-        """ Load up which sprite graphic to use """
+        # Load up which sprite graphic to use
         self.img_file_location = os.path.join("Graphics", "Space Objects") + "/"
         rng = randint(1, 4)
         if rng == 1:
@@ -291,61 +296,60 @@ class Asteroid(pygame.sprite.Sprite):
             self.img_file_location += "Asteroid 4.png"
 
         # Load up the sprite img and resize it by factor of size_multiple
-        self.image = pygame.image.load(self.img_file_location).convert_alpha()  # load up the planet img
-        self.size = self.image.get_rect().size  # Get the size of the sprite
-        self.image = pygame.transform.scale(self.image, (self.size[0] * self.size_multiple, self.size[1] * self.size_multiple))
-        self.size = [self.size[0] * self.size_multiple, self.size[1] * self.size_multiple]  # Get the new size of the sprite
+        self.image = pygame.image.load(self.img_file_location).convert_alpha()
+        self.size = self.image.get_rect().size
+        self.image = pygame.transform.scale(self.image, (self.size[0] * self.size_multiple,
+                                                         self.size[1] * self.size_multiple))
+        self.size = [self.size[0] * self.size_multiple, self.size[1] * self.size_multiple]
 
         # Determine the position of the asteroid
-        LIMIT_X = SCREEN_WIDTH - self.size[0]  # has to be at least a width/height away so that asteroid stays on screen
+        LIMIT_X = SCREEN_WIDTH - self.size[0]
         LIMIT_Y = SCREEN_HEIGHT - self.size[1]
         self.pos = pos if pos != None else randint(0, LIMIT_X), randint(0, LIMIT_Y)
 
-    """ Draws the asteroid """
     def draw(self, screen):
-        screen.blit(self.image, (self.pos[0], self.pos[1]))  # display image at self.pos
+        screen.blit(self.image, (self.pos[0], self.pos[1]))
+        return
 
 
 class Asteroid_Belt(pygame.sprite.Sprite):
-    """ A list of individual asteroids that will be shown on the screen at the same time. """
+    """ A collection of individual asteroids that will be simultaneously shown on the screen. """
 
     def __init__(self):
-        self.quantity = randint(30, 50)   # how many asteroids to display
-        self.asteroid_belt = []  # the list of asteroids
-        self.frames_since_shown = 0  # how many frames has the asteroid been displayed on screen
+        self.quantity = randint(30, 50)
+        self.asteroid_belt = []
+        self.frames_since_shown = 0
 
-        # Put some Asteroid objects (with random features) in the Asteroid Belt
         for index in range(self.quantity):
             self.asteroid_belt.append(Asteroid())
 
-        # Textbox objection and descriptions
         self.description = ["A large field of stray, floating asteroids.",
                             "They are composed of debris from dead planets, ",
                             "and are space rocks with tons of gems and minerals. "]
 
-        """ A list that will hold the text boxes for the asteroid belt;
-            description textbox is 3X is the size of the original text box sprite """
         self.text_boxes = [TextBox((1350, 400), lines = self.description),
-                           Choice_TextBox((1350, 400), lines = ["Do you want to mine this asteroid belt?", " "])]
+                           Choice_TextBox((1350, 400),
+                                    lines = ["Do you want to mine this asteroid belt?", " "])]
 
-        # This textbox will only display if user entered "YES" in the choice textbox
-        self.textbox_result = Extension_TextBox((1350, 400), lines= ["You mined this asteroid belt and found...",
-                                                                  " ",
-                                                                  "This line will be replaced by result of random_item function."])
+        self.textbox_result = Extension_TextBox((1350, 400),
+                       lines = ["You mined this asteroid belt and found...",
+                                " ",
+                                "This line will be replaced by result of random_item function."])
 
-        """ A list containing how many frames has each textbox been shown on the screen. """
+        # A list containing how many frames has each textbox been shown on the screen
         self.textbox_frames_since_shown = [0] * len(self.text_boxes)
-        self.choice_result = None   # used to determine the choice the player made on the choice text box
 
-    """ Draws the asteroid belt """
+        # used to determine the choice the player made on the choice text box
+        self.choice_result = None
+
     def draw(self, screen):
         for asteroid in self.asteroid_belt:
             asteroid.draw(screen)
+        return
 
-
-    """ Generates a random item that can be found on asteroid when mining """
     def random_item(self):
-        rng = randint(1, 3 )
+        """ Generates a random item that can be found on asteroid when mining """
+        rng = randint(1, 3)
         if rng == 1:
             self.textbox_result.lines[2] = "{} bars of sulfurite!".format(randint(0, 1000))
         elif rng == 2:
@@ -354,20 +358,23 @@ class Asteroid_Belt(pygame.sprite.Sprite):
             self.textbox_result.lines[2] = "{} gold!".format(randrange(0, 100000))
 
 
-    """ Draws the textbox """
     def draw_textbox(self, screen, index, key_pressed):
-        """ - index will hold what textbox to draw in text_boxes list. If index is past what is in self.text_boxes,
-                      don't render anything.
-            - Will return a boolean value: True if there are still text boxes to render, False if there are no
-                      text boxes left to render. This boolean value will be saved in show_textbox in main.
-            - 'key_pressed' will hold the key that was pressed by the user. """
+        """ Parameters:
+                screen: the PyGame screen in which to render the text box
+                index: what textbox to draw in the text_boxes list
+                key_pressed: the key that was pressed by the user
+
+            Returns:
+                True -> There are still textboxes left to render
+                False -> No textboxes left to render
+            """
 
         if key_pressed == "enter":
-            # When enter is pressed, main.py immediately increments index by 1; so in order to display the choice textbox
-            # we need to use index - 1
-            self.choice_result = self.text_boxes[index - 1].draw(screen, self.textbox_frames_since_shown[index - 1], key_pressed)
+            # main.py increments index by 1 when ENTER is pressed.
+            # Thus, in order to display the choice textbox, we need to use index - 1.
+            self.choice_result = self.text_boxes[index - 1]\
+                    .draw(screen, self.textbox_frames_since_shown[index - 1], key_pressed)
 
-            """ Manages which textbox to print given result of choice textbox """
             if self.choice_result == 0:  # Player entered "YES"
                 # Append "YES" result textbox to list so it can render
                 if self.textbox_result not in self.text_boxes:  # make sure textbox result not in text boxes list
