@@ -1,6 +1,11 @@
 """ This module holds the Planet class and everything related to it.
-    - https://gamedev.stackexchange.com/questions/140609/games-developed-in-python-with-pygame-lags-too-much-how-can-i-improve-the-frame
-        - Recommended me to do convert() or convert_alpha() after loading an imate to improve performance """
+
+    USEFUL RESOURCES:
+    - https://gamedev.stackexchange.com/questions/140609/games-developed-in-python-with-pygame
+      -lags-too-much-how-can-i-improve-the-frame
+        - The link recommended to use convert() or convert_alpha()
+          after loading an inmate to improve performance
+"""
 
 import pygame
 import os
@@ -9,44 +14,40 @@ from text_box import TextBox, Extension_TextBox, Choice_TextBox
 from setup import resource_path
 from spritesheet import get_frames
 
-# Dimensions of game for module to refer to:
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
 
-GRID_SIZE = [10, 10]   # The dimensions of the grid space
+GRID_SIZE = [10, 10]
 
-# Coordinates for the center of the screen
 CENTER_X = int(SCREEN_WIDTH / 2)
 CENTER_Y = int(SCREEN_HEIGHT / 2)
 
 class Planet(pygame.sprite.Sprite):
-    """ Planet object in Space Viewer video game.
-        Some spaces in the grid will have a planet, while other will not.  """
 
     def __init__(self, size = None):
-        """@param: size -> size of dot as int; default is a random size """
+        """ Parameters:
+                size: The size of the planet sprite, representing both its length and width
+        """
         super().__init__()
         self.size = size if size != None else randint(75, 500)
-        self.shown = False   # is the planet being currently displayed on the screen
-        self.frames_since_shown = 0  # how many frames has the planet been displayed on screen
-        self.description = []  # the description of planet, which is displayed on textbox (there is no desc by default)
+        self.shown = False
+        self.frames_since_shown = 0
+        self.description = []
 
-        """ THESE CLASS ATTRIBUTES ARE ONLY RELEVANT WHEN DEALING WITH ANIMATED SPRITES """
-        self.frames_list = []  # contains information about each frame in the spritesheet
-                               # if list remains empty after constructor, then the sprite isn't animated.
-        self.total_frames = 0  # how many frames does sprite have (# of frames in spritesheet)
-        self.frame_num = 0     # what frame to render when drawing
-        self.animated = False  # Will sprite be animated (Not animated by default)
+        # These class attributes are only relevant with animated sprites
+        self.frames_list = []
+        self.total_frames = 0
+        self.frame_num = 0
+        self.animated = False
 
-        # the file location for the image of the planet
         self.img_file_location = os.path.join("Graphics", "Space Objects") + "/"
 
-        # Use RNG to decide what type of Planet instance should be
         rng = randint(1, 12)
         if rng == 1:
             self.img_file_location += "Baren.png"
             self.description = ["A rocky moon that doesn't orbit around any planet.",
                                 "It sits silently within the deep reaches of space..."]
+
         elif rng == 2:
             rng_desert = randint(1, 2)
             if rng_desert == 1:
@@ -55,12 +56,11 @@ class Planet(pygame.sprite.Sprite):
                 self.img_file_location += "Brown Planet Animated.png"
                 self.animated = True
                 self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
-                                                                 hanging_frames = 4)  # get the animated frames from spritesheet
+                                                                 hanging_frames = 4)
 
             self.description = ["A planet where it's summer everyday.",
-                                "Mostly heat, sand, and dead plants, but the few oases within this planet",
+                      "Mostly heat, sand, and dead plants, but the few oases within this planet",
                                 "are teeming with life."]
-
         elif rng == 3:
             rng_forest = randint(1, 2)
             if rng_forest == 1:
@@ -69,7 +69,7 @@ class Planet(pygame.sprite.Sprite):
                 self.img_file_location +="Forest Animated.png"
                 self.animated = True
                 self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
-                                                                 hanging_frames=4)  # get the animated frames from spritesheet
+                                                                 hanging_frames = 4)
 
             self.description = ["A planet that is itself a huge jungle.",
                                 "Many insects and furry little creatures coincide peacefully in",
@@ -85,27 +85,30 @@ class Planet(pygame.sprite.Sprite):
                 self.img_file_location += "Blue Planet Animated.png"
                 self.animated = True
                 self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
-                                                                 hanging_frames=4)  # get the animated frames from spritesheet
+                                                                 hanging_frames=4)
 
             self.description = ["Cold and barren, life within the planet lives",
                                 "in the warm caves found underground."]
+
         elif rng == 5:
             self.img_file_location += "Lava.png"
             self.description = ["Due to its heat, no life exists on this planet.",
                                 "But, if you're willing to brace the heat, you can",
                                 "find various types of rare metals next to the lava."]
+
         elif rng == 6:
             self.img_file_location += "Ocean.png"
             self.description = ["A planet where there exists no land.",
-                                "Sea creatures thrive here, and advanced civilizations can be found",
-                                "deep underwater."]
+                            "Sea creatures thrive here, and advanced civilizations can be found",
+                            "deep underwater."]
+
         elif rng == 7:
             self.img_file_location += "Terran.png"
             self.description = ["A planet ideal for sustainable life.",
-                                "Creatures both primitive and civilized coexist together throughout the",
-                                "various desert, taiga, forest, jungle, and ocean biomes within this planet."]
+                     "Creatures both primitive and civilized coexist together throughout the",
+                     "various desert, taiga, forest, jungle, and ocean biomes within this planet."]
 
-        elif rng == 8:  # Gas Giants
+        elif rng == 8:
             rng_gas_giants = randint(1, 4)
             if rng_gas_giants == 1:
                 self.img_file_location += "Green Gas Giant.png"
@@ -117,13 +120,13 @@ class Planet(pygame.sprite.Sprite):
                 self.img_file_location += "Purple Planet.png"
                 self.animated = True
                 self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
-                                                                 hanging_frames=4)  # get the animated frames from spritesheet
+                                                                 hanging_frames=4)
 
             self.description = ["A planet made solely out of air.",
                                 "Birds, bats, and similar creatures of all kinds",
                                 "take flight on its cloudy skies."]
 
-        elif rng == 9:  # Robot Planets
+        elif rng == 9:
             rng_robot = randint(1, 3)
             if rng_robot == 1:
                 self.img_file_location += "Robot.png"
@@ -136,12 +139,12 @@ class Planet(pygame.sprite.Sprite):
 
             self.description = ["A planet that once had civilized life...",
                                 "until the robots that its inhabitants created took over!",
-                                "Now all is left are robots who wander aimlessly, exploiting the planet..."]
+                     "Now all is left are robots who wander aimlessly, exploiting the planet..."]
 
-        # The following are not 'planets' but are things you would typically see in space (sun-like stars and other planetary objects).
-        # For the time being, they will be in the planet class, as although they are not planets, as game sprites they have the
-        # exact same behavior as planets. Once the behavior begins to differ (when I further develop the game), then they will
-        # have a class dedicated to them.
+        # The following are not 'planets' but are things you would typically see in space 
+        # (i.e. sun-like stars and other planetary objects).
+        # Although they are not planets, as game sprites they have the exact same behavior as 
+        # planets for the purpose of this game. 
         elif rng == 10:
             rng_star = randint(1, 4)
             if rng_star == 1:
@@ -157,8 +160,9 @@ class Planet(pygame.sprite.Sprite):
                                 "Advanced beings from nearby planets harness this energy",
                                 "using their advanced technologies."]
 
-
-        elif rng == 11 or rng == 12:  # rng can be 2 nums to increase probabilities moon will spawn
+        # rng can equal either of two possible numbers to increase 
+        # probability of a mooning spawning
+        elif rng == 11 or rng == 12:
             rng_moon = randint(1, 5)
             if rng_moon == 1:
                 self.img_file_location += "Moon.png"
@@ -175,77 +179,94 @@ class Planet(pygame.sprite.Sprite):
                                 "that shines quietly in this ",
                                 "peaceful, yet dark, corner of space. "]
 
-        self.img_file_location = resource_path(self.img_file_location)  # set up file location to work with PyInstaller
+        # Set up file location to work with PyInstaller
+        self.img_file_location = resource_path(self.img_file_location)
 
-        self.image = pygame.image.load(self.img_file_location).convert_alpha()  # load up the planet img
+        self.image = pygame.image.load(self.img_file_location).convert_alpha()
 
-        if self.animated == False:  # If not animated, all we need to do is just scale the image
+        # If not animated, all we need to do is just scale the image
+        if self.animated == False:
             self.image = pygame.transform.scale(self.image,
-                                                (self.size, self.size))  # resize planet big enough so we can see it
+                                                (self.size, self.size))
 
-        """ A list that will hold the text boxes for the planets;
-                    description textbox is 3X is the size of the original text box sprite """
-        self.text_boxes = [TextBox((1350, 400), lines = self.description)]  # 3X is the size of the original text box sprite
-        self.text_boxes.append(Choice_TextBox((1350, 400), lines=["Do you want to enter this planet?",
-                                                           " "]))  # Add the 'choice/prompt' textbox to list
+        self.text_boxes = [TextBox((1350, 400), lines = self.description)]
+        self.text_boxes.append(Choice_TextBox((1350, 400),
+                                              lines=["Do you want to enter this planet?",
+                                                     " "]))
         self.textbox_result = Extension_TextBox((1350, 400), lines = ["Entering Planet..."])
 
-        """ A list containing how many frames has each textbox been shown on the screen. """
+        # A list containing how many frames has each textbox been shown on the screen
         self.textbox_frames_since_shown = [0] * len(self.text_boxes)
 
-    """ Draws the planet sprite """
+
     def draw(self, screen):
-        if len(self.frames_list) != 0:   # if the sprite is animated
-            # The first step is to find which frame to render
-            if self.frames_since_shown % 4 == 0:  # if 1/15 of a second has passed (assuming 60 FPS), update the frame
+        if len(self.frames_list) != 0:
+            # if 1/15 of a second has passed (assuming 60 FPS), update the frame
+            if self.frames_since_shown % 4 == 0:
                 self.frame_num += 1
-            if self.frame_num > len(self.frames_list) - 1:  # if frame_number has reached the end of the spritesheet array
+
+            # if frame_number has reached the end of the spritesheet array
+            if self.frame_num > len(self.frames_list) - 1:
                 self.frame_num = 0
 
-            # Create a new surface that contains the frame and resize it so it has dimensions self.size x self.size
+            # Create a new surface that contains the frame and resize 
+            # it so it has dimensions self.size x self.size
             frame_image = self.image.subsurface(self.frames_list[self.frame_num])
             frame_image = pygame.transform.scale(frame_image, (self.size, self.size))
 
             screen.blit(frame_image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))
         else:
             # This code runs only when there's only 1 frame to deal with
-            screen.blit(self.image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))  # display image at center of screen
+            screen.blit(self.image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))
 
-    """ Draws the textbox """
     def draw_textbox(self, screen, index, key_pressed = None):
-        """ - index will hold what textbox to draw in text_boxes list. If index is past what is in self.text_boxes,
-                      don't render anything.
-            - Will return a boolean value: True if there are still text boxes to render, False if there are no
-                      text boxes left to render. This boolean value will be saved in show_textbox in main.
-            - 'key_pressed' will hold the key that was pressed by the user. """
+        """ Parameters:
+                screen: the PyGame screen in which to render the text box
+                index: what textbox to draw in the text_boxes list
+                key_pressed: the key that was pressed by the user
+
+            Returns:
+                True -> There are still textboxes left to render
+                False -> No textboxes left to render
+         """
 
         if key_pressed == "enter":
-            # When enter is pressed, main.py immediately increments index by 1; so in order to display the choice textbox
-            # we need to use index - 1
-            self.choice_result = self.text_boxes[index - 1].draw(screen, self.textbox_frames_since_shown[index - 1], key_pressed)
+            # main.py increments index by 1 when player pressed ENTER.
+            # Thus, in order to display the choice textbox, we need to use index - 1
+            self.choice_result = self.text_boxes[index - 1] \
+                    .draw(screen, self.textbox_frames_since_shown[index - 1], key_pressed)
 
-            """ Manages which textbox to print given result of choice textbox """
-            if self.choice_result == 0:  # Player entered "YES"
+            # Player entered "YES"
+            if self.choice_result == 0:
                 # Append "YES" result textbox to list so it can render
-                if self.textbox_result not in self.text_boxes:  # make sure textbox result not in text boxes list
-                                                                # as we don't want to include more than 1 copy of it in the list
+                if self.textbox_result not in self.text_boxes:
+                    # make sure textbox result not in text boxes list
+                    # as we don't want to include more than 1 copy of it in the list
                     self.text_boxes.append(self.textbox_result)
-                    self.textbox_frames_since_shown.append(0)   # add an element to textbox frames list to account for new textbox
-            elif self.choice_result == 1:  # Player entered "NO"
-                if self.textbox_result in self.text_boxes:      # make sure textbox result is in text box list
-                                                                # so that we're not removing something that doesn't exist in list
+
+                    # add an element to textbox frames list to account for new textbox
+                    self.textbox_frames_since_shown.append(0)
+
+            # Player entered "NO"
+            elif self.choice_result == 1:
+                # make sure textbox result is in text box list
+                # so that we're not removing something that doesn't exist in list
+                if self.textbox_result in self.text_boxes:
                     self.text_boxes.remove(self.textbox_result)
-                    self.textbox_frames_since_shown.pop()   # remove element from textbox frames list to remove frames from result textbox
+
+                    # remove element from textbox frames list to remove frames from result textbox
+                    self.textbox_frames_since_shown.pop()
 
         if index > len(self.text_boxes) - 1:
-            # Remove textbox result so that we can reset the result of the choices that the player made
+            # Remove textbox result to reset the result of the choices that the player made
             if self.textbox_result in self.text_boxes:
                 self.text_boxes.remove(self.textbox_result)
                 self.textbox_frames_since_shown.pop()
-            return False    # False means there are no more text boxes to show
+            return False
 
-        """ Render the textbox
-            NOTE: self.choice_result and key_pressed variables are used only for choice text boxes. """
-        self.choice_result = self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index], key_pressed)
+        # Render the textbox
+        # NOTE: self.choice_result and key_pressed are solely choice textbox variables
+        self.choice_result = self.text_boxes[index] \
+                .draw(screen, self.textbox_frames_since_shown[index], key_pressed)
 
-        return True    # True means that there are still more text boxes to show
+        return True

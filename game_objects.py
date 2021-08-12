@@ -364,7 +364,7 @@ class Asteroid_Belt(pygame.sprite.Sprite):
             Returns:
                 True -> There are still textboxes left to render
                 False -> No textboxes left to render
-            """
+        """
 
         if key_pressed == "enter":
             # main.py increments index by 1 when ENTER is pressed.
