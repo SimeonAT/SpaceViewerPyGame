@@ -75,15 +75,7 @@ class Intestellar_Object(pygame.sprite.Sprite):
         self.textbox_frames_since_shown = [0] * len(self.text_boxes)
 
 
-    def draw(self, screen):
-        """ Draws the space object sprite.
-
-            Parameters:
-                screen: the PyGame screen object to draw the sprite in
-
-            Returns:
-                No return value
-        """
+    def draw(self, screen, frames_since_shown):
         screen.blit(self.image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))
 
 
@@ -185,7 +177,7 @@ class Spaceship(pygame.sprite.Sprite):
         self.textbox_frames_since_shown = [0] * len(self.text_boxes)
 
 
-    def draw(self, screen):
+    def draw(self, screen, frames_since_shown):
         if self.frames_since_shown % 4 == 0:
             # if 1/15 of a second has passed (assuming 60 FPS), update the frame
             self.frame += 1
@@ -279,6 +271,7 @@ class Asteroid(pygame.sprite.Sprite):
         self.size_multiple = size_multiple if size_multiple != None else randint(1, 5)
         self.shown = False
         self.frames_since_shown = 0
+        self.hover_direction = 1
 
         # Load up which sprite graphic to use
         self.img_file_location = os.path.join("Graphics", "Space Objects") + "/"
@@ -304,7 +297,23 @@ class Asteroid(pygame.sprite.Sprite):
         LIMIT_Y = SCREEN_HEIGHT - self.size[1]
         self.pos = pos if pos != None else randint(0, LIMIT_X), randint(0, LIMIT_Y)
 
-    def draw(self, screen):
+    def draw(self, screen, frames_since_shown):
+
+        # Slightly change position every 16 frames to display a "hovering"
+        # effect on the asteroid
+        if frames_since_shown % 16  == 0:
+
+            # Hover direction can only either be -1 and 1, which when multiplied
+            # with the x of y position can make the asteroid sprite
+            # move up and down, or left and right, respectively.
+            if self.hover_direction == 1:
+                self.hover_direction = -1
+            else:
+                self.hover_direction = 1
+
+            self.pos = (self.pos[0] + randint(1, 10) * self.hover_direction,
+                        self.pos[1] + randint(1, 10) * self.hover_direction)
+
         screen.blit(self.image, (self.pos[0], self.pos[1]))
         return
 
@@ -339,9 +348,9 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         # used to determine the choice the player made on the choice text box
         self.choice_result = None
 
-    def draw(self, screen):
+    def draw(self, screen, frames_since_shown):
         for asteroid in self.asteroid_belt:
-            asteroid.draw(screen)
+            asteroid.draw(screen, frames_since_shown)
         return
 
     def random_item(self):

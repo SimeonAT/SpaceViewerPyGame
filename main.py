@@ -171,7 +171,7 @@ while not quit:
         for object in grid[current_pos[0] % 10][current_pos[1] % 10]:
             object.shown = True
             object.frames_since_shown += 1
-            object.draw(screen)
+            object.draw(screen, object.frames_since_shown)
 
         # display the text box, but 'close' (don't display)
         # textbox if player pressed 'z' (show_textbox == false)

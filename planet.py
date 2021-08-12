@@ -199,7 +199,7 @@ class Planet(pygame.sprite.Sprite):
         self.textbox_frames_since_shown = [0] * len(self.text_boxes)
 
 
-    def draw(self, screen):
+    def draw(self, screen, frames_since_shown):
         if len(self.frames_list) != 0:
             # if 1/15 of a second has passed (assuming 60 FPS), update the frame
             if self.frames_since_shown % 4 == 0:
