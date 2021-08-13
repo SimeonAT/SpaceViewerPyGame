@@ -382,7 +382,7 @@ class Asteroid_Belt(pygame.sprite.Sprite):
 
             # Player entered YES
             if self.choice_result == 0:
-                # Append "YES" result textbox to list so it can render
+                # Append "YES" result textbox to list so it can render it
                 if self.textbox_result not in self.text_boxes:
                     # make sure textbox result not in text boxes list
                     # as we don't want to include more than 1 copy of it in the list
@@ -400,8 +400,7 @@ class Asteroid_Belt(pygame.sprite.Sprite):
                     # so that we're not removing something that doesn't exist in list
                     self.text_boxes.remove(self.textbox_result)
 
-                    # add an element to textbox frames list to account for new textbox
-
+                    # remove element from textbox frames list to remove frames from result textbox
                     self.textbox_frames_since_shown.pop()
 
         if index > len(self.text_boxes) - 1:
