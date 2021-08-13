@@ -6,7 +6,7 @@
 	avoid being too ambitious.~~
 *	~~Format the code for each Python file so that it is easy to read and make changes.~~
 *	~~Change the textbox descriptions for the planets, objects, and spaceship sprites to what I wrote in the DESIGN.pdf.~~ 
-*	Change the music so that it is more suitable to the theme of the game and the gameplay.
+*	~~Change the music so that it is more suitable to the theme of the game and the gameplay.~~
 *	Add in new spaceship sprites and the animated planet sprites. In addition, add a "floating animation" for the asteorid sprites.
 *	Create a Choice Textbox Tree ADT which will help organize the choices that the player can make when they choose YES/NO 
 	in a given choice textbox. 
@@ -28,5 +28,5 @@ The sources below are the music and graphics that I am using for this video game
 	*	https://gvituri.itch.io/space-shooter
 	*	https://helianthus-games.itch.io/animated-pixel-art-planets
 	*	https://ansimuz.itch.io/explosion-animations-pack
-*	DOS-88 Synthwave Music Library: https://dos88.itch.io/dos-88-music-library
+*	*	Gameplay Music Provided by Lofi Girl (bit.ly/lofigirI-playlists)
 *	Textbox Sprite : https://vapxiel.itch.io/pixel-ui-elements-pack-1?download
