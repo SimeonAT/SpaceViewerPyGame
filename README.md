@@ -5,7 +5,7 @@
 *	~~Write up a DESIGN PDF to plan out exactly how you want this game to function. Keep the game short and simple, and 
 	avoid being too ambitious.~~
 *	~~Format the code for each Python file so that it is easy to read and make changes.~~
-*	Change the textbox descriptions for the planets, objects, and spaceship sprites to what I wrote in the DESIGN.pdf. 
+*	~~Change the textbox descriptions for the planets, objects, and spaceship sprites to what I wrote in the DESIGN.pdf.~~ 
 *	Add in new spaceship sprites and the animated planet sprites. In addition, add a "floating animation" for the asteorid sprites.
 *	Create a Choice Textbox Tree ADT which will help organize the choices that the player can make when they choose YES/NO 
 	in a given choice textbox. 

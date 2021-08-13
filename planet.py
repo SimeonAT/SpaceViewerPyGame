@@ -59,8 +59,8 @@ class Planet(pygame.sprite.Sprite):
                                                                  hanging_frames = 4)
 
             self.description = ["A planet where it's summer everyday.",
-                      "Mostly heat, sand, and dead plants, but the few oases within this planet",
-                                "are teeming with life."]
+                      "Although the surace is mostly made up of sand dunes and dust storms,",
+                                "the few oases within this planet are teeming with life."]
         elif rng == 3:
             rng_forest = randint(1, 2)
             if rng_forest == 1:
@@ -71,9 +71,9 @@ class Planet(pygame.sprite.Sprite):
                 self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
                                                                  hanging_frames = 4)
 
-            self.description = ["A planet that is itself a huge jungle.",
-                                "Many insects and furry little creatures coincide peacefully in",
-                                "the dark ecosystem covered by the leaves of various tall trees."]
+            self.description = ["A planet that is essentially a huge jungle.",
+                                "Many insects and furry little creatures coincide peacefully",
+                                "together among the various tall trees within the planet."]
 
         elif rng == 4:
             rng_ice = randint(1, 2)
@@ -87,26 +87,26 @@ class Planet(pygame.sprite.Sprite):
                 self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
                                                                  hanging_frames=4)
 
-            self.description = ["Cold and barren, life within the planet lives",
-                                "in the warm caves found underground."]
+            self.description = ["A cold and barren rogue planet. In spite of the",
+                                "lifelessness on its cold surface, various underwater"
+                                "creates live behind the darkness of the ice sheets."]
 
         elif rng == 5:
             self.img_file_location += "Lava.png"
-            self.description = ["Due to its heat, no life exists on this planet.",
-                                "But, if you're willing to brace the heat, you can",
-                                "find various types of rare metals next to the lava."]
+            self.description = ["The hottest planet that is not a star. No life exists",
+                                "on this planet, but if you are willing to brace the heat,",
+                                "you may find some very valuable metals."]
 
         elif rng == 6:
             self.img_file_location += "Ocean.png"
-            self.description = ["A planet where there exists no land.",
-                            "Sea creatures thrive here, and advanced civilizations can be found",
-                            "deep underwater."]
+            self.description = ["A planet with no land surface in sight. Sea creatures thrive",
+                            "here, and advanced civilizations can be found deep underwater."]
 
         elif rng == 7:
             self.img_file_location += "Terran.png"
-            self.description = ["A planet ideal for sustainable life.",
-                     "Creatures both primitive and civilized coexist together throughout the",
-                     "various desert, taiga, forest, jungle, and ocean biomes within this planet."]
+            self.description = ["This planet contains all the qualities ideal for sustaining",
+                     "various kinds of life. Both land and sea creatures coexist together",
+                     "in the various biomes within this planet."]
 
         elif rng == 8:
             rng_gas_giants = randint(1, 4)
@@ -123,8 +123,8 @@ class Planet(pygame.sprite.Sprite):
                                                                  hanging_frames=4)
 
             self.description = ["A planet made solely out of air.",
-                                "Birds, bats, and similar creatures of all kinds",
-                                "take flight on its cloudy skies."]
+                                "Birds, bats, and various other flying beasts dominate",
+                                "the skies of this hollow planet."]
 
         elif rng == 9:
             rng_robot = randint(1, 3)
@@ -137,7 +137,7 @@ class Planet(pygame.sprite.Sprite):
             elif rng_robot == 4:
                 self.img_file_location += "Robot 4.png"
 
-            self.description = ["A planet that once had civilized life...",
+            self.description = ["A planet once teeming with civilized life...",
                                 "until the robots that its inhabitants created took over!",
                      "Now all is left are robots who wander aimlessly, exploiting the planet..."]
 
@@ -156,9 +156,7 @@ class Planet(pygame.sprite.Sprite):
             elif rng_star == 4:
                 self.img_file_location += "Pink Star.png"
 
-            self.description = ["A powerful star that radiates with intense cosmic energy.",
-                                "Advanced beings from nearby planets harness this energy",
-                                "using their advanced technologies."]
+            self.description = ["A powerful planetary object that radiates with immese heat."]
 
         # rng can equal either of two possible numbers to increase 
         # probability of a mooning spawning
@@ -175,9 +173,8 @@ class Planet(pygame.sprite.Sprite):
             elif rng_moon == 5:
                 self.img_file_location += "Pink Moon.png"
 
-            self.description = ["A beautiful looking moon ",
-                                "that shines quietly in this ",
-                                "peaceful, yet dark, corner of space. "]
+            self.description = ["A satellite that orbits the planets nearby in",
+                                "this peaceful, ey dark, corner of space."]
 
         # Set up file location to work with PyInstaller
         self.img_file_location = resource_path(self.img_file_location)

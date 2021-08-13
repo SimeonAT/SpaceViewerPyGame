@@ -49,9 +49,9 @@ class Intestellar_Object(pygame.sprite.Sprite):
             self.size = [128 * self.size_multiple, 95 * self.size_multiple]
             self.img_file_location = \
                 resource_path(os.path.join("Graphics", "Space Objects", "Wormhole.png"))
-            self.description = ["A black hole that swirls with rage!",
-                                "Whatever comes inside...",
-                                "...never comes out..."]
+            self.description = ["A black hole that SWIRLS WITH RAGE!!!",
+                                "Whatever comes in...",
+                                "...never comes out."]
         elif rng == 2:
             self.size = [128 * self.size_multiple, 128 * self.size_multiple]
             self.img_file_location = \
@@ -156,15 +156,14 @@ class Spaceship(pygame.sprite.Sprite):
 
         rng = randint(1, 3)
         if rng == 1:
-            self.description = ["A spaceship from an unknown galaxy.",
-                                "It looks at your spaceship with curiosity."]
+            self.description = ["Just another passing spaceship from a nearby planet."]
         if rng == 2:
             self.description = ["AN ENEMY SPACESHIP HAS JUST APPEARED!",
-                                "Thank god your have your cloaking device on.",
-                                "Otherwise, they would have seen you."]
+                                "The spaceship has detected you and its targeting computer",
+                                "is aimed right at you!"]
         if rng == 3:
-            self.description = ["A Metroid themed spaceship.",
-                                "That's cool.", "Didn't know those were real."]
+            self.description = ["The creatures inside the spaceship look at you with",
+                                "curious eyes."]
 
         self.text_boxes.append(TextBox((1350, 400), lines = self.description))
         self.text_boxes.append(Choice_TextBox((1350, 400), lines =
@@ -330,8 +329,8 @@ class Asteroid_Belt(pygame.sprite.Sprite):
             self.asteroid_belt.append(Asteroid())
 
         self.description = ["A large field of stray, floating asteroids.",
-                            "They are composed of debris from dead planets, ",
-                            "and are space rocks with tons of gems and minerals. "]
+                            "The asteroids themselves are made up of mineral, space rocks, and",
+                            "the debris of countless dead planets."]
 
         self.text_boxes = [TextBox((1350, 400), lines = self.description),
                            Choice_TextBox((1350, 400),
