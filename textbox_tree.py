@@ -7,14 +7,16 @@ import text_box
 
 class Textbox_Tree_Node:
 
-    def __init__(self):
+    def __init__(self, textbox_object, yes_child = None, no_child = None):
         """
-        Initalizes a node that is a part of a textbox tree. Like all
-        binary trees nodes, each node is assumed to be the parent
-        (i.e. you can only go downward from the tree, not up).
+        Creates a new Textbox Tree Node.
 
-        In addition, there will be no Textbox Tree class; a Textbox Tree
-        will be represented by a bunch of nodes connected to each other.
-
+        Parameters:
+            - the actual textbox object that the node points to
+            - the textbox response for the YES and NO responses,
+              if textbox object is a choice textbox
         """
-        raise NotImplementedError
+        self.textbox_object = textbox_object
+        self.yes_child = yes_child
+        self.no_child = no_child
+        return
