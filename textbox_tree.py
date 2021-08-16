@@ -2,6 +2,10 @@
 Rather that having to deal with the complicated logic of implementing response textboxes
 following a choice from a Choice Textbox, the TextBox Tree allow for easy collection and
 management of textboxes.
+
+USEFUL RESOURCES:
+    - https://docs.python.org/3/library/exceptions.html
+    - https://docs.python.org/3/tutorial/errors.html
 """
 import text_box
 
@@ -63,4 +67,12 @@ class Textbox_Tree:
             No return value, but the function sets self.current
             to the textbox corresponding to the YES/NO value.
         """
-        raise NotImplementedError
+        if !self.head.is_choice_textbox():
+            raise TypeError
+
+        if choice == True:
+            self.current = self.current.yes_child
+        else:
+            self.current = self.current.no_child
+
+        return
