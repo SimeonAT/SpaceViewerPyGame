@@ -88,8 +88,8 @@ class Planet(pygame.sprite.Sprite):
                                                                  hanging_frames=4)
 
             self.description = ["A cold and barren rogue planet. In spite of the",
-                                "lifelessness on its cold surface, various underwater"
-                                "creates live behind the darkness of the ice sheets."]
+                                "lifelessness on its cold surface, various underwater",
+                                "creatures live behind the darkness of the ice sheets."]
 
         elif rng == 5:
             self.img_file_location += "Lava.png"
@@ -174,7 +174,7 @@ class Planet(pygame.sprite.Sprite):
                 self.img_file_location += "Pink Moon.png"
 
             self.description = ["A satellite that orbits the planets nearby in",
-                                "this peaceful, ey dark, corner of space."]
+                                "this peaceful, yet dark, corner of space."]
 
         # Set up file location to work with PyInstaller
         self.img_file_location = resource_path(self.img_file_location)
