@@ -20,3 +20,47 @@ class Textbox_Tree_Node:
         self.yes_child = yes_child
         self.no_child = no_child
         return
+
+    def is_choice_textbox(self):
+        """
+        Returns True if the textbox is a Choice Textbox, and False
+        otherwise.
+        """
+        if isinstance(self.textbox_object, Choice_Textbox()):
+            return True
+        else:
+            return False
+
+
+class Textbox_Tree:
+
+    def __init__(self, head):
+        """
+        Creates a new Textbox Tree.
+
+        Parameters:
+            The Textbox Tree Node that will be the head of the tree.
+        """
+        self.head = head
+
+        # The current textbox that we need to render
+        self.current = self.head
+
+        return
+
+    def make_choice(self, choice):
+        """
+        Renders the needed textbox depending on the choice the user
+        makes on the current textbox (assuming that the textbox is a
+        Choice Textbox).
+
+        Parameters:
+            the YES/NO choice represented as a boolean value
+                True == YES
+                False == NO
+
+        Returns:
+            No return value, but the function sets self.current
+            to the textbox corresponding to the YES/NO value.
+        """
+        raise NotImplementedError
