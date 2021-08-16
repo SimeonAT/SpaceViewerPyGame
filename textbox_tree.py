@@ -23,6 +23,7 @@ class Textbox_Tree_Node:
         self.textbox_object = textbox_object
         self.yes_child = yes_child
         self.no_child = no_child
+        self.frames_since_shown = 0
         return
 
     def is_choice_textbox(self):
@@ -34,6 +35,14 @@ class Textbox_Tree_Node:
             return True
         else:
             return False
+
+    def increment_frames(self):
+        self.frames_since_shown += 1
+        return
+
+    def reset_frames(self):
+        self.frames_since_shown = 0
+        return
 
 
 class Textbox_Tree:
@@ -70,6 +79,7 @@ class Textbox_Tree:
         if !self.head.is_choice_textbox():
             raise TypeError
 
+        self.frames_since_shown = 0
         if choice == True:
             self.current = self.current.yes_child
         else:
