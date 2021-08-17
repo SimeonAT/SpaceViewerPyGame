@@ -6,6 +6,11 @@ management of textboxes.
 USEFUL RESOURCES:
     - https://docs.python.org/3/library/exceptions.html
     - https://docs.python.org/3/tutorial/errors.html
+
+NOTE:
+    There may be potential bugs when rendering a non-choice textbox, as make_choice()
+    and next_textbox() do not consider whether or not the child textboxes exist. As a result,
+    self.current may == None if the previous textbox has no children.
 """
 import text_box
 
@@ -17,9 +22,9 @@ class Textbox_Tree_Node:
 
         Parameters:
             - the actual textbox object that the node points to
-            - the textbox response for the YES and NO responses,
+            - the textbox nodes holding the textboxes for the YES and NO responses,
               if textbox object is a choice textbox
-            - the next textbox object to render, if textbox node represents a non-choice
+            - the next textbox object node to render, if textbox node represents a non-choice
               textbox
         """
         self.textbox_object = textbox_object
@@ -47,6 +52,9 @@ class Textbox_Tree_Node:
         self.frames_since_shown = 0
         return
 
+    def __repr__(self):
+        return f"Textbox node holding the lines: {self.textbox_object}"
+
 
 class Textbox_Tree:
 
@@ -59,7 +67,7 @@ class Textbox_Tree:
         """
         self.head = head
 
-        # The current textbox that we need to render
+        # The current textbox node that we need to render
         self.current = self.head
 
         return
@@ -79,7 +87,7 @@ class Textbox_Tree:
             No return value, but the function sets self.current
             to the textbox corresponding to the YES/NO value.
         """
-        if !self.head.is_choice_textbox():
+        if not self.head.is_choice_textbox():
             raise TypeError
 
         self.frames_since_shown = 0
@@ -108,3 +116,25 @@ class Textbox_Tree:
         """
         self.current = self.head
         return
+
+
+def traverse(current_node):
+    """
+    Debugging function that prints out description of each textbox
+    node in the tree.
+
+    Parameters:
+        current_node: The textbox node to start with. This textbox, along with all of
+                      its child textboxes, will be printed by this function.
+    """
+
+    print(current_node)
+
+    if current_node.yes_child != None:
+        traverse(current_node.yes_child)
+    elif current_node.no_child != None:
+        traverse(current_node.no_child)
+    elif current_node.next_child != None:
+        traverse(current_node.next_child)
+    return
+
