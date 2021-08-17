@@ -340,6 +340,20 @@ class Asteroid_Belt(pygame.sprite.Sprite):
                                                             lines = self.description))
         self.head_node.next_child = Textbox_Tree_Node(Choice_TextBox((1350, 400),
                                lines = ["Do you want to mine this asteroid belt?", " "]))
+
+        # The textbox that gives the reward to the player if they choose to mine
+        # the asteroid belt.
+        self.head_node.next_child.yes_child = Textbox_Tree_Node(TextBox((1350, 400),
+                                lines = ["You mined this ateroid belt and found...",
+                                         " ",
+                                         "Replace w/ random_item() return value"]))
+
+        # This link taught me that Python stores by reference, not by value
+        # https://stackoverflow.com/questions/11049942
+        # /how-do-i-create-an-alias-for-a-variable-in-python
+        #
+        self.result_textbox_node = self.head_node.next_child.yes_child
+
         self.tree = Textbox_Tree(self.head_node)
 
         # used to determine the choice the player made on the choice text box
@@ -354,12 +368,11 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         """ Generates a random item that can be found on asteroid when mining """
         rng = randint(1, 3)
         if rng == 1:
-            self.textbox_result.lines[2] = "{} bars of sulfurite!".format(randint(0, 1000))
+            return "{} bars of sulfurite!".format(randint(0, 1000))
         elif rng == 2:
-            self.textbox_result.lines[2] = "{} mythril ores!".format(randint(0, 500))
+            return "{} mythril ores!".format(randint(0, 500))
         elif rng == 3:
-            self.textbox_result.lines[2] = "{} gold!".format(randrange(0, 100000))
-        return
+            return "{} gold!".format(randrange(0, 100000))
 
 
     def draw_textbox(self, screen, index, key_pressed):
@@ -381,6 +394,7 @@ class Asteroid_Belt(pygame.sprite.Sprite):
                                                  key_pressed)
 
                 if self.choice_result == 0:
+                    self.result_textbox_node.textbox_object.lines[2] = self.random_item()
                     self.tree.make_choice(True)
                 elif self.choice_result == 1:
                     self.tree.make_choice(False)

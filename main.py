@@ -140,6 +140,11 @@ while not quit:
                                 # reset frames since shown for each textbox
                                 object.textbox_frames_since_shown[i] = 0
 
+                        # Asteroid Belt needs to be reset different, where it is using
+                        # test implementation where its textboxes are managed by a binary tree
+                        if isinstance(object, Asteroid_Belt):
+                            object.reset_textbox_tree()
+
                         textbox_index = 0
 
                 for spaceship in list_of_spaceships:
@@ -175,7 +180,7 @@ while not quit:
             object.draw(screen, object.frames_since_shown)
 
         # display the text box, but 'close' (don't display)
-        # textbox if player pressed 'z' (show_textbox == false)
+        # textbox if player pressed 'enter' (show_textbox == false)
         if show_textbox:
             # Draw the textbox for each object on the grid space
             for object in grid[current_pos[0] % 10][current_pos[1] % 10]:
