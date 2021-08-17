@@ -372,23 +372,26 @@ class Asteroid_Belt(pygame.sprite.Sprite):
                 True -> There are still textboxes left to render
                 False -> No textboxes left to render
         """
-
         if key_pressed == "enter":
-            # main.py increments index by 1 when ENTER is pressed.
-            # Thus, in order to display the choice textbox, we need to use index - 1.
-            self.choice_result = self.tree.current.textbox_object \
-            .draw(screen, self.tree.current.frames_since_shown,
+            if not self.tree.current.is_choice_textbox():
+                self.tree.next_textbox()
+            else:
+                self.choice_result = self.tree.current.textbox_object \
+                .draw(screen, self.tree.current.frames_since_shown,
                                                  key_pressed)
 
-            if self.choice_result == 0:
-                self.tree.make_choice(True)
-            elif self.choice_result == 1:
-                self.tree.make_choice(False)
-                return False
+                if self.choice_result == 0:
+                    self.tree.make_choice(True)
+                elif self.choice_result == 1:
+                    self.tree.make_choice(False)
+
+        # If the textbox that we need to render is 'None', then there
+        # are no more textboxes left to render.
+        if self.tree.current == None:
+            return False
 
         # Render the textbox
         # NOTE: self.choice_result and key_pressed variables are used only for choice text boxes
-        print(self.tree.current)
         self.choice_result = self.tree.current.textbox_object.draw(screen,
                                              self.tree.current.frames_since_shown, key_pressed)
 
@@ -400,3 +403,4 @@ class Asteroid_Belt(pygame.sprite.Sprite):
 
     def reset_textbox_tree(self):
         self.tree.reset_tree()
+        return

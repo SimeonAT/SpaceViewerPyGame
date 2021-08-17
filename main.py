@@ -177,7 +177,7 @@ while not quit:
         # display the text box, but 'close' (don't display)
         # textbox if player pressed 'z' (show_textbox == false)
         if show_textbox:
-            # TEMPORARY SOLUTION: Draw the textbox for each object on the grid space
+            # Draw the textbox for each object on the grid space
             for object in grid[current_pos[0] % 10][current_pos[1] % 10]:
                 show_textbox = object.draw_textbox(screen, textbox_index, key_pressed=key_pressed)
 
@@ -189,8 +189,8 @@ while not quit:
                     # reset index so that we can render first textbox for next obj
                     if isinstance(object, Asteroid_Belt):
                         object.reset_textbox_tree()
-                    else:
-                        textbox_index = 0
+
+                    textbox_index = 0
                 else:
                     if isinstance(object, Asteroid_Belt):
                         object.increment_textbox_frames()

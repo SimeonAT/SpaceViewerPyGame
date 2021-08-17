@@ -12,7 +12,7 @@ NOTE:
     and next_textbox() do not consider whether or not the child textboxes exist. As a result,
     self.current may == None if the previous textbox has no children.
 """
-import text_box
+from text_box import *
 
 class Textbox_Tree_Node:
 
@@ -39,7 +39,7 @@ class Textbox_Tree_Node:
         Returns True if the textbox is a Choice Textbox, and False
         otherwise.
         """
-        if isinstance(self.textbox_object, Choice_Textbox()):
+        if isinstance(self.textbox_object, Choice_TextBox):
             return True
         else:
             return False
@@ -87,7 +87,7 @@ class Textbox_Tree:
             No return value, but the function sets self.current
             to the textbox corresponding to the YES/NO value.
         """
-        if not self.head.is_choice_textbox():
+        if not self.current.is_choice_textbox():
             raise TypeError
 
         self.current.frames_since_shown = 0
@@ -111,10 +111,27 @@ class Textbox_Tree:
 
     def reset_tree(self):
         """
-        Resets the current textbox to the head textbox, so the textbox
-        interactions play out the same the next time these set of textboxes are rendered.
+        This function:
+            - resets current textbox to the original head textbox
+            - sets each textbox frame to 0
+
+        This is so that the textbox interactions play out the same the next time
+        the player visits the frame in which the textbox tree is a part of.
         """
-        self.current.frames_since_shown = 0
+
+        def reset_tree_helper(current_node):
+            current_node.frames_since_shown = 0
+            if current_node.yes_child != None:
+                reset_tree_helper(current_node.yes_child)
+            elif current_node.no_child != None:
+                reset_tree_helper(current_node.no_child)
+            elif current_node.next_child != None:
+                reset_tree_helper(current_node.next_child)
+            return
+
+        # The function implementation begins below - the definition
+        # for the helper function is above.
+        reset_tree_helper(self.head)
         self.current = self.head
         return
 
