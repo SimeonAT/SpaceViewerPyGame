@@ -380,9 +380,9 @@ class Asteroid_Belt(pygame.sprite.Sprite):
             .draw(screen, self.tree.current.frames_since_shown,
                                                  key_pressed)
 
-            if self.choice == 0:
+            if self.choice_result == 0:
                 self.tree.make_choice(True)
-            elif self.choice == 1:
+            elif self.choice_result == 1:
                 self.tree.make_choice(False)
                 return False
 

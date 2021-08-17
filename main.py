@@ -135,9 +135,10 @@ while not quit:
                         object.shown = False
                         object.frames_since_shown = 0  # reset frames since shown
 
-                        for i in range(0, len(object.textbox_frames_since_shown)):
-                            # reset frames since shown for each textbox
-                            object.textbox_frames_since_shown[i] = 0
+                        if not isinstance(object, Asteroid_Belt):
+                            for i in range(0, len(object.textbox_frames_since_shown)):
+                                # reset frames since shown for each textbox
+                                object.textbox_frames_since_shown[i] = 0
 
                         textbox_index = 0
 
