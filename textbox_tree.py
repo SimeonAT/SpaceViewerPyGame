@@ -53,7 +53,7 @@ class Textbox_Tree_Node:
         return
 
     def __repr__(self):
-        return f"Textbox node holding the lines: {self.textbox_object}"
+        return f"Textbox node holding the textbox object: {self.textbox_object}"
 
 
 class Textbox_Tree:
@@ -90,7 +90,7 @@ class Textbox_Tree:
         if not self.head.is_choice_textbox():
             raise TypeError
 
-        self.frames_since_shown = 0
+        self.current.frames_since_shown = 0
         if choice == True:
             self.current = self.current.yes_child
         else:
@@ -105,7 +105,7 @@ class Textbox_Tree:
         if self.head.is_choice_textbox():
             raise TypeError
 
-        self.frames_since_shown = 0
+        self.current.frames_since_shown = 0
         self.current = self.current.next_child
         return
 
@@ -114,6 +114,7 @@ class Textbox_Tree:
         Resets the current textbox to the head textbox, so the textbox
         interactions play out the same the next time these set of textboxes are rendered.
         """
+        self.current.frames_since_shown = 0
         self.current = self.head
         return
 

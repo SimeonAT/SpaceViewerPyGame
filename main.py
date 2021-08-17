@@ -180,12 +180,25 @@ while not quit:
             for object in grid[current_pos[0] % 10][current_pos[1] % 10]:
                 show_textbox = object.draw_textbox(screen, textbox_index, key_pressed=key_pressed)
 
+                print("\n\n\n")
+                print("Current Object:", type(object))
+                print("\n\n\n")
+                print("Asteroid Belt:", type(Asteroid_Belt()))
+                print("\n\n\n")
+                print(type(object) == type(Asteroid_Belt))
+                print("\n\n\n")
                 if not show_textbox:
                     # if no more textboxes to render,
                     # reset index so that we can render first textbox for next obj
-                    textbox_index = 0
+                    if type(object) == type(Asteroid_Belt()):
+                        object.reset_textbox_tree()
+                    else:
+                        textbox_index = 0
                 else:
-                    object.textbox_frames_since_shown[textbox_index] += 1
+                    if type(object) == type(Asteroid_Belt()):
+                        object.increment_textbox_frames()
+                    else:
+                        object.textbox_frames_since_shown[textbox_index] += 1
 
     pygame.display.flip()
     clock.tick(60)  # 60 FPS

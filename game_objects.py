@@ -384,11 +384,19 @@ class Asteroid_Belt(pygame.sprite.Sprite):
                 self.tree.make_choice(True)
             elif self.choice == 1:
                 self.tree.make_choice(False)
+                return False
 
         # Render the textbox
         # NOTE: self.choice_result and key_pressed variables are used only for choice text boxes
         print(self.tree.current)
         self.choice_result = self.tree.current.textbox_object.draw(screen,
                                              self.tree.current.frames_since_shown, key_pressed)
+
+        def increment_textbox_frames(self):
+            self.textbox_tree.current.increment_frames()
+            return
+
+        def reset_textbox_tree(self):
+            self.textbox_tree.reset_tree()
 
         return True
