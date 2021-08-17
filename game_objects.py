@@ -392,11 +392,11 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         self.choice_result = self.tree.current.textbox_object.draw(screen,
                                              self.tree.current.frames_since_shown, key_pressed)
 
-        def increment_textbox_frames(self):
-            self.textbox_tree.current.increment_frames()
-            return
-
-        def reset_textbox_tree(self):
-            self.textbox_tree.reset_tree()
-
         return True
+
+    def increment_textbox_frames(self):
+        self.tree.current.increment_frames()
+        return
+
+    def reset_textbox_tree(self):
+        self.tree.reset_tree()
