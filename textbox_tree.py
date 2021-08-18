@@ -35,14 +35,7 @@ class Textbox_Tree_Node:
         return
 
     def is_choice_textbox(self):
-        """
-        Returns True if the textbox is a Choice Textbox, and False
-        otherwise.
-        """
-        if isinstance(self.textbox_object, Choice_TextBox):
-            return True
-        else:
-            return False
+        return isinstance(self.textbox_object, Choice_TextBox)
 
     def increment_frames(self):
         self.frames_since_shown += 1
@@ -66,10 +59,7 @@ class Textbox_Tree:
             The Textbox Tree Node that will be the head of the tree.
         """
         self.head = head
-
-        # The current textbox node that we need to render
         self.current = self.head
-
         return
 
     def make_choice(self, choice):
