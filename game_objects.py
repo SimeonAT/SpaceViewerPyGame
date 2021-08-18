@@ -347,6 +347,10 @@ class Asteroid_Belt(pygame.sprite.Sprite):
                                 lines = ["You mined this ateroid belt and found...",
                                          " ",
                                          "Replace w/ random_item() return value"]))
+        self.head_node.next_child.no_child = Textbox_Tree_Node(TextBox((1350, 400),
+                                        lines = ["You fly away from the asteroid belt...",
+                                                 " ",
+                                                 "and deep into the depths of space."]))
 
         # This link taught me that Python stores by reference, not by value
         # https://stackoverflow.com/questions/11049942
