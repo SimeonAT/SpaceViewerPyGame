@@ -42,7 +42,7 @@ for row in range(0, GRID_SIZE[0]):
             3 -> interstellar object
             4 -> asteroid belt
         """
-        rng = randint(0, 4)
+        rng = randint(0, 2)
 
         """
         grid[row][column] will contain a LIST of game objects,
@@ -52,13 +52,13 @@ for row in range(0, GRID_SIZE[0]):
             grid[row][column] = []
         if rng == 1:
             grid[row][column] = [Planet()]
-        if rng == 2:
+        if rng == None:
             new_spaceship = Spaceship([row, column])
             grid[row][column] = [new_spaceship]
             list_of_spaceships.append(new_spaceship)
-        if rng == 3:
+        if rng == None:
             grid[row][column] = [Intestellar_Object()]
-        if rng == 4:
+        if rng == 2:
             grid[row][column] = [Asteroid_Belt()]
 
 """
@@ -135,16 +135,9 @@ while not quit:
                         object.shown = False
                         object.frames_since_shown = 0  # reset frames since shown
 
-                        if not isinstance(object, Asteroid_Belt):
-                            for i in range(0, len(object.textbox_frames_since_shown)):
-                                # reset frames since shown for each textbox
-                                object.textbox_frames_since_shown[i] = 0
-
-                        # Asteroid Belt needs to be reset different, where it is using
-                        # test implementation where its textboxes are managed by a binary tree
-                        if isinstance(object, Asteroid_Belt):
-                            object.reset_textbox_tree()
-
+                        # Reset the all of textboxes' frames within the object's textbox
+                        # binary tree
+                        object.reset_textbox_tree()
                         textbox_index = 0
 
                 for spaceship in list_of_spaceships:
@@ -190,17 +183,13 @@ while not quit:
                 # https://stackoverflow.com/questions/14549405/python-check-instances-of-classes
                 # 
                 if not show_textbox:
-                    # if no more textboxes to render,
-                    # reset index so that we can render first textbox for next obj
-                    if isinstance(object, Asteroid_Belt):
-                        object.reset_textbox_tree()
+                    # if no more textboxes to render, reset the frames for 
+                    # each textbox in the object's textbox tree
+                    object.reset_textbox_tree()
 
                     textbox_index = 0
                 else:
-                    if isinstance(object, Asteroid_Belt):
-                        object.increment_textbox_frames()
-                    else:
-                        object.textbox_frames_since_shown[textbox_index] += 1
+                    object.increment_textbox_frames()
 
     pygame.display.flip()
     clock.tick(60)  # 60 FPS

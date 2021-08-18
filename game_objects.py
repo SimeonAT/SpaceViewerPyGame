@@ -336,19 +336,18 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         # The Textbox Tree will manage the which textboxes should render next given
         # the player input. More info on this ADT can be found in textbox_tree.py.
         #
-        self.head_node = Textbox_Tree_Node(TextBox((1350, 400),
-                                                            lines = self.description))
-        self.head_node.next_child = Textbox_Tree_Node(Choice_TextBox((1350, 400),
-                               lines = ["Do you want to mine this asteroid belt?", " "]))
+        self.head_node = Textbox_Tree_Node(TextBox(lines = self.description))
+        self.head_node.next_child = Textbox_Tree_Node(Choice_TextBox(lines = \
+                                            ["Do you want to mine this asteroid belt?", " "]))
 
         # The textbox that gives the reward to the player if they choose to mine
         # the asteroid belt.
-        self.head_node.next_child.yes_child = Textbox_Tree_Node(TextBox((1350, 400),
-                                lines = ["You mined this ateroid belt and found...",
+        self.head_node.next_child.yes_child = Textbox_Tree_Node(TextBox(lines = \
+                                        ["You mined this ateroid belt and found...",
                                          " ",
                                          "Replace w/ random_item() return value"]))
-        self.head_node.next_child.no_child = Textbox_Tree_Node(TextBox((1350, 400),
-                                        lines = ["You fly away from the asteroid belt...",
+        self.head_node.next_child.no_child = Textbox_Tree_Node(TextBox(lines = \
+                                                ["You fly away from the asteroid belt...",
                                                  " ",
                                                  "and deep into the depths of space."]))
 

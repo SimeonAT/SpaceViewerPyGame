@@ -19,11 +19,12 @@ CENTER_Y = int(SCREEN_HEIGHT / 2)
 class TextBox(pygame.sprite.Sprite):
     """ Class template for text and dialogue boxes. """
 
-    def __init__(self, size=(452, 93), lines=[]):
+    def __init__(self, size=(1350, 400), lines=[]):
         """
         size -> tuple containing dimensions of the text box
         lines -> a list of strings; each element is a line to display on the textbox
-        NOTE: The original size of the text box is 452 x 93.
+        NOTE: The original size of the text box is 452 x 93, but the most optimal size
+        for it on a 1280 x 720 screen is 1350 x 400.
         """
         super().__init__()
 
@@ -213,7 +214,7 @@ class Choice_TextBox(TextBox):
     predefined set of textboxes will appear depending on the choice the player makes.
     """
 
-    def __init__(self, size=(452, 93), lines=[], choices=None):
+    def __init__(self, size=(1350, 400), lines=[], choices=None):
         """
             Parameters:
                 size: The size of the textbox, represented as a list/tuple. Default size

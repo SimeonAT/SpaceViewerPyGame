@@ -13,6 +13,7 @@ from random import randint
 from text_box import TextBox, Extension_TextBox, Choice_TextBox
 from setup import resource_path
 from spritesheet import get_frames
+from textbox_tree import *
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -186,15 +187,15 @@ class Planet(pygame.sprite.Sprite):
             self.image = pygame.transform.scale(self.image,
                                                 (self.size, self.size))
 
-        self.text_boxes = [TextBox((1350, 400), lines = self.description)]
-        self.text_boxes.append(Choice_TextBox((1350, 400),
-                                              lines=["Do you want to enter this planet?",
-                                                     " "]))
-        self.textbox_result = Extension_TextBox((1350, 400), lines = ["Entering Planet..."])
+        # --- The Textbox Tree ---
+        self.description_node = Textbox_Tree_Node(TextBox(lines = self.description))
+        self.prompt_node = Textbox_Tree_Node(Choice_TextBox(lines =
+                                                    ["Do you want to enter this planet?"]))
+        self.yes_node = Textbox_Tree_Node(TextBox(lines = ["Entering Planet..."]))
 
-        # A list containing how many frames has each textbox been shown on the screen
-        self.textbox_frames_since_shown = [0] * len(self.text_boxes)
-
+        self.description_node.next_child = self.prompt_node
+        self.prompt_node.yes_child = self.yes_node
+        self.tree = Textbox_Tree(self.description_node)
 
     def draw(self, screen, frames_since_shown):
         if len(self.frames_list) != 0:
@@ -216,6 +217,14 @@ class Planet(pygame.sprite.Sprite):
             # This code runs only when there's only 1 frame to deal with
             screen.blit(self.image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))
 
+    def increment_textbox_frames(self):
+        self.tree.current.increment_frames()
+        return
+
+    def reset_textbox_tree(self):
+        self.tree.reset_tree()
+        return
+
     def draw_textbox(self, screen, index, key_pressed = None):
         """ Parameters:
                 screen: the PyGame screen in which to render the text box
@@ -224,46 +233,22 @@ class Planet(pygame.sprite.Sprite):
 
             Returns:
                 True -> There are still textboxes left to render
-                False -> No textboxes left to render
-         """
-
+                False -> No textboxes left to render """
         if key_pressed == "enter":
-            # main.py increments index by 1 when player pressed ENTER.
-            # Thus, in order to display the choice textbox, we need to use index - 1
-            self.choice_result = self.text_boxes[index - 1] \
-                    .draw(screen, self.textbox_frames_since_shown[index - 1], key_pressed)
+            if not self.tree.current.is_choice_textbox():
+                self.tree.next_textbox()
+            else:
+                if self.choice_result == 0:
+                    self.tree.make_choice(True)
+                elif self.choice_result == 1:
+                    self.tree.make_choice(False)
 
-            # Player entered "YES"
-            if self.choice_result == 0:
-                # Append "YES" result textbox to list so it can render
-                if self.textbox_result not in self.text_boxes:
-                    # make sure textbox result not in text boxes list
-                    # as we don't want to include more than 1 copy of it in the list
-                    self.text_boxes.append(self.textbox_result)
-
-                    # add an element to textbox frames list to account for new textbox
-                    self.textbox_frames_since_shown.append(0)
-
-            # Player entered "NO"
-            elif self.choice_result == 1:
-                # make sure textbox result is in text box list
-                # so that we're not removing something that doesn't exist in list
-                if self.textbox_result in self.text_boxes:
-                    self.text_boxes.remove(self.textbox_result)
-
-                    # remove element from textbox frames list to remove frames from result textbox
-                    self.textbox_frames_since_shown.pop()
-
-        if index > len(self.text_boxes) - 1:
-            # Remove textbox result to reset the result of the choices that the player made
-            if self.textbox_result in self.text_boxes:
-                self.text_boxes.remove(self.textbox_result)
-                self.textbox_frames_since_shown.pop()
+        if self.tree.current == None:
+            # No more textboxes left to render
             return False
 
         # Render the textbox
         # NOTE: self.choice_result and key_pressed are solely choice textbox variables
-        self.choice_result = self.text_boxes[index] \
-                .draw(screen, self.textbox_frames_since_shown[index], key_pressed)
-
+        self.choice_result = self.tree.current.textbox_object \
+                .draw(screen, self.tree.current.frames_since_shown, key_pressed)
         return True
