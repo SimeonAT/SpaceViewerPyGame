@@ -153,15 +153,43 @@ class Spaceship(pygame.sprite.Sprite):
         self.shown = False
         self.frames_since_shown = 0
 
-        self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics",
+        self.spritesheet = None
+        rng = randint(1, 4)
+        if rng == 1:
+            # The Metroid-themed spaceship that I came up with the idea for
+            #
+            self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics",
                                  "Spaceships", "spaceship-1.png"))).convert_alpha(),
-                            pygame.image.load(resource_path(os.path.join("Graphics",
+                                pygame.image.load(resource_path(os.path.join("Graphics",
                                  "Spaceships", "spaceship-2.png"))).convert_alpha()]
 
-        # Resize each image in self.spritesheet to the dimensions of self.size
-        for index in range(0, len(self.spritesheet)):
-            self.spritesheet[index] = \
-                pygame.transform.scale(self.spritesheet[index], (self.size, self.size))
+            # Resize each image in self.spritesheet to the dimensions of self.size
+            # As this spaceship sprite is a square (i.e. same x and y sizes)
+            #
+            for index in range(0, len(self.spritesheet)):
+                self.spritesheet[index] = \
+                    pygame.transform.scale(self.spritesheet[index], (self.size, self.size))
+        elif rng == 2:
+            self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics",
+                                "Spaceships", "vehicle1frame1.png"))).convert_alpha(),
+                                pygame.image.load(resource_path(os.path.join("Graphics",
+                                "Spaceships", "vehicle1frame2.png"))).convert_alpha(),
+                                pygame.image.load(resource_path(os.path.join("Graphics",
+                                "Spaceships", "vehicle1frame3.png"))).convert_alpha()]
+        elif rng == 3:
+            self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics",
+                                "Spaceships", "vehicle2frame1.png"))).convert_alpha(),
+                                pygame.image.load(resource_path(os.path.join("Graphics",
+                                "Spaceships", "vehicle2frame2.png"))).convert_alpha(),
+                                pygame.image.load(resource_path(os.path.join("Graphics",
+                                "Spaceships", "vehicle2frame3.png"))).convert_alpha()]
+        elif rng == 4:
+            self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics",
+                                "Spaceships", "vehicle3frame1.png"))).convert_alpha(),
+                                pygame.image.load(resource_path(os.path.join("Graphics",
+                                "Spaceships", "vehicle3frame2.png"))).convert_alpha(),
+                                pygame.image.load(resource_path(os.path.join("Graphics",
+                                "Spaceships", "vehicle3frame3.png"))).convert_alpha()]
 
         # What frame is the sprite animation on; also the index for self.spritesheet
         self.frame = 0
