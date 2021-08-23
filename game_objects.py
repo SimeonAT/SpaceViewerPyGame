@@ -166,16 +166,14 @@ class Spaceship(pygame.sprite.Sprite):
             self.description = ["The creatures inside the spaceship look at you with",
                                 "curious eyes."]
 
-        self.text_boxes.append(TextBox((1350, 400), lines = self.description))
-        self.text_boxes.append(Choice_TextBox((1350, 400), lines =
+        # --- Textbox Tree ---
+        self.desc_node = Textbox_Tree_Node(TextBox(lines = self.description))
+        self.desc_node.next_child = Textbox_Tree_Node(Choice_TextBox((1350, 400), lines =
                                               ["Do you want to fight this spaceship?", " "]))
-        self.textbox_result = Extension_TextBox((1350, 400), lines =
-                                              ["Spaceship battle will happen here.",
-                                               "But it is still in development right now."])
-
-        # A list containing how many frames has each textbox been shown on the screen
-        self.textbox_frames_since_shown = [0] * len(self.text_boxes)
-
+        self.desc_node.next_child.yes_child = Textbox_Tree_Node(Extension_TextBox((1350, 400),
+                                      lines =  ["Spaceship battle will happen here.",
+                                               "But it is still in development right now."]))
+        self.tree = Textbox_Tree(self.desc_node)
 
     def draw(self, screen, frames_since_shown):
         if self.frames_since_shown % 4 == 0:
@@ -190,8 +188,7 @@ class Spaceship(pygame.sprite.Sprite):
         screen.blit(self.image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))
         return
 
-
-    def draw_textbox(self, screen, index, key_pressed=None):
+    def draw_textbox(self, screen, index, key_pressed = None):
         """ Parameters:
                 screen: the PyGame screen in which to render the text box
                 index: what textbox to draw in the text_boxes list
@@ -199,51 +196,32 @@ class Spaceship(pygame.sprite.Sprite):
 
             Returns:
                 True -> There are still textboxes left to render
-                False -> No textboxes left to render
-            """
-
+                False -> No textboxes left to render """
         if key_pressed == "enter":
-            # main.py increments index by 1 when ENTER is pressed
-            # Thus, in order to display the choice textbox, we need to use index - 1
-            self.choice_result = self.text_boxes[index - 1] \
-                .draw(screen, self.textbox_frames_since_shown[index - 1], key_pressed)
+            if not self.tree.current.is_choice_textbox():
+                self.tree.next_textbox()
+            else:
+                if self.choice_result == 0:
+                    self.tree.make_choice(True)
+                elif self.choice_result == 1:
+                    self.tree.make_choice(False)
 
-            # Player chose "YES"
-            if self.choice_result == 0:
-                # Append "YES" result textbox to list so it can render the "YES" outcome.
-                if self.textbox_result not in self.text_boxes:
-                    # Make sure textbox result not in text boxes list,
-                    # as we don't want to include more than 1 copy of it in the list
-                    self.text_boxes.append(self.textbox_result)
-
-                    # add an element to textbox frames list to account for new textbox
-                    self.textbox_frames_since_shown.append(0)
-
-            # Player Chose "NO"
-            elif self.choice_result == 1:
-                # make sure textbox result is in text box list
-                # so that we're not removing something that doesn't exist in list
-                if self.textbox_result in self.text_boxes:
-                    self.text_boxes.remove(self.textbox_result)
-
-                    # remove element from textbox frames list to remove frames from result textbox
-                    self.textbox_frames_since_shown.pop()
-
-        if index > len(self.text_boxes) - 1:
-            # Remove textbox result so that we can reset the result of 
-            # the choices that the player made
-            if self.textbox_result in self.text_boxes:
-                self.text_boxes.remove(self.textbox_result)
-                self.textbox_frames_since_shown.pop()
+        if self.tree.current == None:
+            # No more textboxes left to render
             return False
 
         # Render the textbox
-        # NOTE: self.choice_result and key_pressed are only choice textbox class attributes
-        self.choice_result = self.text_boxes[index] \
-                .draw(screen, self.textbox_frames_since_shown[index], key_pressed)
-
+        # NOTE: self.choice_result and key_pressed are solely choice textbox variables
+        self.choice_result = self.tree.current.textbox_object \
+                .draw(screen, self.tree.current.frames_since_shown, key_pressed)
         return True
 
+    def increment_textbox_frames(self):
+        self.tree.current.increment_frames()
+
+    def reset_textbox_tree(self):
+        self.tree.reset_tree()
+        return
 
     def update(self):
         """ Updates the position of the spaceship, which allows the spaceship to move to
