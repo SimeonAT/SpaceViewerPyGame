@@ -190,6 +190,13 @@ class Spaceship(pygame.sprite.Sprite):
                                                "But it is still in development right now."]))
         self.tree = Textbox_Tree(self.desc_node)
 
+        # Used to indiciate the direction in which the spaceship 
+        # slight hovers on screen
+        self.hover_direction = 1
+
+        # The current position of the spaceship sprite on the screen/window
+        self.pos = (CENTER_X - self.size / 2, CENTER_Y - self.size / 2)
+
     def draw(self, screen, frames_since_shown):
         if self.frames_since_shown % 4 == 0:
             # if 1/15 of a second has passed (assuming 60 FPS), update the frame
@@ -200,7 +207,19 @@ class Spaceship(pygame.sprite.Sprite):
             self.frame = 0
         self.image = self.spritesheet[self.frame]
 
-        screen.blit(self.image, (CENTER_X - self.size / 2, CENTER_Y - self.size / 2))
+        x = CENTER_X - self.size / 2
+        y = CENTER_Y - self.size / 2
+
+        # Change the y-direction of the spaceship every 4 frames to give an
+        # animated "hovering" effect on the spaceship
+        if self.frames_since_shown % 16 == 0:
+            if self.hover_direction == 1:
+                self.hover_direction = -1
+            else:
+                self.hover_direction = 1
+            self.pos = (self.pos[0], self.pos[1] + randint(1, 10) * self.hover_direction)
+
+        screen.blit(self.image, self.pos)
         return
 
     def draw_textbox(self, screen, index, key_pressed = None):
@@ -294,7 +313,7 @@ class Asteroid(pygame.sprite.Sprite):
 
         # Slightly change position every 16 frames to display a "hovering"
         # effect on the asteroid
-        if frames_since_shown % 16  == 0:
+        if frames_since_shown % 16 == 0:
 
             # Hover direction can only either be -1 and 1, which when multiplied
             # with the x of y position can make the asteroid sprite
