@@ -8,7 +8,7 @@
 *	~~Change the textbox descriptions for the planets, objects, and spaceship sprites to what I wrote in the DESIGN.pdf.~~ 
 *	~~Change the music so that it is more suitable to the theme of the game and the gameplay.~~
 *	Add in new spaceship sprites and the animated planet sprites. In addition, add a "floating animation" for the asteorid sprites.
-~~*	Create a Choice Textbox Tree ADT which will help organize the choices that the player can make when they choose YES/NO 
+*	~~Create a Choice Textbox Tree ADT which will help organize the choices that the player can make when they choose YES/NO 
 	in a given choice textbox.~~ 
 *	Implement the resource gathering mechanics.
 *	Implement the combat mechanics. 
