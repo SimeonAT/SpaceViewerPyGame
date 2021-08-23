@@ -71,32 +71,47 @@ class Intestellar_Object(pygame.sprite.Sprite):
         self.image = pygame.image.load(self.img_file_location).convert_alpha()
         self.image = pygame.transform.scale(self.image, (self.size[0], self.size[1]))
 
-        # 1350 x 400 is three times the size of the original text box sprite
-        self.text_boxes = [TextBox((1350, 400), lines=self.description)]
-        self.textbox_frames_since_shown = [0] * len(self.text_boxes)
-
+        self.desc_node = Textbox_Tree_Node(TextBox((1350, 400), lines=self.description))
+        self.tree = Textbox_Tree(self.desc_node)
 
     def draw(self, screen, frames_since_shown):
         screen.blit(self.image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))
 
 
-    def draw_textbox(self, screen, index, key_pressed=None):
+    def draw_textbox(self, screen, index, key_pressed = None):
         """ Parameters:
-                index: the index for the text box that should be drawn in the text_boxes list
-                key_pressed: the key value that has been pressed by the user
+                screen: the PyGame screen in which to render the text box
+                index: what textbox to draw in the text_boxes list
+                key_pressed: the key that was pressed by the user
 
             Returns:
-                True -> there are still text boxes left to render
-                False -> No more text boxes left to render """
-        if index > len(self.text_boxes) - 1:
+                True -> There are still textboxes left to render
+                False -> No textboxes left to render """
+        if key_pressed == "enter":
+            if not self.tree.current.is_choice_textbox():
+                self.tree.next_textbox()
+            else:
+                if self.choice_result == 0:
+                    self.tree.make_choice(True)
+                elif self.choice_result == 1:
+                    self.tree.make_choice(False)
+
+        if self.tree.current == None:
+            # No more textboxes left to render
             return False
 
-        if key_pressed != None:
-            self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index], key_pressed)
-        else:
-            self.text_boxes[index].draw(screen, self.textbox_frames_since_shown[index])
-
+        # Render the textbox
+        # NOTE: self.choice_result and key_pressed are solely choice textbox variables
+        self.choice_result = self.tree.current.textbox_object \
+                .draw(screen, self.tree.current.frames_since_shown, key_pressed)
         return True
+
+    def increment_textbox_frames(self):
+        self.tree.current.increment_frames()
+
+    def reset_textbox_tree(self):
+        self.tree.reset_tree()
+        return
 
 
 class Star(pygame.sprite.Sprite):

@@ -42,7 +42,7 @@ for row in range(0, GRID_SIZE[0]):
             3 -> interstellar object
             4 -> asteroid belt
         """
-        rng = randint(0, 3)
+        rng = randint(0, 4)
 
         """
         grid[row][column] will contain a LIST of game objects,
@@ -56,9 +56,9 @@ for row in range(0, GRID_SIZE[0]):
             new_spaceship = Spaceship([row, column])
             grid[row][column] = [new_spaceship]
             list_of_spaceships.append(new_spaceship)
-        if rng == None:
-            grid[row][column] = [Intestellar_Object()]
         if rng == 3:
+            grid[row][column] = [Intestellar_Object()]
+        if rng == 4:
             grid[row][column] = [Asteroid_Belt()]
 
 """
