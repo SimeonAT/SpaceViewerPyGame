@@ -4,6 +4,7 @@ import sound
 from random import randint
 from game_objects import Star, Spaceship, Intestellar_Object, Asteroid_Belt
 from planet import Planet
+from player import *
 
 # TURNS OFF 'WELCOME TO PYGAME MESSAGE'
 # Got some help here: https://stackoverflow.com/questions/54246668/how-do-i-delete-the-hello
@@ -22,7 +23,7 @@ clock = pygame.time.Clock()  # FPS of game
 
 list_of_spaceships = []
 
-# current location of player
+player = Player()
 current_pos = [0, 0]
 
 """
@@ -165,6 +166,7 @@ while not quit:
 
     """ --- DRAW EVERYTHING IN TILE --- """
     star_list.draw(screen)
+    player.draw(screen)
     if grid[current_pos[0] % 10][current_pos[1] % 10]:
         # draw objects that are on tile if there is object to be drawn
         for object in grid[current_pos[0] % 10][current_pos[1] % 10]:
