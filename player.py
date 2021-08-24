@@ -31,13 +31,6 @@ class Player:
         self.heart_image = pygame.transform.scale(self.heart_image,
                            (self.heart_width, self.heart_height))
 
-        self.health_bar = pygame.image.load(resource_path(
-            os.path.join("Graphics", "Player Objects", "health_bar.png"))).convert_alpha()
-        _, _, self.hbar_width, self.hbar_height = self.health_bar.get_rect()
-        self.hbar_width *= SIZE_MULTIPLE
-        self.hbar_height *= SIZE_MULTIPLE
-        self.health_bar = pygame.transform.scale(self.health_bar, (self.hbar_width,
-                                                 self.hbar_height))
         return
 
     def draw_hud(self, screen):
@@ -51,10 +44,12 @@ class Player:
         # and the edge of the screen
         offset = 10
 
-        # Display the heart icon at the top left corner of screen
-        screen.blit(self.heart_image,(offset, offset))
+        # Display the heart icons at the top left corner of screen
+        # Each heart icon represents a life that the player has
+        for i in range(0, 3):
+            dist_from_prev_icon = self.heart_width * i
+            screen.blit(self.heart_image,(offset + dist_from_prev_icon,
+                                          offset))
 
-        # The health bar is at the immediate right of the heart icon
-        screen.blit(self.health_bar, (self.heart_width + offset * 2, offset))
         return
 
