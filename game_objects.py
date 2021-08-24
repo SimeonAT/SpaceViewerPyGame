@@ -44,7 +44,7 @@ class Intestellar_Object(pygame.sprite.Sprite):
 
         # rng == 1 -> black hole 
         # rng == 2 -> nebula
-        #rng == 3-> small nebula
+        #rng == 3 -> small nebula
         rng = randint(1, 3)
         if rng == 1:
             self.size = [128 * self.size_multiple, 95 * self.size_multiple]
