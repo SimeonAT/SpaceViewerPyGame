@@ -15,7 +15,13 @@
 *	~~Create a Choice Textbox Tree ADT which will help organize the choices that 
       the player can make when they choose YES/NO in a given choice textbox.~~ 
 *	Implement the resource gathering mechanics.
-*	Implement the combat mechanics. 
+*	Implement the combat mechanics through the use of YES/NO choice textboxes.
+	*	Don't forget to add at least one "game breaking" event. A game doesn't truly
+		feel open world unless you have the ability to destroy everything and test
+		the limits of the game.
+	*	Since most of the game will be implemented with YES/NO choice textboxes, use
+		items and powerup unlocks to allow the player to unlock new stories, rather than
+		giving them extra abilities that will make them stronger in the game.
 
 # **SOURCES USED**
 
