@@ -18,10 +18,26 @@ class Player:
 
     def __init__(self):
         self.lives = 3
+
+        # Load up the heart sprite image and resize it so that it appears big enough on screen
         self.heart_image = pygame.image.load(resource_path(
             os.path.join("Graphics", "Player Objects", "heart.png"))).convert_alpha()
 
-    def draw(self, screen):
+        _, _, self.width, self.height = self.heart_image.get_rect()
+        self.width *= 5
+        self.height *= 5
+
+        self.heart_image = pygame.transform.scale(self.heart_image,
+                           (self.width, self.height))
+        return
+
+    def draw_hud(self, screen):
+        """
+        Draws the Player HUD onto the screen.
+
+        Parameter(s):
+            The screen in which to draw the HUD on
+        """
         # The heart sprite, along with the number of lives the player has,
         # will always be shown at the top left corner of the screen
         screen.blit(self.heart_image,(0, 0))

@@ -166,7 +166,6 @@ while not quit:
 
     """ --- DRAW EVERYTHING IN TILE --- """
     star_list.draw(screen)
-    player.draw(screen)
     if grid[current_pos[0] % 10][current_pos[1] % 10]:
         # draw objects that are on tile if there is object to be drawn
         for object in grid[current_pos[0] % 10][current_pos[1] % 10]:
@@ -193,6 +192,7 @@ while not quit:
                 else:
                     object.increment_textbox_frames()
 
+    player.draw_hud(screen)
     pygame.display.flip()
     clock.tick(60)  # 60 FPS
     key_pressed = None
