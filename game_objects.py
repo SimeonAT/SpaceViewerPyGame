@@ -122,7 +122,7 @@ class Star(pygame.sprite.Sprite):
     def __init__(self):
         super().__init__()
         self.color = (randint(0, 255), randint(0, 255), randint(0, 255))
-        self.width = self.height = randint(1, 4)
+        self.width = self.height = randint(2, 4)
 
         self.image = pygame.Surface([self.width, self.height])
         pygame.draw.rect(self.image, self.color, [0, 0, self.width, self.height])
@@ -140,16 +140,16 @@ class Star(pygame.sprite.Sprite):
 
 class Spaceship(pygame.sprite.Sprite):
 
-    def __init__(self, grid_pos, size = None):
+    def __init__(self, grid_pos, size_mult = None):
         """ Parameters:
                 grid_pos: the [row, column]/(row, column) position of the spaceship on the grid
-                size: the size of the spaceship sprite
+                size_mult: A factor of how big the spaceship should be from the original size
 
             Returns:
                 No return value """
         super().__init__()
         self.grid_pos = grid_pos
-        self.size = size if size != None else randint(300, 700)
+        self.size_mult = size_mult if size_mult != None else randint(1, 3)
         self.shown = False
         self.frames_since_shown = 0
 
@@ -163,12 +163,6 @@ class Spaceship(pygame.sprite.Sprite):
                                 pygame.image.load(resource_path(os.path.join("Graphics",
                                  "Spaceships", "spaceship-2.png"))).convert_alpha()]
 
-            # Resize each image in self.spritesheet to the dimensions of self.size
-            # As this spaceship sprite is a square (i.e. same x and y sizes)
-            #
-            for index in range(0, len(self.spritesheet)):
-                self.spritesheet[index] = \
-                    pygame.transform.scale(self.spritesheet[index], (self.size, self.size))
         elif rng == 2:
             self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics",
                                 "Spaceships", "vehicle1frame1.png"))).convert_alpha(),
@@ -190,6 +184,20 @@ class Spaceship(pygame.sprite.Sprite):
                                 "Spaceships", "vehicle3frame2.png"))).convert_alpha(),
                                 pygame.image.load(resource_path(os.path.join("Graphics",
                                 "Spaceships", "vehicle3frame3.png"))).convert_alpha()]
+
+        # The dimensions of the spritesheet
+        # Format of a rect (top, left, width, height)
+        # Source: https://www.pygame.org/docs/ref/rect.html
+        _, _, self.width, self.height = self.spritesheet[0].get_rect()
+
+        # Resize each image in sprite sheet by a factor of self.size_mult
+        # As this spaceship sprite is a square (i.e. same x and y sizes)
+        #
+        self.width *= self.size_mult
+        self.height *= self.size_mult
+        for index in range(0, len(self.spritesheet)):
+            self.spritesheet[index] = pygame.transform.scale(self.spritesheet[index],
+                           (self.width, self.height))
 
         # What frame is the sprite animation on; also the index for self.spritesheet
         self.frame = 0
@@ -223,7 +231,8 @@ class Spaceship(pygame.sprite.Sprite):
         self.hover_direction = 1
 
         # The current position of the spaceship sprite on the screen/window
-        self.pos = (CENTER_X - self.size / 2, CENTER_Y - self.size / 2)
+        self.pos = (CENTER_X - (self.width / 2),
+                    CENTER_Y - (self.height / 2))
 
     def draw(self, screen, frames_since_shown):
         if self.frames_since_shown % 4 == 0:
@@ -235,8 +244,8 @@ class Spaceship(pygame.sprite.Sprite):
             self.frame = 0
         self.image = self.spritesheet[self.frame]
 
-        x = CENTER_X - self.size / 2
-        y = CENTER_Y - self.size / 2
+        x = CENTER_X - self.width / 2
+        y = CENTER_Y - self.height / 2
 
         # Change the y-direction of the spaceship every 4 frames to give an
         # animated "hovering" effect on the spaceship
