@@ -4,6 +4,7 @@ and the tutorial NPC that guides the player on how to play the game.
 """
 import pygame
 from setup import resource_path
+from random import randint
 import os
 
 SCREEN_WIDTH = 1280
@@ -22,6 +23,9 @@ class Player:
     def __init__(self):
         self.lives = 3
 
+        self.frames_since_shown = 0
+        self.hover_direction = 1
+
         # Load up each sprite and resize them by a factor of SIZE_MULTIPLE
         self.heart_image = pygame.image.load(resource_path(
             os.path.join("Graphics", "Player Objects", "heart.png"))).convert_alpha()
@@ -30,7 +34,6 @@ class Player:
         self.heart_height *= SIZE_MULTIPLE
         self.heart_image = pygame.transform.scale(self.heart_image,
                            (self.heart_width, self.heart_height))
-
         return
 
     def draw_hud(self, screen):
@@ -49,13 +52,25 @@ class Player:
         for i in range(1, 4):
             # The distance that top left coord of current heart needs to be in order
             # to be right next to the previous heart icon
+            # 
             dist_from_prev_heart = self.heart_width * (i - 1)
 
             # For the ith heart, we need to offset * i in order for the hearts to be
             # offset distance apart; not * i will make the hearts cluttered together
+            # 
             x_offset = offset * i
 
+            # Every 16 frames, slightly adjust y pos of the heart icons by a small
+            # random number in order to give them a hover effect similar to the asteroids
+            # 
+            if self.frames_since_shown % 100 == 0:
+                self.hover_direction *= -1
+                self.heart_height = self.heart_height + self.hover_direction * 30
+                print(f"Change in y-position for heart {i}: {self.heart_height}")
+
             screen.blit(self.heart_image, (dist_from_prev_heart + x_offset,
-                                          offset))
+                                          self.heart_height))
+
+        self.frames_since_shown += 1
         return
 
