@@ -45,11 +45,17 @@ class Player:
         offset = 10
 
         # Display the heart icons at the top left corner of screen
-        # Each heart icon represents a life that the player has
-        for i in range(0, 3):
-            dist_from_prev_icon = self.heart_width * i
-            screen.blit(self.heart_image,(offset + dist_from_prev_icon,
-                                          offset))
+        # 
+        for i in range(1, 4):
+            # The distance that top left coord of current heart needs to be in order
+            # to be right next to the previous heart icon
+            dist_from_prev_heart = self.heart_width * (i - 1)
 
+            # For the ith heart, we need to offset * i in order for the hearts to be
+            # offset distance apart; not * i will make the hearts cluttered together
+            x_offset = offset * i
+
+            screen.blit(self.heart_image, (dist_from_prev_heart + x_offset,
+                                          offset))
         return
 
