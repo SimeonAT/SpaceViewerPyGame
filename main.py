@@ -193,6 +193,8 @@ while not quit:
                     object.increment_textbox_frames()
 
     player.draw_hud(screen)
+    player.increment_frames()
+
     pygame.display.flip()
     clock.tick(60)  # 60 FPS
     key_pressed = None
