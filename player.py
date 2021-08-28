@@ -31,7 +31,6 @@ class Heart:
         self.heart_image = pygame.image.load(resource_path(
             os.path.join("Graphics", "Player Objects", "heart.png"))).convert_alpha()
         self.x, self.y, self.width, self.height = self.heart_image.get_rect()
-        print(f"Before scaling: (width, height): {(self.width, self.height)}")
         self.width *= SIZE_MULTIPLE
         self.height *= SIZE_MULTIPLE
         self.heart_image = pygame.transform.scale(self.heart_image,
@@ -39,6 +38,12 @@ class Heart:
 
         self.frames_since_shown = 0
         self.hover_direction = 1
+
+        # The offset from the actual y-value that heart sprite will 
+        # temporaily take and change every few frames in order to give 
+        # it a bouncing/hovering effect
+        self.offset_from_real_y = 0
+
         return
 
     def draw(self, screen, position = None):
@@ -52,13 +57,17 @@ class Heart:
         if position == None:
             position = (self.x, self.y)
 
-        # Change the direction and position every 16 frames (assuming 60 FPS)
+        # Change the direction and position every 13 frames (I found that doing so
+        # gives the best effect)
         # so the heart displays a "hovering effect" similar to the asteroids
-        # if self.frames_since_shown % 16 == 0:
-        #    self.hover_direction *= -1
-        #    self.y += (self.hover_direction * randint(1, 10))
+        if self.frames_since_shown % 13 == 0:
+            self.hover_direction *= -1
 
-        screen.blit(self.heart_image, position)
+            # How much the heart hovers will always be a random distance from its
+            # actual/original y-value
+            self.offset_from_real_y = self.y + (self.hover_direction * randint(1, 3))
+
+        screen.blit(self.heart_image, (self.x, self.offset_from_real_y))
         return
 
     def increment_frames(self):
@@ -105,6 +114,9 @@ class Player:
     def increment_frames(self):
         """
         Increment the number of frames that the player HUD has been displayed on screen.
+
+        The Player object itself will not have a frame counter; rather the sprites that make
+        up the player HUD will have frame counters, at they will be displayed on screen.
         """
         for heart in self.heart_icons:
             heart.increment_frames()
