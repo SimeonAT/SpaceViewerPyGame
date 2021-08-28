@@ -114,7 +114,7 @@ class Player:
         x_offset = OFFSET * (last_heart_index + 1)
 
         (new_life.x, new_life.y) = (dist_from_prev_heart + x_offset, OFFSET)
-        self.heart_icons.append(Heart())
+        self.heart_icons.append(new_life)
 
         return
 
