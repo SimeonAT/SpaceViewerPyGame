@@ -100,6 +100,24 @@ class Player:
 
         return
 
+    def give_life(self):
+        """
+        Gives the player one extra life.
+        """
+        self.lives += 1
+        new_life = Heart()
+
+        # Find the position where the new heart should be in a similar fashion
+        # to the for loop in the constructor
+        last_heart_index = len(self.heart_icons) - 1
+        dist_from_prev_heart = self.heart_icons[last_heart_index].width * last_heart_index
+        x_offset = OFFSET * (last_heart_index + 1)
+
+        (new_life.x, new_life.y) = (dist_from_prev_heart + x_offset, OFFSET)
+        self.heart_icons.append(Heart())
+
+        return
+
     def draw_hud(self, screen):
         """
         Draws the Player HUD onto the screen.
