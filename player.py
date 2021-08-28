@@ -30,14 +30,18 @@ class Heart:
     def __init__(self):
         self.heart_image = pygame.image.load(resource_path(
             os.path.join("Graphics", "Player Objects", "heart.png"))).convert_alpha()
-        _, _,  self.width, self.height = self.heart_image.get_rect()
+        self.x, self.y, self.width, self.height = self.heart_image.get_rect()
+        print(f"Before scaling: (width, height): {(self.width, self.height)}")
         self.width *= SIZE_MULTIPLE
         self.height *= SIZE_MULTIPLE
-        self.image = pygame.transform.scale(self.heart_image,
+        self.heart_image = pygame.transform.scale(self.heart_image,
                            (self.width, self.height))
+
+        self.frames_since_shown = 0
+        self.hover_direction = 1
         return
 
-    def draw(self, screen, position = (OFFSET, OFFSET)):
+    def draw(self, screen, position = None):
         """
         Draws the heart icon onto the screen.
 
@@ -45,7 +49,20 @@ class Heart:
             The screen to draw on
             The (x, y) position as a tuple or list
         """
-        screen.blit(self.image, position)
+        if position == None:
+            position = (self.x, self.y)
+
+        # Change the direction and position every 16 frames (assuming 60 FPS)
+        # so the heart displays a "hovering effect" similar to the asteroids
+        # if self.frames_since_shown % 16 == 0:
+        #    self.hover_direction *= -1
+        #    self.y += (self.hover_direction * randint(1, 10))
+
+        screen.blit(self.heart_image, position)
+        return
+
+    def increment_frames(self):
+        self.frames_since_shown += 1
         return
 
 
@@ -57,8 +74,21 @@ class Player:
         for i in range(0, self.lives):
             self.heart_icons.append(Heart())
 
-        self.HUD_frames_since_shown = 0
-        self.hover_direction = 1
+        # Determine the position that each heart icon will be in:
+        # They will all appear at the top left corner of the screen with
+        # OFFSET spaces apart
+        for i in range(0, self.lives):
+            # The distance that top left coord of current heart needs to be in order 
+            # to be right next to the previous heart icon 
+            dist_from_prev_heart = self.heart_icons[i].width * i
+
+            # The distance that the ith heart is from the first heart. Each heart
+            # will be be OFFSET spaces away from each other.
+            x_offset = OFFSET * (i + 1)
+
+            (self.heart_icons[i].x,
+             self.heart_icons[i].y) = (dist_from_prev_heart + x_offset, OFFSET)
+
         return
 
     def draw_hud(self, screen):
@@ -68,27 +98,15 @@ class Player:
         Parameter(s):
             The screen in which to draw the HUD on
         """
-
-        # Display the heart icons at the top left corner of screen
-        for i in range(0, self.lives):
-            # The distance that top left coord of current heart needs to be in order
-            # to be right next to the previous heart icon
-            # 
-            dist_from_prev_heart = self.heart_icons[i].width * i
-
-            # For the ith heart, we need to offset * i in order for the hearts to be
-            # offset distance apart; not * i will make the hearts cluttered together
-            # 
-            x_offset = OFFSET * (i + 1)
-
-            self.heart_icons[i].draw(screen, (dist_from_prev_heart + x_offset,
-                                              OFFSET))
+        for heart in self.heart_icons:
+            heart.draw(screen)
         return
 
     def increment_frames(self):
         """
         Increment the number of frames that the player HUD has been displayed on screen.
         """
-        self.HUD_frames_since_shown += 1
+        for heart in self.heart_icons:
+            heart.increment_frames()
         return
 
