@@ -417,15 +417,9 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         return
 
     def random_item(self):
-        """ Generates a random item that can be found on asteroid when mining """
-        rng = randint(1, 3)
-        if rng == 1:
-            return "{} bars of sulfurite!".format(randint(0, 1000))
-        elif rng == 2:
-            return "{} mythril ores!".format(randint(0, 500))
-        elif rng == 3:
-            return "{} gold!".format(randrange(0, 100000))
-
+        """ Generates a random reward that can be found on asteroid when mining """
+        rng = randint(1, 5000)
+        return f"{rng} resources!"
 
     def draw_textbox(self, screen, index, key_pressed):
         """ Parameters:
