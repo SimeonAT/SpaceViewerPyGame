@@ -30,7 +30,7 @@ class Heart:
     def __init__(self):
         self.heart_image = pygame.image.load(resource_path(
             os.path.join("Graphics", "Player Objects", "heart.png"))).convert_alpha()
-        self.x, self.y, self.width, self.height = self.heart_image.get_rect()
+        _, _,  self.width, self.height = self.heart_image.get_rect()
         self.width *= SIZE_MULTIPLE
         self.height *= SIZE_MULTIPLE
         self.image = pygame.transform.scale(self.heart_image,
@@ -68,9 +68,6 @@ class Player:
         Parameter(s):
             The screen in which to draw the HUD on
         """
-        # Offset so that there is a small amount of space between each sprite
-        # and the edge of the screen
-        offset = 10
 
         # Display the heart icons at the top left corner of screen
         for i in range(0, self.lives):
@@ -82,10 +79,10 @@ class Player:
             # For the ith heart, we need to offset * i in order for the hearts to be
             # offset distance apart; not * i will make the hearts cluttered together
             # 
-            x_offset = offset * i
+            x_offset = OFFSET * (i + 1)
 
             self.heart_icons[i].draw(screen, (dist_from_prev_heart + x_offset,
-                                              self.heart_icons[i].height))
+                                              OFFSET))
         return
 
     def increment_frames(self):
