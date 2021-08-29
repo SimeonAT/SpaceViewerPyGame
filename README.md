@@ -41,5 +41,6 @@ The sources below are the music and graphics that I am using for this video game
 	*	https://gvituri.itch.io/space-shooter
 	*	https://helianthus-games.itch.io/animated-pixel-art-planets
 	*	https://ansimuz.itch.io/explosion-animations-pack
-*	*	Gameplay Music Provided by Lofi Girl (bit.ly/lofigirI-playlists)
-*	Textbox Sprite : https://vapxiel.itch.io/pixel-ui-elements-pack-1?download
+	*	Gameplay Music Provided by Lofi Girl (bit.ly/lofigirI-playlists)
+	*	https://deep-fold.itch.io/pixel-planet-generator
+	*	Textbox Sprite: https://vapxiel.itch.io/pixel-ui-elements-pack-1?download
