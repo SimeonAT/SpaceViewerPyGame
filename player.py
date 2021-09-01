@@ -110,9 +110,10 @@ class Player:
         # Find the position where the new heart should be in a similar fashion
         # to the for loop in the constructor
         next_available_heart_index = len(self.heart_icons)
-        dist_from_prev_heart = self.heart_icons[last_heart_index - 1].width \
-                * last_heart_index
-        x_offset = OFFSET * (last_heart_index + 1)
+        last_heart_index = next_available_heart_index - 1
+        dist_from_prev_heart = self.heart_icons[last_heart_index].width \
+                * next_available_heart_index
+        x_offset = OFFSET * (next_available_heart_index + 1)
 
         (new_life.x, new_life.y) = (dist_from_prev_heart + x_offset, OFFSET)
         self.heart_icons.append(new_life)
