@@ -424,18 +424,30 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         return
 
     def random_item(self, player):
-        """ Generates a random item (or if lucky, the player
-            gets an extra life) that can be found on asteroid when mining """
-        rng = 1
-        if rng == 5:
+        """
+        Generates a random item (or if lucky, the player
+        gets an extra life) that can be found on asteroid when mining
+
+        Probabilities of Rewards:
+            - 40% for an extra life
+            - Uniform Distribution for all other rewards
+              (approximately 20% each)
+        """
+        rng = randint(1, 10)
+        if rng in {1, 2}:
             return "{} bars of sulfurite!".format(randint(0, 1000))
-        elif rng == 5:
+        elif rng in {3, 4}:
             return "{} mythril ores!".format(randint(0, 500))
-        elif rng == 5:
+        elif rng in {5, 6}:
             return "{} gold!".format(randrange(0, 100000))
-        elif rng == 1:
-            player.give_life()
-            return "You find a weird pink essence, which rejuvinates yourself into a new state"
+        elif rng in {7, 8, 9, 10}:
+            if player.lives < player.max_lives:
+                player.give_life()
+                return "You find a weird pink essence, which rejuvinates you into a healty state."
+            else:
+                first_part = "You find a weird pink essence,"
+                second_part = "but it disappears as you try to grab it!"
+                return f"{first_part} {second_part}"
 
     def draw_textbox(self, screen, index, player, key_pressed=None):
         """ Parameters:

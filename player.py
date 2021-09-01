@@ -79,6 +79,7 @@ class Player:
 
     def __init__(self):
         self.lives = 3
+        self.max_lives = 7
         self.heart_icons = []
         for i in range(0, self.lives):
             self.heart_icons.append(Heart())
@@ -104,6 +105,9 @@ class Player:
         """
         Gives the player one extra life.
         """
+        if self.lives > self.max_lives:
+            return
+
         self.lives += 1
         new_life = Heart()
 
@@ -119,6 +123,12 @@ class Player:
         self.heart_icons.append(new_life)
 
         return
+
+    def lose_life(self):
+        """
+        Takes away one life from the player.
+        """
+        self.lives -= 1
 
     def draw_hud(self, screen):
         """
