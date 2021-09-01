@@ -17,6 +17,7 @@ from text_box import TextBox, Extension_TextBox, Choice_TextBox
 from setup import resource_path
 from spritesheet import get_frames
 from textbox_tree import *
+from player import *
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -78,11 +79,14 @@ class Intestellar_Object(pygame.sprite.Sprite):
         screen.blit(self.image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))
 
 
-    def draw_textbox(self, screen, index, key_pressed = None):
+    def draw_textbox(self, screen, index, player, key_pressed=None):
         """ Parameters:
                 screen: the PyGame screen in which to render the text box
                 index: what textbox to draw in the text_boxes list
                 key_pressed: the key that was pressed by the user
+                player: the object that holds data about player,
+                        as certain textbox results can positively/negative affect
+                        the player
 
             Returns:
                 True -> There are still textboxes left to render
@@ -259,11 +263,14 @@ class Spaceship(pygame.sprite.Sprite):
         screen.blit(self.image, self.pos)
         return
 
-    def draw_textbox(self, screen, index, key_pressed = None):
+    def draw_textbox(self, screen, index, player, key_pressed=None):
         """ Parameters:
                 screen: the PyGame screen in which to render the text box
                 index: what textbox to draw in the text_boxes list
                 key_pressed: the key that was pressed by the user
+                player: the object that holds data about player,
+                        as certain textbox results can positively/negative affect
+                        the player
 
             Returns:
                 True -> There are still textboxes left to render
@@ -416,21 +423,28 @@ class Asteroid_Belt(pygame.sprite.Sprite):
             asteroid.draw(screen, frames_since_shown)
         return
 
-    def random_item(self):
-        """ Generates a random item that can be found on asteroid when mining """
-        rng = randint(1, 3)
-        if rng == 1:
+    def random_item(self, player):
+        """ Generates a random item (or if lucky, the player
+            gets an extra life) that can be found on asteroid when mining """
+        rng = 1
+        if rng == 5:
             return "{} bars of sulfurite!".format(randint(0, 1000))
-        elif rng == 2:
+        elif rng == 5:
             return "{} mythril ores!".format(randint(0, 500))
-        elif rng == 3:
+        elif rng == 5:
             return "{} gold!".format(randrange(0, 100000))
+        elif rng == 1:
+            player.give_life()
+            return "You find a weird pink essence, which rejuvinates yourself into a new state"
 
-    def draw_textbox(self, screen, index, key_pressed):
+    def draw_textbox(self, screen, index, player, key_pressed=None):
         """ Parameters:
                 screen: the PyGame screen in which to render the text box
                 index: what textbox to draw in the text_boxes list
                 key_pressed: the key that was pressed by the user
+                player: the object that holds data about player,
+                        as certain textbox results can positively/negative affect
+                        the player
 
             Returns:
                 True -> There are still textboxes left to render
@@ -445,7 +459,7 @@ class Asteroid_Belt(pygame.sprite.Sprite):
                                                  key_pressed)
 
                 if self.choice_result == 0:
-                    self.result_textbox_node.textbox_object.lines[2] = self.random_item()
+                    self.result_textbox_node.textbox_object.lines[2] = self.random_item(player)
                     self.tree.make_choice(True)
                 elif self.choice_result == 1:
                     self.tree.make_choice(False)

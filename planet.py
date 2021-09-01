@@ -225,11 +225,14 @@ class Planet(pygame.sprite.Sprite):
         self.tree.reset_tree()
         return
 
-    def draw_textbox(self, screen, index, key_pressed = None):
+    def draw_textbox(self, screen, index, player, key_pressed = None):
         """ Parameters:
                 screen: the PyGame screen in which to render the text box
                 index: what textbox to draw in the text_boxes list
                 key_pressed: the key that was pressed by the user
+                player: the object that holds data about player,
+                        as certain textbox results can positively/negative affect
+                        the player
 
             Returns:
                 True -> There are still textboxes left to render

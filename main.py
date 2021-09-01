@@ -178,7 +178,8 @@ while not quit:
         if show_textbox:
             # Draw the textbox for each object on the grid space
             for object in grid[current_pos[0] % 10][current_pos[1] % 10]:
-                show_textbox = object.draw_textbox(screen, textbox_index, key_pressed=key_pressed)
+                show_textbox = object.draw_textbox(screen, textbox_index, player,
+                                                   key_pressed=key_pressed)
 
                 # I used this link to learn how to properly use isinstance():
                 # https://stackoverflow.com/questions/14549405/python-check-instances-of-classes
