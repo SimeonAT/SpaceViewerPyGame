@@ -30,7 +30,7 @@ class Planet(pygame.sprite.Sprite):
                 size: The size of the planet sprite, representing both its length and width
         """
         super().__init__()
-        self.size = size if size != None else randint(75, 500)
+        self.size = size if size != None else randint(200, 700)
         self.shown = False
         self.frames_since_shown = 0
         self.description = []
@@ -43,10 +43,10 @@ class Planet(pygame.sprite.Sprite):
 
         self.img_file_location = os.path.join("Graphics", "Space Objects") + "/"
 
-        rng = 10
+        rng = randint(1, 10)
         if rng == 1:
             self.img_file_location += "barren_spritesheet.png"
-            self.frames_list, self.total_frames = get_frames(1, 100, 100, 100)
+            self.frames_list, self.total_frames = get_frames(15, 15, 100, 100)
             self.description = ["A rocky moon that doesn't orbit around any planet.",
                                 "It sits silently within the deep reaches of space..."]
 
@@ -54,7 +54,7 @@ class Planet(pygame.sprite.Sprite):
             rng_desert = randint(1, 2)
             if rng_desert == 1:
                 self.img_file_location += "terran_dry.png"
-                self.frames_list, self.total_frames = get_frames(1, 100, 100, 100)
+                self.frames_list, self.total_frames = get_frames(15, 15, 100, 100)
             elif rng_desert == 2:
                 self.img_file_location += "Brown Planet Animated.png"
                 self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
@@ -79,7 +79,7 @@ class Planet(pygame.sprite.Sprite):
                 self.frames_list, self.total_frames = get_frames(5, 15, 34, 34, hanging_frames=4)
             else:
                 self.img_file_location += "ice_spritesheet.png"
-                self.frames_list, self.total_frames = get_frames(1, 100, 100, 100)
+                self.frames_list, self.total_frames = get_frames(15, 15, 100, 100)
 
             self.description = ["A cold and barren rogue planet. In spite of the",
                                 "lifelessness on its cold surface, various underwater",
@@ -87,21 +87,21 @@ class Planet(pygame.sprite.Sprite):
 
         elif rng == 5:
             self.img_file_location += "lava_spritesheet.png"
-            self.frames_list, self.total_frames = get_frames(1, 100, 100, 100)
+            self.frames_list, self.total_frames = get_frames(15, 15, 100, 100)
             self.description = ["The hottest planet that is not a star. No life exists",
                                 "on this planet, but if you are willing to brace the heat,",
                                 "you may find some very valuable metals."]
 
         elif rng == 6:
             self.img_file_location += "ocean_spritesheet.png"
-            self.frames_list, self.total_frames = get_frames(1, 100, 100, 100)
+            self.frames_list, self.total_frames = get_frames(15, 15, 100, 100)
             self.description = ["A planet with very few land surfaces, if any.",
                                 "Sea creatures thrive here, and advanced",
                                 "civilizations can be found deep underwater."]
 
         elif rng == 7:
             self.img_file_location += "terran_spritesheet.png"
-            self.frames_list, self.total_frames = get_frames(1, 100, 100, 100)
+            self.frames_list, self.total_frames = get_frames(15, 15, 100, 100)
             self.description = ["This planet contains all the qualities ideal for sustaining",
                      "various kinds of life. Both land and sea creatures coexist together",
                      "in the various biomes within this planet."]
@@ -110,11 +110,11 @@ class Planet(pygame.sprite.Sprite):
             rng_gas_giants = randint(1, 2)
             if rng_gas_giants == 1:
                 self.img_file_location += "gas_giant_spritesheet1.png"
-                self.frames_list, self.total_frames = get_frames(1, 100, 100, 100)
+                self.frames_list, self.total_frames = get_frames(15, 15, 100, 100)
 
             elif rng_gas_giants == 2:
                 self.img_file_location += "gas_giant_spritesheet2.png"
-                self.frames_list, self.total_frames = get_frames(1, 50, 300, 300)
+                self.frames_list, self.total_frames = get_frames(15, 15, 300, 300)
 
             self.description = ["A planet made solely out of air.",
                                 "Birds, bats, and various other flying beasts dominate",
@@ -149,7 +149,7 @@ class Planet(pygame.sprite.Sprite):
             elif rng_star == 3:
                 self.img_file_location += "star3.png"
 
-            self.frames_list, self.total_frames = get_frames(13, 13, 200, 200)
+            self.frames_list, self.total_frames = get_frames(15, 15, 200, 200)
             self.description = ["A powerful planetary object that radiates with immese heat."]
 
         # Set up file location to work with PyInstaller
