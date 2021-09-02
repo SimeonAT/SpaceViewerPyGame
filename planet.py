@@ -45,7 +45,8 @@ class Planet(pygame.sprite.Sprite):
 
         rng = randint(1, 12)
         if rng == 1:
-            self.img_file_location += "Baren.png"
+            self.img_file_location += "baren_spritesheet.png"
+            self.animated = True
             self.description = ["A rocky moon that doesn't orbit around any planet.",
                                 "It sits silently within the deep reaches of space..."]
 
