@@ -43,7 +43,8 @@ class Planet(pygame.sprite.Sprite):
 
         self.img_file_location = os.path.join("Graphics", "Space Objects") + "/"
 
-        rng = randint(1, 12)
+        # rng = randint(1, 12)
+        rng = 7
         if rng == 1:
             self.img_file_location += "Baren.png"
             self.description = ["A rocky moon that doesn't orbit around any planet.",
@@ -77,15 +78,9 @@ class Planet(pygame.sprite.Sprite):
                                 "together among the various tall trees within the planet."]
 
         elif rng == 4:
-            rng_ice = randint(1, 2)
-            if rng_ice == 1:
-                self.img_file_location += "Ice.png"
-            elif rng_ice == 2:
-                self.img_file_location += "Blue Planet.png"
-            elif rng_ice == 3:
-                self.img_file_location += "Blue Planet Animated.png"
-                self.animated = True
-                self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
+            self.img_file_location += "Blue Planet Animated.png"
+            self.animated = True
+            self.frames_list, self.total_frames = get_frames(5, 15, 34, 34,
                                                                  hanging_frames=4)
 
             self.description = ["A cold and barren rogue planet. In spite of the",
@@ -104,7 +99,9 @@ class Planet(pygame.sprite.Sprite):
                             "here, and advanced civilizations can be found deep underwater."]
 
         elif rng == 7:
-            self.img_file_location += "Terran.png"
+            self.img_file_location += "terran_spritesheet.png"
+            self.animated = True
+            self.frames_list, self.total_frames = get_frames(1, 100, 100, 100)
             self.description = ["This planet contains all the qualities ideal for sustaining",
                      "various kinds of life. Both land and sea creatures coexist together",
                      "in the various biomes within this planet."]

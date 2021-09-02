@@ -7,7 +7,8 @@ def get_frames(rows, frames_per_row, frame_width, frame_height, hanging_frames=N
 
     rows -> how many rows in the spritesheet
     frames_per_row -> how many frames in each row
-    frame_width, frame_height -> the dimensions of each frame in the spritesheet
+    frame_width, frame_height -> the dimensions of EACH FRAME IN THE SPRITESHEET
+                                 (NOT THE DIMENSIONS OF THE WHOLE SPRITESHEET)
     hanging_frames -> contains how many frames are in last row when last row < frames_per_row;
                       'None' means that last row has frames_per_row frames
 
