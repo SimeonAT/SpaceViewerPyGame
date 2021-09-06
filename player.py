@@ -5,6 +5,7 @@ and the tutorial NPC that guides the player on how to play the game.
 import pygame
 from setup import resource_path
 from random import randint
+from spritesheet import get_frames
 import os
 
 SCREEN_WIDTH = 1280
@@ -35,6 +36,11 @@ class Heart:
         self.height *= SIZE_MULTIPLE
         self.heart_image = pygame.transform.scale(self.heart_image,
                            (self.width, self.height))
+
+        self.explosion_sprite = pygame.image.load(resource_path(
+            os.path.join("Graphics", "Player Objects","explosion.png"))).convert_alpha()
+        self.explosion_frames, self.num_expl_frames = get_frames(7, 10, 100, 100,
+                                                                hanging_frames=5)
 
         self.frames_since_shown = 0
         self.hover_direction = 1
