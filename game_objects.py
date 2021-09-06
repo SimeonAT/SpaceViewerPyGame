@@ -430,22 +430,27 @@ class Asteroid_Belt(pygame.sprite.Sprite):
 
         Probabilities of Rewards:
             - 40% for an extra life
-            - Uniform Distribution for all other rewards
-              (approximately 20% each)
+            - 10% to lose a live
+            - 50% to obtain resources
         """
         rng = randint(1, 10)
-        if rng in {1, 2}:
-            return "{} bars of sulfurite!".format(randint(0, 1000))
+        if rng == 1:
+            return "{} bars of sulfurite, which goes into your resources inventory." \
+                   .format(randint(0, 1000))
+        elif rng in {2, 3}:
+            return "{} mythril ores, which goes into your resources inventory" \
+                    .format(randint(0, 500))
         elif rng in {3, 4}:
-            return "{} mythril ores!".format(randint(0, 500))
-        elif rng in {5, 6}:
-            return "{} gold!".format(randrange(0, 100000))
+            return "{} gold, which goes into your resources inventory".format(randrange(0, 1000))
+        elif rng == 5:
+            player.lose_life()
+            return "...a BLACK ESSENSE grabs onto you, AND SUCKS SOME OF YOUR LIFE AWAY!!!"
         elif rng in {7, 8, 9, 10}:
             if player.lives < player.max_lives:
                 player.give_life()
-                return "You find a weird pink essence, which rejuvinates you into a healty state."
+                return "...a weird pink essence, which rejuvinates you into a healty state."
             else:
-                first_part = "You find a weird pink essence,"
+                first_part = "...a weird pink essence,"
                 second_part = "but it disappears as you try to grab it!"
                 return f"{first_part} {second_part}"
 

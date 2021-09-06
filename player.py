@@ -129,6 +129,8 @@ class Player:
         Takes away one life from the player.
         """
         self.lives -= 1
+        self.heart_icons.pop()
+        return
 
     def draw_hud(self, screen):
         """
