@@ -37,6 +37,7 @@ class Heart:
         self.heart_image = pygame.transform.scale(self.heart_image,
                            (self.width, self.height))
 
+        # The explosion sprite will have the same dimensions are the heart sprite
         self.explosion_sprite = pygame.image.load(resource_path(
             os.path.join("Graphics", "Player Objects","explosion.png"))).convert_alpha()
         self.explosion_frames, self.num_expl_frames = get_frames(7, 10, 100, 100,
