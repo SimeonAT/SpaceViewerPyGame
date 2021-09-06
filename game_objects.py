@@ -43,17 +43,25 @@ class Intestellar_Object(pygame.sprite.Sprite):
         self.shown = False
         self.frames_since_shown = 0
 
+        self.animated = False
+        self.num_frames = 0
+        self.frames_list = None
+        self.frame_num = 0
+
         # rng == 1 -> black hole 
         # rng == 2 -> nebula
         #rng == 3 -> small nebula
         rng = randint(1, 3)
         if rng == 1:
-            self.size = [128 * self.size_multiple, 95 * self.size_multiple]
-            self.img_file_location = \
-                resource_path(os.path.join("Graphics", "Space Objects", "Wormhole.png"))
+            self.size = [200* self.size_multiple, 200 * self.size_multiple]
             self.description = ["A black hole that SWIRLS WITH RAGE!!!",
                                 "Whatever comes in...",
                                 "...never comes out."]
+
+            self.img_file_location = \
+                resource_path(os.path.join("Graphics", "Space Objects", "blackhole_sprite.png"))
+            self.animated = True
+            self.frames_list, self.num_frames = get_frames(30, 30, 200, 200)
         elif rng == 2:
             self.size = [128 * self.size_multiple, 128 * self.size_multiple]
             self.img_file_location = \
@@ -70,14 +78,26 @@ class Intestellar_Object(pygame.sprite.Sprite):
                                 "at the edge of space."]
 
         self.image = pygame.image.load(self.img_file_location).convert_alpha()
-        self.image = pygame.transform.scale(self.image, (self.size[0], self.size[1]))
+
+        if self.animated == False:
+            self.image = pygame.transform.scale(self.image, (self.size[0], self.size[1]))
 
         self.desc_node = Textbox_Tree_Node(TextBox((1350, 400), lines=self.description))
         self.tree = Textbox_Tree(self.desc_node)
 
     def draw(self, screen, frames_since_shown):
-        screen.blit(self.image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))
+        if not self.animated:
+            screen.blit(self.image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))
+        else:
+            if len(self.frames_list) % 4 == 0:
+                self.frame_num += 1
 
+            if self.frame_num > len(self.frames_list) - 1:
+                self.frame_num = 0
+
+            frame_image = self.image.subsurface(self.frames_list[self.frame_num])
+            frame_image = pygame.transform.scale(frame_image, self.size)
+            screen.blit(frame_image, (CENTER_X - self.size[0] / 2, CENTER_Y - self.size[1] / 2))
 
     def draw_textbox(self, screen, index, player, key_pressed=None):
         """ Parameters:
