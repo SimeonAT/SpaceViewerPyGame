@@ -52,6 +52,10 @@ class Heart:
         # If self.pop == True, then yes; otherwise no.
         self.pop = False
 
+        # This is the multiple to scale the dimensions of each sprite frame by.
+        # I found that this multiple gives the best lookt & fit through experimentation
+        self.expl_sprite_factor = 2
+
         self.frames_since_shown = 0
         self.hover_direction = 1
 
@@ -100,7 +104,8 @@ class Heart:
 
         # Resize the explosion frame pixel art so that it big enough to be seen on screen
         _, _, exp_width, exp_height = frame_image.get_rect()
-        framge_image = pygame.transform.scale(frame_image, (exp_width * 3, exp_height * 3))
+        frame_image = pygame.transform.scale(frame_image,
+                      (exp_width * self.expl_sprite_factor, exp_height * self.expl_sprite_factor))
 
         screen.blit(frame_image, position)
         return
