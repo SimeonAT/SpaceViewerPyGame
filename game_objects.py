@@ -449,11 +449,12 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         gets an extra life) that can be found on asteroid when mining
 
         Probabilities of Rewards:
-            - 40% for an extra life
-            - 10% to lose a live
-            - 50% to obtain resources
+            - 4/11 for an extra life
+            - 2/11 to lose a live
+            - 5/11 to obtain resources
         """
         rng = randint(1, 10)
+        print(rng)
         if rng == 1:
             return "{} bars of sulfurite, which goes into your resources inventory." \
                    .format(randint(0, 1000))
@@ -462,7 +463,7 @@ class Asteroid_Belt(pygame.sprite.Sprite):
                     .format(randint(0, 500))
         elif rng in {3, 4}:
             return "{} gold, which goes into your resources inventory".format(randrange(0, 1000))
-        elif rng == 5:
+        elif rng == {5, 6}:
             player.lose_life()
             return "...a BLACK ESSENSE grabs onto you, AND SUCKS SOME OF YOUR LIFE AWAY!!!"
         elif rng in {7, 8, 9, 10}:
