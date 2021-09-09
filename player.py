@@ -43,6 +43,11 @@ class Heart:
         self.explosion_frames, self.num_expl_frames = get_frames(7, 10, 100, 100,
                                                                 hanging_frames=5)
 
+        # destroyed == True indiciates that the player lost one life and this heart
+        # object corresponds to that lost life. In that case, we will play the explosion
+        # sprite animation before deleting this heart.
+        self.destroyed = False
+
         self.frames_since_shown = 0
         self.hover_direction = 1
 
@@ -54,6 +59,17 @@ class Heart:
         return
 
     def draw(self, screen, position = None):
+        """
+        Wrapper function to determine whether or not we should
+        draw the heart icon or the explosion of the heart (when the
+        plaer loses a life)
+        """
+        if not self.destroyed:
+            self.draw_alive(screen, position)
+
+        return
+
+    def draw_alive(self, screen, position = None):
         """
         Draws the heart icon onto the screen.
 
