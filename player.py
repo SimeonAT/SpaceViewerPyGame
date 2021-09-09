@@ -56,6 +56,13 @@ class Heart:
         # I found that this multiple gives the best lookt & fit through experimentation
         self.expl_sprite_factor = 2
 
+        # The actual explosion sprite does not begin at the left-corner of its sprite frame:
+        # the sprite is right in the middle of the frame. The offset holds how much we need to 
+        # move from the top-left corner of the sprite frame so that the top-left corner of the
+        # actual sprite art is at (self.x, self.y).
+        self.exp_offset_x = -80
+        self.exp_offset_y = -75
+
         self.frames_since_shown = 0
         self.hover_direction = 1
 
@@ -107,7 +114,10 @@ class Heart:
         frame_image = pygame.transform.scale(frame_image,
                       (exp_width * self.expl_sprite_factor, exp_height * self.expl_sprite_factor))
 
-        screen.blit(frame_image, position)
+        screen.blit(frame_image,
+                   (position[0] + self.exp_offset_x, position[1] + self.exp_offset_y))
+
+        self.explosion_frames_since_shown += 1
         return
 
     def draw_alive(self, screen, position = None):
