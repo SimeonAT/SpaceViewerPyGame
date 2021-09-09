@@ -218,6 +218,7 @@ class Player:
         for heart in self.heart_icons:
             if heart.pop:
                 self.heart_icons.remove(heart)
+                self.lives -= 1
             else:
                 heart.draw(screen)
         return
