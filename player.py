@@ -5,6 +5,7 @@ and the tutorial NPC that guides the player on how to play the game.
 import pygame
 from setup import resource_path
 from random import randint
+from spritesheet import get_frames
 import os
 
 SCREEN_WIDTH = 1280
@@ -36,8 +37,37 @@ class Heart:
         self.heart_image = pygame.transform.scale(self.heart_image,
                            (self.width, self.height))
 
+        # The explosion sprite will have the same dimensions are the heart sprite
+        self.explosion_image = pygame.image.load(resource_path(
+            os.path.join("Graphics", "Player Objects","explosion.png"))).convert_alpha()
+        self.explosion_frames, self.num_expl_frames = get_frames(7, 10, 100, 100,
+                                                                hanging_frames=4)
+
+        # destroyed == True indiciates that the player lost one life and this heart
+        # object corresponds to that lost life. In that case, we will play the explosion
+        # sprite animation before deleting this heart.
+        self.destroyed = False
+
+        # Should the draw_hud() function in the Player class delete this heart object.
+        # If self.pop == True, then yes; otherwise no.
+        self.pop = False
+
+        # This is the multiple to scale the dimensions of each sprite frame by.
+        # I found that this multiple gives the best lookt & fit through experimentation
+        self.expl_sprite_factor = 2
+
+        # The actual explosion sprite does not begin at the left-corner of its sprite frame:
+        # the sprite is right in the middle of the frame. The offset holds how much we need to 
+        # move from the top-left corner of the sprite frame so that the top-left corner of the
+        # actual sprite art is at (self.x, self.y).
+        self.exp_offset_x = -80
+        self.exp_offset_y = -75
+
         self.frames_since_shown = 0
         self.hover_direction = 1
+
+        self.explosion_frames_since_shown = 0
+        self.explosion_frame_num = 0
 
         # The offset from the actual y-value that heart sprite will 
         # temporaily take and change every few frames in order to give 
@@ -47,6 +77,50 @@ class Heart:
         return
 
     def draw(self, screen, position = None):
+        """
+        Wrapper function to determine whether or not we should
+        draw the heart icon or the explosion of the heart (when the
+        plaer loses a life)
+        """
+        if not self.destroyed:
+            self.draw_alive(screen, position)
+        else:
+            self.draw_explosion(screen, position)
+
+        return
+
+    def draw_explosion(self, screen, position = None):
+        """
+        Draw the explosion of the heart icon before it is destroyed
+        (after the player loses a life).
+        """
+        if position == None:
+            position = (self.x, self.y)
+
+        if self.explosion_frames_since_shown % 4 == 0:
+            self.explosion_frame_num += 1
+
+        # If we rendered all the frames of the explosion, then we
+        # indicate that this heart object should be removed from player obj
+        if self.explosion_frame_num > self.num_expl_frames - 1:
+            self.pop = True
+            return
+
+        frame_image = self.explosion_image.subsurface(
+            self.explosion_frames[self.explosion_frame_num])
+
+        # Resize the explosion frame pixel art so that it big enough to be seen on screen
+        _, _, exp_width, exp_height = frame_image.get_rect()
+        frame_image = pygame.transform.scale(frame_image,
+                      (exp_width * self.expl_sprite_factor, exp_height * self.expl_sprite_factor))
+
+        screen.blit(frame_image,
+                   (position[0] + self.exp_offset_x, position[1] + self.exp_offset_y))
+
+        self.explosion_frames_since_shown += 1
+        return
+
+    def draw_alive(self, screen, position = None):
         """
         Draws the heart icon onto the screen.
 
@@ -126,10 +200,12 @@ class Player:
 
     def lose_life(self):
         """
-        Takes away one life from the player.
+        Takes away one life from the player. Labels the last heart icon as
+        'destroyed', so that heart icon can play the explosion animation. After
+        the heart icon explodes, the draw_hud() function will remove it from
+        the list of heart_icons, essentially deleting it.
         """
-        self.lives -= 1
-        self.heart_icons.pop()
+        self.heart_icons[len(self.heart_icons) - 1].destroyed = True
         return
 
     def draw_hud(self, screen):
@@ -140,7 +216,10 @@ class Player:
             The screen in which to draw the HUD on
         """
         for heart in self.heart_icons:
-            heart.draw(screen)
+            if heart.pop:
+                self.heart_icons.remove(heart)
+            else:
+                heart.draw(screen)
         return
 
     def increment_frames(self):

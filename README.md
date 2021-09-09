@@ -44,3 +44,4 @@ The sources below are the music and graphics that I am using for this video game
 	*	Gameplay Music Provided by Lofi Girl (bit.ly/lofigirI-playlists)
 	*	https://deep-fold.itch.io/pixel-planet-generator
 	*	Textbox Sprite: https://vapxiel.itch.io/pixel-ui-elements-pack-1?download
+	*	https://untiedgames.itch.io/five-free-pixel-explosions

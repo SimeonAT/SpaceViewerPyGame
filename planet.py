@@ -156,7 +156,7 @@ class Planet(pygame.sprite.Sprite):
         self.img_file_location = resource_path(self.img_file_location)
         self.image = pygame.image.load(self.img_file_location).convert_alpha()
 
-        # If not animated, all we need to do is just scale the image
+        # If not animated, we have to scale the image
         if self.animated == False:
             self.image = pygame.transform.scale(self.image,
                                                 (self.size, self.size))
