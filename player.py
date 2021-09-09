@@ -38,7 +38,7 @@ class Heart:
                            (self.width, self.height))
 
         # The explosion sprite will have the same dimensions are the heart sprite
-        self.explosion_sprite = pygame.image.load(resource_path(
+        self.explosion_image = pygame.image.load(resource_path(
             os.path.join("Graphics", "Player Objects","explosion.png"))).convert_alpha()
         self.explosion_frames, self.num_expl_frames = get_frames(7, 10, 100, 100,
                                                                 hanging_frames=5)
@@ -50,6 +50,9 @@ class Heart:
 
         self.frames_since_shown = 0
         self.hover_direction = 1
+
+        self.explosion_frames_since_shown = 0
+        self.explosion_frame_num = 0
 
         # The offset from the actual y-value that heart sprite will 
         # temporaily take and change every few frames in order to give 
@@ -76,7 +79,26 @@ class Heart:
         Draw the explosion of the heart icon before it is destroyed
         (after the player loses a life).
         """
-        raise notImplementedError
+        if position == None:
+            position = (self.x, self.y)
+
+        if self.explosion_frames_since_shown % 4 == 0:
+            self.explosion_frame_num += 1
+
+        # If we rendered all the frames of the explosion, then we
+        # do nothing as the player lost this heart/life
+        if self.explosion_frame_num > self.num_expl_frames - 1:
+            return
+
+        frame_image = self.explosion_image.subsurface(
+            self.explosion_frames[self.explosion_frame_num])
+
+        # Resize the explosion frame pixel art so that it big enough to be seen on screen
+        _, _, exp_width, exp_height = frame_image.get_rect()
+        framge_image = pygame.transform.scale(frame_image, (exp_width * 3, exp_height * 3))
+
+        screen.blit(frame_image, position)
+        return
 
     def draw_alive(self, screen, position = None):
         """
