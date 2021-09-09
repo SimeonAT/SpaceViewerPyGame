@@ -66,8 +66,17 @@ class Heart:
         """
         if not self.destroyed:
             self.draw_alive(screen, position)
+        else:
+            self.draw_explosion(screen, position)
 
         return
+
+    def draw_explosion(self, screen, position = None):
+        """
+        Draw the explosion of the heart icon before it is destroyed
+        (after the player loses a life).
+        """
+        raise notImplementedError
 
     def draw_alive(self, screen, position = None):
         """
