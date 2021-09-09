@@ -48,6 +48,10 @@ class Heart:
         # sprite animation before deleting this heart.
         self.destroyed = False
 
+        # Should the draw_hud() function in the Player class delete this heart object.
+        # If self.pop == True, then yes; otherwise no.
+        self.pop = False
+
         self.frames_since_shown = 0
         self.hover_direction = 1
 
@@ -86,8 +90,9 @@ class Heart:
             self.explosion_frame_num += 1
 
         # If we rendered all the frames of the explosion, then we
-        # do nothing as the player lost this heart/life
+        # indicate that this heart object should be removed from player obj
         if self.explosion_frame_num > self.num_expl_frames - 1:
+            self.pop = True
             return
 
         frame_image = self.explosion_image.subsurface(
@@ -180,10 +185,12 @@ class Player:
 
     def lose_life(self):
         """
-        Takes away one life from the player.
+        Takes away one life from the player. Labels the last heart icon as
+        'destroyed', so that heart icon can play the explosion animation. After
+        the heart icon explodes, the draw_hud() function will remove it from
+        the list of heart_icons, essentially deleting it.
         """
-        self.lives -= 1
-        self.heart_icons.pop()
+        self.heart_icons[len(self.heart_icons) - 1].destroyed = True
         return
 
     def draw_hud(self, screen):
@@ -194,7 +201,10 @@ class Player:
             The screen in which to draw the HUD on
         """
         for heart in self.heart_icons:
-            heart.draw(screen)
+            if heart.pop:
+                self.heart_icons.remove(heart)
+            else:
+                heart.draw(screen)
         return
 
     def increment_frames(self):
