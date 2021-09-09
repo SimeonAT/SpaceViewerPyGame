@@ -41,7 +41,7 @@ class Heart:
         self.explosion_image = pygame.image.load(resource_path(
             os.path.join("Graphics", "Player Objects","explosion.png"))).convert_alpha()
         self.explosion_frames, self.num_expl_frames = get_frames(7, 10, 100, 100,
-                                                                hanging_frames=5)
+                                                                hanging_frames=4)
 
         # destroyed == True indiciates that the player lost one life and this heart
         # object corresponds to that lost life. In that case, we will play the explosion

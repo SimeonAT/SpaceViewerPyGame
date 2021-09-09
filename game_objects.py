@@ -453,7 +453,7 @@ class Asteroid_Belt(pygame.sprite.Sprite):
             - 10% to lose a live
             - 50% to obtain resources
         """
-        rng = 5
+        rng = randint(1, 10)
         if rng == 1:
             return "{} bars of sulfurite, which goes into your resources inventory." \
                    .format(randint(0, 1000))
