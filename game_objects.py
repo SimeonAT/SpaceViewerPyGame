@@ -419,8 +419,8 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         # The textbox that gives the reward to the player if they choose to mine
         # the asteroid belt.
         self.head_node.next_child.yes_child = Textbox_Tree_Node(TextBox(lines = \
-                                        ["You mined this ateroid belt and found...",
-                                         " ",
+                                        ["You sent a small mining team to the asteroid belt,",
+                                         "and they found...",
                                          "Replace w/ random_item() return value"]))
         self.head_node.next_child.no_child = Textbox_Tree_Node(TextBox(lines = \
                                                 ["You fly away from the asteroid belt...",
@@ -455,13 +455,13 @@ class Asteroid_Belt(pygame.sprite.Sprite):
         """
         rng = randint(1, 10)
         if rng == 1:
-            return "{} bars of sulfurite, which goes into your resources inventory." \
+            return "{} bars of sulfurite!" \
                    .format(randint(0, 1000))
         elif rng in {2, 3}:
-            return "{} mythril ores, which goes into your resources inventory" \
+            return "{} mythril ores!" \
                     .format(randint(0, 500))
         elif rng in {3, 4}:
-            return "{} gold, which goes into your resources inventory".format(randrange(0, 1000))
+            return "{} gold!".format(randrange(0, 1000))
         elif rng in {5, 6}:
             player.lose_life()
             return "...a BLACK ESSENSE grabs onto you, AND SUCKS SOME OF YOUR LIFE AWAY!!!"
