@@ -53,7 +53,7 @@ class Intestellar_Object(pygame.sprite.Sprite):
         #rng == 3 -> small nebula
         rng = randint(1, 3)
         if rng == 1:
-            self.size = [200* self.size_multiple, 200 * self.size_multiple]
+            self.size = [200 * self.size_multiple, 200 * self.size_multiple]
             self.description = ["A black hole that SWIRLS WITH RAGE!!!",
                                 "Whatever comes in...",
                                 "...never comes out."]
