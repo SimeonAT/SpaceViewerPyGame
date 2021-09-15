@@ -150,6 +150,21 @@ class Heart:
         return
 
 
+class Stats_Display(TextBox):
+    """
+    The HUD that shows the statistics of the player's spaceship.
+    Can be opened/closed by pressing the "T" key.
+    """
+
+    def __init__(self):
+        super().__init__()
+        return
+
+    def draw(self, screen, frames_since_shown, position=None):
+        super().draw(screen, frames_since_shown, position)
+        return
+
+
 class Player:
 
     def __init__(self):
@@ -159,11 +174,7 @@ class Player:
         for i in range(0, self.lives):
             self.heart_icons.append(Heart())
 
-        # The HUD that shows the statistics of the player's spaceship.
-        # Can be opened/closed by pressing the "T" key.
-        self.stats_display = TextBox(lines = ["Stats Display TBD"])
-        self.stats_display.change_size(int(self.stats_display.get_width() * 1.5),
-                                       int(self.stats_display.get_height() * 1.5))
+        self.stats_display = Stats_Display()
         self.stats_display_frames = 0
 
         # Determine the position that each heart icon will be in:
@@ -237,6 +248,10 @@ class Player:
         """
         self.stats_display.draw(screen, self.stats_display_frames)
         self.stats_display_frames += 1
+        return
+
+    def reset_stats_frames(self):
+        self.stats_display_frames = 0
         return
 
     def increment_frames(self):

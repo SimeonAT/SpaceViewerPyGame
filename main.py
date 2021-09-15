@@ -130,7 +130,7 @@ while not quit:
                 # Open/close stats display when player presses "T" key
                 if draw_stats_display == True:
                     draw_stats_display = False
-                    player.stats_display_frames = 0
+                    player.reset_stats_frames()
                 else:
                     draw_stats_display = True
 
