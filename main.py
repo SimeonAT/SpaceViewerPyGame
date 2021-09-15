@@ -84,6 +84,9 @@ textbox_index = 0
 # IF WASD was pressed (if any) by the user; Used for textbox purposes
 key_pressed = None
 
+# should we draw the HUD that shows the player's spaceship stats?
+draw_stats_display = False
+
 while not quit:
     # clear the screen so that the previous frame is not 'saved'
     screen.fill((0, 0, 0))
@@ -123,6 +126,13 @@ while not quit:
             elif (event.key == pygame.K_d):
                 # to 'move right' when textbox is shown
                 key_pressed = "d"
+            elif (event.key == pygame.K_t):
+                # Open/close stats display when player presses "T" key
+                if draw_stats_display == True:
+                    draw_stats_display = False
+                    player.stats_display_frames = 0
+                else:
+                    draw_stats_display = True
 
             # Need if statement so stars ONLY CHANGE when player pos changes
             if previous_current_pos != current_pos:
@@ -194,6 +204,9 @@ while not quit:
                     object.increment_textbox_frames()
 
     player.draw_hud(screen)
+    if draw_stats_display:
+        player.draw_stats(screen)
+
     player.increment_frames()
 
     pygame.display.flip()

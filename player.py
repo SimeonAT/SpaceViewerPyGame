@@ -161,7 +161,8 @@ class Player:
 
         # The HUD that shows the statistics of the player's spaceship.
         # Can be opened/closed by pressing the "T" key.
-        self.stats_display = TextBox()
+        self.stats_display = TextBox(lines = ["Stats Display TBD"])
+        self.stats_display_frames = 0
 
         # Determine the position that each heart icon will be in:
         # They will all appear at the top left corner of the screen with
@@ -232,7 +233,8 @@ class Player:
         """
         Draws the player stats display onto the screen.
         """
-        self.stats_display.draw()
+        self.stats_display.draw(screen, self.stats_display_frames)
+        self.stats_display_frames += 1
         return
 
     def increment_frames(self):
