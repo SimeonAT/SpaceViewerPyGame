@@ -92,6 +92,14 @@ class TextBox(pygame.sprite.Sprite):
         screen.blit(self.current_image, ((CENTER_X - self.current_size[0] / 2),
                                          (CENTER_Y - self.current_size[1] / 2) + 250))
 
+        self.render_text(screen, frames_since_shown)
+        return
+
+    def render_text(self, screen, frames_since_shown):
+        """
+        Helper function for self.draw() that renders the actual text on
+        the textbox.
+        """
         # Display text on the textbox; we render one new line each frame so that each line
         # "pops up" like how they do in a typical RPG.
         if frames_since_shown > 35:
@@ -134,6 +142,8 @@ class TextBox(pygame.sprite.Sprite):
 
             close_text = font.render("Press ENTER to continue.", True, (255, 255, 255, 255))
             screen.blit(close_text, dest=(CENTER_X + 250, CENTER_Y + 290))
+        return
+
 
     def change_size(self, width, height):
         """
