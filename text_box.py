@@ -92,7 +92,8 @@ class TextBox(pygame.sprite.Sprite):
         screen.blit(self.current_image, ((CENTER_X - self.current_size[0] / 2),
                                          (CENTER_Y - self.current_size[1] / 2) + 250))
 
-        self.render_text(screen, frames_since_shown)
+        if frames_since_shown > 35:
+            self.render_text(screen, frames_since_shown)
         return
 
     def render_text(self, screen, frames_since_shown):
@@ -102,46 +103,45 @@ class TextBox(pygame.sprite.Sprite):
         """
         # Display text on the textbox; we render one new line each frame so that each line
         # "pops up" like how they do in a typical RPG.
-        if frames_since_shown > 35:
-            font = pygame.font.Font(resource_path(os.path.join("Graphics", "m5x7.ttf")), 40)
+        font = pygame.font.Font(resource_path(os.path.join("Graphics", "m5x7.ttf")), 40)
 
-            # coordinates of the top left corner of the first line of text
-            top_left = [CENTER_X - (self.final_size[0] / 2) + 100,
-                        CENTER_Y - (self.final_size[1] / 2) + 375]
+        # coordinates of the top left corner of the first line of text
+        top_left = [CENTER_X - (self.final_size[0] / 2) + 100,
+                    CENTER_Y - (self.final_size[1] / 2) + 375]
 
-            for i in range(0, self.current_line):
-                if i >= len(self.lines):
-                    # Double check if we just rendered the last line;
-                    # if we did, leave loop, because there isn't a "next line" to get ready for
-                    break
+        for i in range(0, self.current_line):
+            if i >= len(self.lines):
+                # Double check if we just rendered the last line;
+                # if we did, leave loop, because there isn't a "next line" to get ready for
+                break
 
-                if i == self.current_line - 1:
-                    # slice string up to where current_letter is "referring to"
-                    line_to_render = self.lines[i][0:self.current_letter - 1]
+            if i == self.current_line - 1:
+                # slice string up to where current_letter is "referring to"
+                line_to_render = self.lines[i][0:self.current_letter - 1]
+            else:
+                # render whole line
+                line_to_render = self.lines[i]
+
+            text = font.render(line_to_render, True, (255, 255, 255, 255))
+            screen.blit(text, dest=top_left)
+            top_left[1] += 40
+
+            # a new letter appears every 0.25 frames
+            if frames_since_shown % 0.25 == 0:
+                # need >= to account for when self.current_letter is > than amount of lines
+                if self.current_letter >= len(self.lines[i]):
+                    # If all letters have been printed for given line, get ready for next line
+                    self.current_line += 1
+
+                    # reset self.current_letter so that we can print first letter of next line
+                    self.current_letter = 1
                 else:
-                    # render whole line
-                    line_to_render = self.lines[i]
+                    # if not finished printing out whole line,
+                    # get ready to print next letter in next frame
+                    self.current_letter += 1
 
-                text = font.render(line_to_render, True, (255, 255, 255, 255))
-                screen.blit(text, dest=top_left)
-                top_left[1] += 40
-
-                # a new letter appears every 0.25 frames
-                if frames_since_shown % 0.25 == 0:
-                    # need >= to account for when self.current_letter is > than amount of lines
-                    if self.current_letter >= len(self.lines[i]):
-                        # If all letters have been printed for given line, get ready for next line
-                        self.current_line += 1
-
-                        # reset self.current_letter so that we can print first letter of next line
-                        self.current_letter = 1
-                    else:
-                        # if not finished printing out whole line,
-                        # get ready to print next letter in next frame
-                        self.current_letter += 1
-
-            close_text = font.render("Press ENTER to continue.", True, (255, 255, 255, 255))
-            screen.blit(close_text, dest=(CENTER_X + 250, CENTER_Y + 290))
+        close_text = font.render("Press ENTER to continue.", True, (255, 255, 255, 255))
+        screen.blit(close_text, dest=(CENTER_X + 250, CENTER_Y + 290))
         return
 
 
@@ -188,47 +188,8 @@ class Extension_TextBox(TextBox):
                     ((CENTER_X - self.final_size[0] / 2),
                      (CENTER_Y - self.final_size[1] / 2) + 250))
 
-        # 'm5x7' font by Daniel Linssen
-        font = pygame.font.Font(resource_path(os.path.join("Graphics", "m5x7.ttf")), 40)
-
-        # Display what is intended to be displayed:
-        # Render one new line each frame so that each
-        # line "pops up" like how they do in a typical RPG.
-        # Coordinates refer to top left corner of text box.
-        top_left = [CENTER_X - (self.final_size[0] / 2) + 100,
-                    CENTER_Y - (self.final_size[1] / 2) + 375]
-
-        for i in range(0, self.current_line):
-            if i >= len(self.lines):
-                # We just rendered the last line
-                break
-
-            if i == self.current_line - 1:
-                # slice string up to the current letter to be rendered
-                line_to_render = self.lines[i][0:self.current_letter - 1]
-            else:
-                # render whole line
-                line_to_render = self.lines[i]
-
-            text = font.render(line_to_render, True, (255, 255, 255, 255))
-            screen.blit(text, dest=top_left)
-
-            # the next line of text will be under previous line of text
-            top_left[1] += 40
-
-            # A new letter appears every 1/4 frame
-            if frames_since_shown % 0.25 == 0:
-                if self.current_letter >= len(self.lines[i]):
-                    # We already print out all letters in current line;
-                    # Move to the next line
-                    self.current_line += 1
-                    self.current_letter = 1
-                else:
-                    # Get ready to print the next letter
-                    self.current_letter += 1
-
-        close_text = font.render("Press ENTER to continue.", True, (255, 255, 255, 255))
-        screen.blit(close_text, dest=(CENTER_X + 250, CENTER_Y + 290))
+        self.render_text(screen, frames_since_shown)
+        return
 
 
 class Choice_TextBox(TextBox):
