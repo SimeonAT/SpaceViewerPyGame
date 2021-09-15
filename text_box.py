@@ -135,6 +135,19 @@ class TextBox(pygame.sprite.Sprite):
             close_text = font.render("Press ENTER to continue.", True, (255, 255, 255, 255))
             screen.blit(close_text, dest=(CENTER_X + 250, CENTER_Y + 290))
 
+    def change_size(self, width, height):
+        """
+        Changes the size of the textbox.
+        """
+        self.final_size = (width, height)
+        return
+
+    def get_width(self):
+        return self.final_size[0]
+
+    def get_height(self):
+        return self.final_size[1]
+
 
 class Extension_TextBox(TextBox):
     """

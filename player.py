@@ -6,6 +6,7 @@ import pygame
 from setup import resource_path
 from random import randint
 from spritesheet import get_frames
+from text_box import *
 import os
 
 SCREEN_WIDTH = 1280
@@ -158,6 +159,10 @@ class Player:
         for i in range(0, self.lives):
             self.heart_icons.append(Heart())
 
+        # The HUD that shows the statistics of the player's spaceship.
+        # Can be opened/closed by pressing the "T" key.
+        self.stats_display = TextBox()
+
         # Determine the position that each heart icon will be in:
         # They will all appear at the top left corner of the screen with
         # OFFSET spaces apart
@@ -221,6 +226,13 @@ class Player:
                 self.lives -= 1
             else:
                 heart.draw(screen)
+        return
+
+    def draw_stats(self, screen):
+        """
+        Draws the player stats display onto the screen.
+        """
+        self.stats_display.draw()
         return
 
     def increment_frames(self):
