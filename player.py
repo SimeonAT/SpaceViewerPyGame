@@ -265,7 +265,7 @@ class Player:
         Increment the number of frames that the player HUD has been displayed on screen.
 
         The Player object itself will not have a frame counter; rather the sprites that make
-        up the player HUD will have frame counters, at they will be displayed on screen.
+        up the player HUD will have frame counters, as they will be displayed on screen.
         """
         for heart in self.heart_icons:
             heart.increment_frames()
