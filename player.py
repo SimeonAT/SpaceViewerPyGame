@@ -156,12 +156,18 @@ class Stats_Display(TextBox):
     Can be opened/closed by pressing the "T" key.
     """
 
+    # This is the size and position on the screen that I found works
+    # best for the Stats Display textbox after trial and error.
+    size = (1360, 1360)
+    position = (-45, -330)
+
     def __init__(self):
-        super().__init__()
+        super().__init__(size=Stats_Display.size)
+        self.image = pygame.transform.scale(self.image, self.final_size)
         return
 
-    def draw(self, screen, frames_since_shown, position=None):
-        super().draw(screen, frames_since_shown, position)
+    def draw(self, screen, frames_since_shown):
+        screen.blit(self.image, Stats_Display.position)
         return
 
 
