@@ -205,7 +205,7 @@ while not quit:
 
     player.draw_hud(screen)
     if draw_stats_display:
-        player.draw_stats(screen)
+        player.draw_stats(screen, player)
 
     player.increment_frames()
 

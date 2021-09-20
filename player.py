@@ -171,13 +171,15 @@ class Stats_Display(TextBox):
         self.font = pygame.font.Font(resource_path(os.path.join("Graphics", "m5x7.ttf")), 40)
         return
 
-    def draw(self, screen, frames_since_shown):
+    def draw(self, screen, frames_since_shown, player):
         screen.blit(self.image, Stats_Display.position)
 
         # The coordinates of the title will be described as offsets away from the top left
         # corner of the stats display text box object.
         title_coords = [495, 75]
         title = self.font.render("Spaceship Statistics", True, (255, 255, 255, 255))
+
+        line_coords = [300, 300]
         screen.blit(title, dest=title_coords)
         return
 
@@ -259,11 +261,11 @@ class Player:
                 heart.draw(screen)
         return
 
-    def draw_stats(self, screen):
+    def draw_stats(self, screen, player):
         """
         Draws the player stats display onto the screen.
         """
-        self.stats_display.draw(screen, self.stats_display_frames)
+        self.stats_display.draw(screen, self.stats_display_frames, player)
         self.stats_display_frames += 1
         return
 
