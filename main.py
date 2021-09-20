@@ -212,6 +212,6 @@ while not quit:
     pygame.display.flip()
     clock.tick(60)  # 60 FPS
     key_pressed = None
-    # sound.play_music(sound.main_loop)
+    sound.play_music(sound.main_loop)
 
 pygame.quit()
