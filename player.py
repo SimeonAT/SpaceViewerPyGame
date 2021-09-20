@@ -214,6 +214,12 @@ class Player:
         self.crew_size = 5
         self.max_crew_size = 10
 
+        # The Player Spaceship Sprite
+        self.spaceship = pygame.image.load(resource_path(os.path.join("Graphics",
+                                                                      "Spaceships",
+                                                                      "player_spaceship.png")))
+        self.frames, self.num_frames = get_frames(2, 5, 16, 24)
+
         self.heart_icons = []
         for i in range(0, self.lives):
             self.heart_icons.append(Heart())
