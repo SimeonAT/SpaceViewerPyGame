@@ -172,6 +172,14 @@ class Stats_Display(TextBox):
         return
 
     def draw(self, screen, frames_since_shown, player):
+        """
+        Draws the stats display onto the screen.
+
+        Parameters:
+            the screen to draw on
+            the number of frames stats display has been shown on screen
+            the player object
+        """
         screen.blit(self.image, Stats_Display.position)
 
         # The coordinates of the title will be described as offsets away from the top left
@@ -179,7 +187,18 @@ class Stats_Display(TextBox):
         title_coords = [495, 75]
         title = self.font.render("Spaceship Statistics", True, (255, 255, 255, 255))
 
-        line_coords = [300, 300]
+        lines = [f"Spaceship Name: {player.spaceship_name}",
+                 f"Spaceship Health: {int((player.lives / player.max_lives) * 100)} %",
+                 f"Shield Protection: {'N/A'} %",
+                 f"Total Resources: {player.resources} resources",
+                 f"Current Crew Size: {player.crew_size} crew members",
+                 f"Max Crew Size: {player.max_crew_size} crew members"]
+        line_coords = [100, 150]
+        for line in lines:
+            line_to_render = self.font.render(line, True, (255, 255, 255, 255))
+            screen.blit(line_to_render, dest=line_coords)
+            line_coords[1] += 50
+
         screen.blit(title, dest=title_coords)
         return
 
@@ -187,8 +206,14 @@ class Stats_Display(TextBox):
 class Player:
 
     def __init__(self):
+        # --- The Player's Spaceship Stats ---
         self.lives = 3
         self.max_lives = 7
+        self.spaceship_name = "Galactus Prime X"
+        self.resources = 0
+        self.crew_size = 5
+        self.max_crew_size = 10
+
         self.heart_icons = []
         for i in range(0, self.lives):
             self.heart_icons.append(Heart())
