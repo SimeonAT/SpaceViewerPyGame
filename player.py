@@ -158,6 +158,10 @@ class Stats_Display(TextBox):
 
     # This is the size and position on the screen that I found works
     # best for the Stats Display textbox after trial and error.
+    #
+    # Please note that the position is negative as the textbox sprite png is surrounded
+    # by transparent space, so the negative coordinates places the transparent space out of
+    # the screen.
     size = (1360, 1360)
     position = (-45, -330)
 
