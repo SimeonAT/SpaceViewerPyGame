@@ -164,10 +164,17 @@ class Stats_Display(TextBox):
     def __init__(self):
         super().__init__(size=Stats_Display.size)
         self.image = pygame.transform.scale(self.image, self.final_size)
+        self.font = pygame.font.Font(resource_path(os.path.join("Graphics", "m5x7.ttf")), 40)
         return
 
     def draw(self, screen, frames_since_shown):
         screen.blit(self.image, Stats_Display.position)
+
+        # The coordinates of the title will be described as offsets away from the top left
+        # corner of the stats display text box object.
+        title_coords = [Stats_Display.position[0], Stats_Display.position[1]]
+        title = self.font.render("Spaceship Statistics", True, (255, 255, 255, 255))
+        screen.blit(title, dest=title_coords)
         return
 
 
