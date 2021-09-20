@@ -172,7 +172,7 @@ class Stats_Display(TextBox):
 
         # The coordinates of the title will be described as offsets away from the top left
         # corner of the stats display text box object.
-        title_coords = [Stats_Display.position[0], Stats_Display.position[1]]
+        title_coords = [Stats_Display.position[0] + 100, Stats_Display.position[1] + 100]
         title = self.font.render("Spaceship Statistics", True, (255, 255, 255, 255))
         screen.blit(title, dest=title_coords)
         return
