@@ -25,13 +25,31 @@ python3 main.py
 
 ## **Controls**
 
-Arrow keys: Moves to the tile directly up, down, left, or right from the current tile, depending
+**Arrow keys**: Moves to the tile directly up, down, left, or right from the current tile, depending
 			on the key that was pressed.
 
-"A" and "D" keys: The "A" key moves the arrow left when at a textbox that gives you two choices.
+**"A" and "D" keys**: The "A" key moves the arrow left when at a textbox that gives you two choices.
 				  The "D" moves this arrow to the right. The "A" and "D" keys are only used
 				  when there is a textbox that offers you two possible choices.
 
-"ENTER" key: Moves to the next textbox.
+**"ENTER" key**: Moves to the next textbox.
 
+# **Art Citations**
 
+*	M5x7 font by Daniel Linssen: https://managore.itch.io/m5x7 
+    (Free to use but attribution required)
+*	Spaceship was originally created by me, but a lot of the improvements 
+    to my original design came from pixel artists SuperTurnip, Skittle, 
+	and Adcrusher (http://pixeljoint.com/forum/forum_posts.asp?TID=19551)
+*	Sprites for the Planets and other Space Objects: 
+	*	https://helianthus-games.itch.io/pixel-art-planets
+	*	https://norma-2d.itch.io/celestial-objects-pixel-art-pack
+	*	https://ansimuz.itch.io/warped-vehicles
+	*	https://gvituri.itch.io/space-shooter
+	*	https://helianthus-games.itch.io/animated-pixel-art-planets
+	*	https://ansimuz.itch.io/explosion-animations-pack
+	*	Gameplay Music Provided by Lofi Girl i(https://bit.ly/lofigirI-playlists)
+	*	https://deep-fold.itch.io/pixel-planet-generator
+	*	Textbox Sprite: https://vapxiel.itch.io/pixel-ui-elements-pack-1?download
+	*	https://untiedgames.itch.io/five-free-pixel-explosions
+	*	https://ansimuz.itch.io/spaceship-shooter-environment
