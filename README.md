@@ -1,6 +1,6 @@
 # **SPACE VIEWER VIDEO GAME**
 
-This is a space sci-fi themed video game that I worked on in my free time. and is my first 
+This is a space sci-fi themed video game that I worked on in my free time, and is my first 
 ever proramming hobby/passion project. Although I'm proud of the progress I made in this game,
 there are still a few features that are still unfinished. At this point, I feel it is best
 for me to work on other projects in order to improve my programming skills, and when I feel
