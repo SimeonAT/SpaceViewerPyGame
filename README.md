@@ -20,8 +20,18 @@ with the resources that I used to learn the skills I need to develop this game, 
 2. Download or clone this directory. Once downloaded, go to the folder and run in your terminal:
 
 ```sh
-	python3 main.py
+python3 main.py
 ```
 
 ## **Controls**
+
+Arrow keys: Moves to the tile directly up, down, left, or right from the current tile, depending
+			on the key that was pressed.
+
+"A" and "D" keys: The "A" key moves the arrow left when at a textbox that gives you two choices.
+				  The "D" moves this arrow to the right. The "A" and "D" keys are only used
+				  when there is a textbox that offers you two possible choices.
+
+"ENTER" key: Moves to the next textbox.
+
 
