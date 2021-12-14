@@ -2,7 +2,6 @@
 import pygame
 import os
 from random import randint
-from setup import resource_path
 
 
 def fill_music_lists(file_location, music_list):
@@ -14,10 +13,6 @@ def fill_music_lists(file_location, music_list):
     for filename in os.listdir(file_location):
         if filename.endswith(".wav"):
             music_list.append(file_location + "/" + filename)
-
-    # Make each file location in music_list compatible with PyInstaller
-    for song in music_list:
-        song = resource_path(song)
 
 
 # Organize game music by function (main loop music, battle music, etc):
@@ -37,5 +32,5 @@ def play_music(music_list):
     """
     if not pygame.mixer.music.get_busy():
         random_num = randint(0, len(music_list) - 1)
-        pygame.mixer.music.load(resource_path(music_list[random_num]))
+        pygame.mixer.music.load(music_list[random_num])
         pygame.mixer.music.play()
