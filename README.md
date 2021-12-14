@@ -73,5 +73,11 @@ a resource.
 * https://opensource.com/article/17/12/game-python-moving-player
 * https://stackoverflow.com/questions/7053971/python-trouble-using-escape-key-to-exit
 * https://stackoverflow.com/questions/14549405/python-check-instances-of-classes
-
-NOTE TO SELF: Continue look starting after main.py.
+* https://gamedev.stackexchange.com/questions/140609/games-developed-in-python-with-pygame-lags-too-much-how-can-i-improve-the-frame
+* https://stackoverflow.com/questions/7746263/how-can-i-play-an-mp3-with-pygame
+* https://stackoverflow.com/questions/6239769/how-can-i-crop-an-image-with-pygame
+* https://stackoverflow.com/questions/36653519/how-do-i-get-the-size-width-x-height-of-my-pygame-window
+* https://stackoverflow.com/questions/328061/how-to-make-a-surface-with-a-transparent-background-in-pygame
+* https://stackoverflow.com/questions/20842801/how-to-display-text-in-pygame
+* https://docs.python.org/3/library/exceptions.html
+* https://docs.python.org/3/tutorial/errors.html
