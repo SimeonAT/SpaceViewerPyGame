@@ -12,6 +12,16 @@ with the resources that I used to learn the skills I need to develop this game, 
 
 # **How to Play**
 
-**Installation**
+## **Installation**
 
+1. Download the newest version of Python ([link](https://www.python.org/downloads/ "download link"),
+   along with the most recent version of the [link](https://www.pygame.org/news "Pygame") library.
+
+2. Download or clone this directory. Once downloaded, go to the folder and run in your terminal:
+
+```sh
+	python3 main.py
+```
+
+## **Controls**
 
