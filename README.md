@@ -8,7 +8,7 @@ inspired and I have extra time, I might spend some time making improvements on t
 
 I made this game in Python through the use of the PyGame library. The sprites that I used, along
 with the resources that I used to learn the skills I need to develop this game, are cited in the
-"Art Citations" and "Programming Citations" sections below.
+"Art Resources" and "Programming Resources" sections below.
 
 # **How to Play**
 
@@ -34,7 +34,7 @@ python3 main.py
 
 **"ENTER" key**: Moves to the next textbox.
 
-# **Art Citations**
+# **Art Resources**
 
 *	M5x7 font by Daniel Linssen: https://managore.itch.io/m5x7 
     (Free to use but attribution required)
@@ -53,3 +53,7 @@ python3 main.py
 	*	Textbox Sprite: https://vapxiel.itch.io/pixel-ui-elements-pack-1?download
 	*	https://untiedgames.itch.io/five-free-pixel-explosions
 	*	https://ansimuz.itch.io/spaceship-shooter-environment
+
+# **Programming Resources**
+
+
