@@ -7,7 +7,6 @@ USEFUL RESOURCES:
 """
 import pygame
 import os
-from setup import resource_path
 
 SCREEN_WIDTH = 1280
 SCREEN_HEIGHT = 720
@@ -44,7 +43,7 @@ class TextBox(pygame.sprite.Sprite):
         self.current_letter = 1
 
         # set up the text box sprite/image
-        self.file_loc = resource_path(os.path.join("Graphics", "text_box.png"))
+        self.file_loc = os.path.join("Graphics", "text_box.png")
         self.image = pygame.image.load(self.file_loc).convert()
 
         # make img transparent to black
@@ -103,7 +102,7 @@ class TextBox(pygame.sprite.Sprite):
         """
         # Display text on the textbox; we render one new line each frame so that each line
         # "pops up" like how they do in a typical RPG.
-        font = pygame.font.Font(resource_path(os.path.join("Graphics", "m5x7.ttf")), 40)
+        font = pygame.font.Font(os.path.join("Graphics", "m5x7.ttf"), 40)
 
         # coordinates of the top left corner of the first line of text
         top_left = [CENTER_X - (self.final_size[0] / 2) + 100,
@@ -244,7 +243,7 @@ class Choice_TextBox(TextBox):
         screen.blit(self.current_image, ((CENTER_X - self.final_size[0] / 2),
                                          (CENTER_Y - self.final_size[1] / 2) + 250))
 
-        font = pygame.font.Font(resource_path(os.path.join("Graphics", "m5x7.ttf")), 40)
+        font = pygame.font.Font(os.path.join("Graphics", "m5x7.ttf"), 40)
 
         # coordinates of the top left corner of the first line of text
         top_left = [CENTER_X - (self.final_size[0] / 2) + 100,
