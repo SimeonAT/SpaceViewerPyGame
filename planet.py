@@ -11,7 +11,6 @@ import pygame
 import os
 from random import randint
 from text_box import TextBox, Extension_TextBox, Choice_TextBox
-from setup import resource_path
 from spritesheet import get_frames
 from textbox_tree import *
 
@@ -153,7 +152,7 @@ class Planet(pygame.sprite.Sprite):
             self.description = ["A powerful planetary object that radiates with immese heat."]
 
         # Set up file location to work with PyInstaller
-        self.img_file_location = resource_path(self.img_file_location)
+        self.img_file_location = self.img_file_location
         self.image = pygame.image.load(self.img_file_location).convert_alpha()
 
         # If not animated, we have to scale the image
