@@ -55,5 +55,23 @@ python3 main.py
 	*	https://ansimuz.itch.io/spaceship-shooter-environment
 
 # **Programming Resources**
+	
+	I also cite these links in the source files in which I utilize them as 
+	a resource.
 
+	* https://www.geeksforgeeks.org/python-display-images-with-pygame/:~:text=load()%20method%20of%20pygame,update()%20method%20of%20pygame.
+    * http://programarcadegames.com/python_examples/en/sprite_sheets/
+    * https://stackoverflow.com/questions/20002242/how-to-scale-images-to-screen-size-in-pygame
+    * https://stackoverflow.com/questions/14044147/animated-sprite-from-few-images
+    * https://stackoverflow.com/questions/19715251/pygame-getting-the-size-of-a-loaded-image/19715931
+    * https://stackoverflow.com/questions/6239769/how-can-i-crop-an-image-with-pygame
+	* https://www.pygame.org/docs/ref/rect.html
+	* https://stackoverflow.com/questions/11049942#/how-do-i-create-an-alias-for-a-variable-in-python
+	* https://stackoverflow.com/questions/54246668/how-do-i-delete-the-hello-from-the-pygame-community-console-alert-while-using/54246669
+	* https://www.geeksforgeeks.org/python-using-2d-arrays-lists-the-right-way/
+	* https://stackoverflow.com/questions/56962469/display-fps-is-0-when-nothing-is-happening
+	* https://opensource.com/article/17/12/game-python-moving-player
+	* https://stackoverflow.com/questions/7053971/python-trouble-using-escape-key-to-exit
+	* https://stackoverflow.com/questions/14549405/python-check-instances-of-classes
 
+	NOTE TO SELF: Continue look starting after main.py.
