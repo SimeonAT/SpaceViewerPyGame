@@ -2,7 +2,6 @@
 
     USEFUL RESOURCES:
     - https://www.geeksforgeeks.org/python-display-images-with-pygame/
-      #:~:text=load()%20method%20of%20pygame,update()%20method%20of%20pygame.
     - http://programarcadegames.com/python_examples/en/sprite_sheets/
     - https://stackoverflow.com/questions/20002242/how-to-scale-images-to-screen-size-in-pygame
     - https://stackoverflow.com/questions/14044147/animated-sprite-from-few-images
