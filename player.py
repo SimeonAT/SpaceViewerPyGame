@@ -3,7 +3,6 @@ This Python file houses the code for the Player class
 and the tutorial NPC that guides the player on how to play the game.
 """
 import pygame
-from setup import resource_path
 from random import randint
 from spritesheet import get_frames
 from text_box import *
@@ -30,8 +29,8 @@ class Heart:
     icon displayed on the Player HUD.
     """
     def __init__(self):
-        self.heart_image = pygame.image.load(resource_path(
-            os.path.join("Graphics", "Player Objects", "heart.png"))).convert_alpha()
+        self.heart_image = pygame.image.load(
+            os.path.join("Graphics", "Player Objects", "heart.png")).convert_alpha()
         self.x, self.y, self.width, self.height = self.heart_image.get_rect()
         self.width *= SIZE_MULTIPLE
         self.height *= SIZE_MULTIPLE
@@ -39,8 +38,8 @@ class Heart:
                            (self.width, self.height))
 
         # The explosion sprite will have the same dimensions are the heart sprite
-        self.explosion_image = pygame.image.load(resource_path(
-            os.path.join("Graphics", "Player Objects","explosion.png"))).convert_alpha()
+        self.explosion_image = pygame.image.load(
+							os.path.join("Graphics", "Player Objects","explosion.png")).convert_alpha()
         self.explosion_frames, self.num_expl_frames = get_frames(7, 10, 100, 100,
                                                                 hanging_frames=4)
 
@@ -168,7 +167,7 @@ class Stats_Display(TextBox):
     def __init__(self):
         super().__init__(size=Stats_Display.size)
         self.image = pygame.transform.scale(self.image, self.final_size)
-        self.font = pygame.font.Font(resource_path(os.path.join("Graphics", "m5x7.ttf")), 40)
+        self.font = pygame.font.Font(os.path.join("Graphics", "m5x7.ttf"), 40)
         return
 
     def draw(self, screen, frames_since_shown, player):
@@ -215,9 +214,9 @@ class Player:
         self.max_crew_size = 10
 
         # The Player Spaceship Sprite
-        self.spaceship = pygame.image.load(resource_path(os.path.join("Graphics",
+        self.spaceship = pygame.image.load(os.path.join("Graphics",
                                                                       "Spaceships",
-                                                                      "player_spaceship.png")))
+                                                                      "player_spaceship.png"))
         self.frames, self.num_frames = get_frames(2, 5, 16, 24)
 
         self.heart_icons = []
