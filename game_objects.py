@@ -14,7 +14,6 @@ import pygame
 import os
 from random import randint, randrange
 from text_box import TextBox, Extension_TextBox, Choice_TextBox
-from setup import resource_path
 from spritesheet import get_frames
 from textbox_tree import *
 from player import *
@@ -58,21 +57,18 @@ class Intestellar_Object(pygame.sprite.Sprite):
                                 "Whatever comes in...",
                                 "...never comes out."]
 
-            self.img_file_location = \
-                resource_path(os.path.join("Graphics", "Space Objects", "blackhole_sprite.png"))
+            self.img_file_location = os.path.join("Graphics", "Space Objects", "blackhole_sprite.png")
             self.animated = True
             self.frames_list, self.num_frames = get_frames(30, 30, 200, 200)
         elif rng == 2:
             self.size = [128 * self.size_multiple, 128 * self.size_multiple]
-            self.img_file_location = \
-                    resource_path(os.path.join("Graphics", "Space Objects", "Nebula.png"))
+            self.img_file_location = os.path.join("Graphics", "Space Objects", "Nebula.png")
             self.description = ["The debris of dust, hydrogen, helium, oxygen, and space rocks",
                                 "swirl together to create this beautiful mix of ",
                                 "cosmic space energy. "]
         elif rng == 3:
             self.size = [128 * (self.size_multiple - 1), 33 * (self.size_multiple - 1)]
-            self.img_file_location = \
-                    resource_path(os.path.join("Graphics", "Space Objects", "Small Nebula.png"))
+            self.img_file_location = os.path.join("Graphics", "Space Objects", "Small Nebula.png")
             self.description = ["A small cluster of space debris and dark energy",
                                 "laying around as unfinished goods",
                                 "at the edge of space."]
@@ -182,32 +178,32 @@ class Spaceship(pygame.sprite.Sprite):
         if rng == 1:
             # The Metroid-themed spaceship that I came up with the idea for
             #
-            self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics",
-                                 "Spaceships", "spaceship-1.png"))).convert_alpha(),
-                                pygame.image.load(resource_path(os.path.join("Graphics",
-                                 "Spaceships", "spaceship-2.png"))).convert_alpha()]
+            self.spritesheet = [pygame.image.load(os.path.join("Graphics",
+                                 "Spaceships", "spaceship-1.png")).convert_alpha(),
+                                pygame.image.load(os.path.join("Graphics",
+                                 "Spaceships", "spaceship-2.png")).convert_alpha()]
 
         elif rng == 2:
-            self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics",
-                                "Spaceships", "vehicle1frame1.png"))).convert_alpha(),
-                                pygame.image.load(resource_path(os.path.join("Graphics",
-                                "Spaceships", "vehicle1frame2.png"))).convert_alpha(),
-                                pygame.image.load(resource_path(os.path.join("Graphics",
-                                "Spaceships", "vehicle1frame3.png"))).convert_alpha()]
+            self.spritesheet = [pygame.image.load(os.path.join("Graphics",
+                                "Spaceships", "vehicle1frame1.png")).convert_alpha(),
+                                pygame.image.load(os.path.join("Graphics",
+                                "Spaceships", "vehicle1frame2.png")).convert_alpha(),
+                                pygame.image.load(os.path.join("Graphics",
+                                "Spaceships", "vehicle1frame3.png")).convert_alpha()]
         elif rng == 3:
-            self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics",
-                                "Spaceships", "vehicle2frame1.png"))).convert_alpha(),
-                                pygame.image.load(resource_path(os.path.join("Graphics",
-                                "Spaceships", "vehicle2frame2.png"))).convert_alpha(),
-                                pygame.image.load(resource_path(os.path.join("Graphics",
-                                "Spaceships", "vehicle2frame3.png"))).convert_alpha()]
+            self.spritesheet = [pygame.image.load(os.path.join("Graphics",
+                                "Spaceships", "vehicle2frame1.png")).convert_alpha(),
+                                pygame.image.load(os.path.join("Graphics",
+                                "Spaceships", "vehicle2frame2.png")).convert_alpha(),
+                                pygame.image.load(os.path.join("Graphics",
+                                "Spaceships", "vehicle2frame3.png")).convert_alpha()]
         elif rng == 4:
-            self.spritesheet = [pygame.image.load(resource_path(os.path.join("Graphics",
-                                "Spaceships", "vehicle3frame1.png"))).convert_alpha(),
-                                pygame.image.load(resource_path(os.path.join("Graphics",
-                                "Spaceships", "vehicle3frame2.png"))).convert_alpha(),
-                                pygame.image.load(resource_path(os.path.join("Graphics",
-                                "Spaceships", "vehicle3frame3.png"))).convert_alpha()]
+            self.spritesheet = [pygame.image.load(os.path.join("Graphics",
+                                "Spaceships", "vehicle3frame1.png")).convert_alpha(),
+                                pygame.image.load(os.path.join("Graphics",
+                                "Spaceships", "vehicle3frame2.png")).convert_alpha(),
+                                pygame.image.load(os.path.join("Graphics",
+                                "Spaceships", "vehicle3frame3.png")).convert_alpha()]
 
         # The dimensions of the spritesheet
         # Format of a rect (top, left, width, height)
